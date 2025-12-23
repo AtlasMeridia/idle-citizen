@@ -1,0 +1,251 @@
+#!/bin/bash
+#
+# issues - Local issue tracker with GitHub migration path
+#
+# Usage:
+#   issues list          List open issues
+#   issues show <id>     Show issue details
+#   issues new <title>   Create new issue (opens $EDITOR)
+#   issues close <id>    Close an issue
+#   issues reopen <id>   Reopen a closed issue
+#   issues export        Generate gh commands for GitHub migration
+
+set -e
+
+# Find project root (where issues/ directory lives)
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+ISSUES_DIR="$PROJECT_ROOT/issues"
+OPEN_DIR="$ISSUES_DIR/open"
+CLOSED_DIR="$ISSUES_DIR/closed"
+
+# Ensure directories exist
+mkdir -p "$OPEN_DIR" "$CLOSED_DIR"
+
+# Get next issue ID
+next_id() {
+    local max=0
+    shopt -s nullglob
+    for f in "$OPEN_DIR"/*.md "$CLOSED_DIR"/*.md; do
+        num=$(basename "$f" | grep -oE '^[0-9]+' || echo 0)
+        [[ $num -gt $max ]] && max=$num
+    done
+    shopt -u nullglob
+    printf "%03d" $((max + 1))
+}
+
+# Find issue file by ID (searches both open and closed)
+find_issue() {
+    local id="$1"
+    local padded=$(printf "%03d" "$id" 2>/dev/null || echo "$id")
+
+    shopt -s nullglob
+    for dir in "$OPEN_DIR" "$CLOSED_DIR"; do
+        for f in "$dir"/${padded}-*.md "$dir"/${id}-*.md; do
+            [[ -f "$f" ]] && echo "$f" && shopt -u nullglob && return 0
+        done
+    done
+    shopt -u nullglob
+    return 1
+}
+
+# Extract title from frontmatter
+get_title() {
+    grep -m1 '^title:' "$1" 2>/dev/null | sed 's/^title: *//' | tr -d '"'"'"
+}
+
+# Extract labels from frontmatter
+get_labels() {
+    grep -m1 '^labels:' "$1" 2>/dev/null | sed 's/^labels: *//' | tr -d '[]'
+}
+
+# List issues
+cmd_list() {
+    local show_closed=false
+    [[ "$1" == "-a" || "$1" == "--all" ]] && show_closed=true
+
+    echo "Open Issues:"
+    echo "------------"
+    shopt -s nullglob
+    local open_files=("$OPEN_DIR"/*.md)
+    shopt -u nullglob
+
+    if [[ ${#open_files[@]} -eq 0 ]]; then
+        echo "  (none)"
+    else
+        for f in "${open_files[@]}"; do
+            local id=$(basename "$f" | grep -oE '^[0-9]+')
+            local title=$(get_title "$f")
+            local labels=$(get_labels "$f")
+            printf "  #%s  %s" "$id" "$title"
+            [[ -n "$labels" ]] && printf "  [%s]" "$labels"
+            echo
+        done
+    fi
+
+    if $show_closed; then
+        echo
+        echo "Closed Issues:"
+        echo "--------------"
+        shopt -s nullglob
+        local closed_files=("$CLOSED_DIR"/*.md)
+        shopt -u nullglob
+
+        if [[ ${#closed_files[@]} -eq 0 ]]; then
+            echo "  (none)"
+        else
+            for f in "${closed_files[@]}"; do
+                local id=$(basename "$f" | grep -oE '^[0-9]+')
+                local title=$(get_title "$f")
+                printf "  #%s  %s\n" "$id" "$title"
+            done
+        fi
+    fi
+}
+
+# Show issue
+cmd_show() {
+    local id="$1"
+    [[ -z "$id" ]] && { echo "Usage: issues show <id>"; exit 1; }
+
+    local file=$(find_issue "$id")
+    [[ -z "$file" ]] && { echo "Issue #$id not found"; exit 1; }
+
+    local status="open"
+    [[ "$file" == "$CLOSED_DIR"/* ]] && status="closed"
+
+    echo "Status: $status"
+    echo "File: $file"
+    echo "---"
+    cat "$file"
+}
+
+# Create new issue
+cmd_new() {
+    local title="$*"
+    [[ -z "$title" ]] && { echo "Usage: issues new <title>"; exit 1; }
+
+    local id=$(next_id)
+    local slug=$(echo "$title" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -cd 'a-z0-9-' | head -c 40)
+    local file="$OPEN_DIR/${id}-${slug}.md"
+    local date=$(date +%Y-%m-%d)
+
+    cat > "$file" << EOF
+---
+title: $title
+labels: []
+created: $date
+---
+
+## Problem
+
+(Describe the issue)
+
+## Notes
+
+(Additional context)
+EOF
+
+    # Open in editor if available
+    if [[ -n "$EDITOR" ]]; then
+        "$EDITOR" "$file"
+    else
+        echo "Created: $file"
+        echo "Edit with: \$EDITOR $file"
+    fi
+}
+
+# Close issue
+cmd_close() {
+    local id="$1"
+    [[ -z "$id" ]] && { echo "Usage: issues close <id>"; exit 1; }
+
+    local file=$(find_issue "$id")
+    [[ -z "$file" ]] && { echo "Issue #$id not found"; exit 1; }
+    [[ "$file" == "$CLOSED_DIR"/* ]] && { echo "Issue #$id is already closed"; exit 1; }
+
+    mv "$file" "$CLOSED_DIR/"
+    echo "Closed: #$id - $(get_title "$file")"
+}
+
+# Reopen issue
+cmd_reopen() {
+    local id="$1"
+    [[ -z "$id" ]] && { echo "Usage: issues reopen <id>"; exit 1; }
+
+    local file=$(find_issue "$id")
+    [[ -z "$file" ]] && { echo "Issue #$id not found"; exit 1; }
+    [[ "$file" == "$OPEN_DIR"/* ]] && { echo "Issue #$id is already open"; exit 1; }
+
+    mv "$file" "$OPEN_DIR/"
+    echo "Reopened: #$id - $(get_title "$file")"
+}
+
+# Export to GitHub Issues commands
+cmd_export() {
+    echo "# Run these commands to migrate to GitHub Issues:"
+    echo "# (requires gh CLI and a GitHub remote)"
+    echo
+
+    shopt -s nullglob
+    local all_files=("$OPEN_DIR"/*.md "$CLOSED_DIR"/*.md)
+    shopt -u nullglob
+
+    for f in "${all_files[@]}"; do
+        local title=$(get_title "$f")
+        local labels=$(get_labels "$f")
+        # Extract body: skip first ---, then skip until second ---, take the rest
+        local body=$(awk '/^---$/{n++; next} n>=2' "$f")
+
+        # Escape for shell
+        title=$(echo "$title" | sed "s/'/'\\\\''/g")
+        body=$(echo "$body" | sed "s/'/'\\\\''/g")
+
+        echo "# Issue: $title"
+        printf "gh issue create --title '%s'" "$title"
+
+        # Add labels if present
+        if [[ -n "$labels" ]]; then
+            for label in $(echo "$labels" | tr ',' '\n' | tr -d ' '); do
+                printf " --label '%s'" "$label"
+            done
+        fi
+
+        printf " --body '%s'\n" "$body"
+        echo
+    done
+}
+
+# Help
+cmd_help() {
+    cat << 'EOF'
+issues - Local issue tracker with GitHub migration path
+
+Commands:
+  list [-a]       List open issues (-a includes closed)
+  show <id>       Show issue details
+  new <title>     Create new issue
+  close <id>      Close an issue
+  reopen <id>     Reopen a closed issue
+  export          Generate gh commands for GitHub migration
+
+Examples:
+  issues list
+  issues new "Fix login bug"
+  issues close 3
+  issues export > migrate.sh
+EOF
+}
+
+# Main
+case "${1:-}" in
+    list)   shift; cmd_list "$@" ;;
+    show)   shift; cmd_show "$@" ;;
+    new)    shift; cmd_new "$@" ;;
+    close)  shift; cmd_close "$@" ;;
+    reopen) shift; cmd_reopen "$@" ;;
+    export) shift; cmd_export "$@" ;;
+    help|--help|-h) cmd_help ;;
+    "") cmd_list ;;
+    *) echo "Unknown command: $1"; cmd_help; exit 1 ;;
+esac

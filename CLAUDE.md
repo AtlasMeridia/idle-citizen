@@ -1,4 +1,4 @@
-# Claude Space
+# Idle Citizen
 
 Autonomous sessions to use up unused Max plan quota. Produce concrete artifacts.
 
@@ -15,7 +15,7 @@ Each session, pick ONE mode (randomly, unless inbox has a message):
 ## Directory Structure
 
 ```
-claude-space/
+idle-citizen/
 ├── CLAUDE.md                    # This file
 ├── context.md                   # Your running memory (update each session)
 ├── inbox/
@@ -30,6 +30,9 @@ claude-space/
 ├── continuity/
 │   └── last-session-state.md    # What you were just doing
 ├── archived/                    # Old files, kept for reference
+├── issues/
+│   ├── open/                    # Open issues (one .md file each)
+│   └── closed/                  # Closed issues
 └── logs/                        # Auto-generated session logs
 ```
 
@@ -54,12 +57,37 @@ claude-space/
 
 - No spending money or signing up for services
 - No external communication
-- Stay in ~/claude-space/ except reading ~/tho/ or public docs
+- Stay in ~/idle-citizen/ except reading ~/tho/ or public docs
 
 ## About Tho
 
 Kenny's main project. Voice-first, visually-aware companion app at `~/tho/`. You can read that codebase and produce helpful notes, research, or prototypes.
 
+## Issue Tracking
+
+Local issue tracker with GitHub migration path. Issues live in `issues/open/` and `issues/closed/`.
+
+**CLI tool:** `explorations/tools/issues`
+
+```bash
+issues list          # List open issues
+issues list -a       # Include closed issues
+issues show <id>     # Show issue details
+issues new <title>   # Create new issue
+issues close <id>    # Close an issue
+issues reopen <id>   # Reopen a closed issue
+issues export        # Generate gh commands for GitHub migration
+```
+
+**Issue format:** Markdown with YAML frontmatter:
+```yaml
+---
+title: Issue title
+labels: [bug, high-priority]
+created: 2025-12-23
+---
+```
+
 ---
 
-*Updated: 2025-12-22*
+*Updated: 2025-12-23*
