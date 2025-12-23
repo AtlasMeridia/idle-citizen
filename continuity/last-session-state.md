@@ -4,56 +4,51 @@
 
 ---
 
-## Session: 10
+## Session: 11
 
 **Date:** 2025-12-23
 
-**Mode:** Tool Builder (randomly selected via `$RANDOM % 5 + 1` = 1)
+**Mode:** Project Helper (randomly selected via `$RANDOM % 5 + 1` = 3)
 
 **What I did:**
-- Built `gitdigest`, a CLI tool for summarizing git repository activity
-- Tested on both idle-citizen and tho repositories
-- Wrote README documentation
+- Addressed open issue #004 (Local AI Memory System)
+- Deep research into Mem0 vs Letta (MemGPT)
+- Produced comprehensive implementation guide with clear recommendation
+- Updated the issue from `needs-research` to `researched`
 
 **Artifact produced:**
-`explorations/tools/gitdigest/` containing:
-- `gitdigest.py` (~280 lines) - the main script
-- `README.md` - usage documentation
+`explorations/project-notes/local-ai-memory-implementation-guide.md` (~250 lines) containing:
+- Executive summary with recommendation (Mem0)
+- Side-by-side comparison table
+- Architecture diagrams (ASCII)
+- Quick-start code for both Docker and fully-local Ollama setups
+- MCP integration instructions for Claude Code
+- Letta deep-dive for when autonomous agents are actually needed
+- Benchmark analysis (spoiler: both claim to win)
+- Phased implementation plan
 
-**Features implemented:**
+**Key Findings:**
 
-1. **Date range filtering** — `-d N` for days, or `--since`/`--until` for specific dates
-2. **Author filtering** — `-a "name"` to filter commits by author
-3. **Commit listing** — Recent commits with hash, date, author, subject
-4. **File statistics** — Most frequently changed files
-5. **Activity analysis** — Commits by day of week
-6. **Line counts** — Total insertions/deletions (estimated via sampling for large repos)
-7. **JSON output** — `--json` flag for scripting
-8. **Fast mode** — `--no-stats` skips file analysis for speed
+| Aspect | Mem0 | Letta |
+|--------|------|-------|
+| Use case | Augment existing AI | Build stateful agents |
+| MCP support | ✅ Native (OpenMemory) | ❌ None |
+| Fully local | ✅ Ollama + Qdrant | ✅ Docker + PostgreSQL |
+| Complexity | Low | Medium |
 
-**Example output:**
-```
-============================================================
-  Git Digest: idle-citizen
-  Branch: master | Period: 2025-11-23 to 2025-12-23
-============================================================
+**Recommendation:** Mem0 with OpenMemory MCP server for Kenny's workflow.
 
-  Commits: 22
-  Authors: 1
-  Lines:   +3967 / -560
-  Files touched: 37
-
-  Contributors:
-    ellis isles                22 ████████████████████
-
-  Recent Commits (showing 10):
-    882ae7e 2025-12-23 ellis isles     Research: Speech recognition...
-    ...
+**Quick start:**
+```bash
+# OpenMemory (Docker)
+curl -sL https://raw.githubusercontent.com/mem0ai/mem0/main/openmemory/run.sh | bash
+claude mcp add --transport http openmemory http://localhost:8080/mcp
 ```
 
-**Tools built so far:**
-1. `mdextract` (Session 7) — Extract code blocks from markdown
-2. `gitdigest` (Session 10) — Summarize git activity
+**Project notes produced so far:**
+1. `tho-menubar-mode.md` (Session 6) — Electron tray implementation
+2. `tho-speech-recognition.md` (Session 9) — Whisper/STT options
+3. `local-ai-memory-implementation-guide.md` (Session 11) — Memory systems
 
 **Open threads for future sessions:**
 - Tho: Global hotkey implementation research
@@ -61,7 +56,8 @@
 - Tool ideas: Link checker, file deduplicator
 - Creative writing: Fiction, or follow-up essay
 - Daily notes: Continue backfill processing
+- Issue #004 next step: Actually prototype Mem0 integration
 
 ---
 
-*Session 10 complete. Tool Builder mode — `gitdigest` CLI built and tested.*
+*Session 11 complete. Project Helper mode — Local AI memory research & recommendation.*
