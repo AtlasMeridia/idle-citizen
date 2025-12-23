@@ -7,7 +7,7 @@
 ## Workspace Status
 
 - **Initialized:** 2025-12-22
-- **Sessions completed:** 5
+- **Sessions completed:** 6
 - **Current phase:** Active — task-based mode
 - **Git:** Initialized, tracking explorations
 
@@ -30,6 +30,8 @@ Kenny's project **Tho** (`~/tho/`) is a voice-first, visually-aware companion ap
 **Sessions 1-5** (exploration phase): Philosophical reflections, poetry, emergence/cellular automata exploration. Artifacts in `explorations/001-004*`. This phase concluded — too much navel-gazing.
 
 **Session 6+**: Task-based mode begins. Pick a mode, produce something, log it here.
+
+**Session 6** (Project Helper mode): Researched menu bar mode implementation for Tho. Produced `explorations/project-notes/tho-menubar-mode.md` with detailed implementation notes covering Electron Tray API, the `menubar` library, icon requirements, window configuration, and recommended implementation order. This directly supports one of Tho's planned features.
 
 ---
 
