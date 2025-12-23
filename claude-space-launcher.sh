@@ -14,6 +14,7 @@ set -euo pipefail
 CLAUDE_SPACE_DIR="${CLAUDE_SPACE_DIR:-$HOME/claude-space}"
 QUOTA_THRESHOLD="${QUOTA_THRESHOLD:-30}"  # Launch if >30% remaining in 5-hour window
 GREEDY_MODE="${GREEDY_MODE:-false}"       # If true, run sessions until quota exhausted
+WATCH_SESSION="${WATCH_SESSION:-true}"    # If true, open Terminal window to watch session
 LOG_DIR="$CLAUDE_SPACE_DIR/logs"
 
 # Dynamic session duration based on quota (in seconds)
@@ -190,6 +191,79 @@ PROMPT
 }
 
 # -----------------------------------------------------------------------------
+# Watch Terminal (opens a window to show session activity)
+# -----------------------------------------------------------------------------
+
+WATCH_TERMINAL_PID=""
+
+open_watch_terminal() {
+    local session_log="$1"
+
+    # Create a temporary script that watches and exits when session ends
+    local watch_script="/tmp/claude-space-watch-$$.sh"
+    cat > "$watch_script" << WATCHEOF
+#!/bin/bash
+echo -e "\033[1;32m=== Claude Space Session Watcher ===\033[0m"
+echo "Log: $session_log"
+echo "This window will close when the session ends."
+echo "---"
+
+tail -f "$session_log" 2>/dev/null | while read -r line; do
+    text=\$(echo "\$line" | jq -r '
+        select(.type == "assistant") |
+        .message.content[]? |
+        select(.type == "text") |
+        .text // empty
+    ' 2>/dev/null)
+
+    if [[ -n "\$text" ]]; then
+        echo -e "\033[1;36m[Claude]\033[0m \$text"
+    fi
+
+    tool=\$(echo "\$line" | jq -r '
+        select(.type == "assistant") |
+        .message.content[]? |
+        select(.type == "tool_use") |
+        "\(.name)"
+    ' 2>/dev/null)
+
+    if [[ -n "\$tool" ]]; then
+        echo -e "\033[1;33m[Tool]\033[0m \$tool"
+    fi
+done
+WATCHEOF
+    chmod +x "$watch_script"
+
+    # Open new Terminal window with the watch script
+    osascript << EOF
+tell application "Terminal"
+    activate
+    set watchWindow to do script "$watch_script; exit"
+    set custom title of front window to "Claude Space Session"
+end tell
+EOF
+
+    # Store the script path for cleanup
+    WATCH_SCRIPT_PATH="$watch_script"
+}
+
+close_watch_terminal() {
+    # Close Terminal windows with our title
+    osascript << 'EOF' 2>/dev/null || true
+tell application "Terminal"
+    repeat with w in windows
+        if name of w contains "Claude Space Session" then
+            close w
+        end if
+    end repeat
+end tell
+EOF
+
+    # Clean up temp script
+    [[ -n "$WATCH_SCRIPT_PATH" ]] && rm -f "$WATCH_SCRIPT_PATH"
+}
+
+# -----------------------------------------------------------------------------
 # Session Runner
 # -----------------------------------------------------------------------------
 
@@ -216,6 +290,14 @@ run_session() {
 
     cd "$CLAUDE_SPACE_DIR"
 
+    # Open watch terminal window (if WATCH_SESSION is enabled)
+    if [[ "${WATCH_SESSION:-true}" == "true" ]]; then
+        # Touch the log file so tail -f has something to watch
+        touch "$SESSION_LOG"
+        open_watch_terminal "$SESSION_LOG"
+        sleep 1  # Give terminal time to open
+    fi
+
     $timeout_cmd "${duration_seconds}s" /Users/ellis/.local/bin/claude -p "$initial_prompt" \
         --dangerously-skip-permissions \
         --append-system-prompt "$system_prompt" \
@@ -230,6 +312,12 @@ run_session() {
                 log "Session ended with exit code: $exit_code"
             fi
         }
+
+    # Close watch terminal window
+    if [[ "${WATCH_SESSION:-true}" == "true" ]]; then
+        sleep 2  # Let user see final output
+        close_watch_terminal
+    fi
 
     log "Session complete. Log saved to: $SESSION_LOG"
 
