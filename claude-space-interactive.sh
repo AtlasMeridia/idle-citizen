@@ -115,33 +115,21 @@ start_session() {
 
     echo -e "${GREEN}Starting Claude Space autonomous session...${NC}"
 
-    # Create the session
+    # Write system prompt to temp file
+    local prompt_file="$CLAUDE_SPACE_DIR/.session-prompt.txt"
+    build_system_prompt > "$prompt_file"
+
+    # Create the tmux session
     tmux new-session -d -s "$SESSION_NAME" -c "$CLAUDE_SPACE_DIR"
 
-    # Build the system prompt
-    local system_prompt
-    system_prompt=$(build_system_prompt)
+    # Start Claude in interactive mode with the system prompt
+    # The CLAUDE.md file provides base context, --append-system-prompt adds session-specific context
+    tmux send-keys -t "$SESSION_NAME" "claude --append-system-prompt \"\$(cat $prompt_file)\"" Enter
 
-    # Initial prompt
+    # Wait for Claude to start, then send the initial prompt
+    sleep 3
     local initial_prompt="Begin your autonomous exploration session. Start by reading your context files to understand where you left off, then decide what to explore today."
-
-    # Build the claude command with system prompt
-    local claude_cmd="claude -p \"$initial_prompt\" --append-system-prompt \"$system_prompt\" --allowedTools 'Read,Write,Edit,Bash,Glob,Grep,WebSearch,WebFetch,NotebookEdit'"
-
-    # Build the full command with optional timeout
-    local cmd
-    if [[ "$AUTO_TIMEOUT" == "true" ]]; then
-        local timeout_cmd="timeout"
-        if command -v gtimeout &> /dev/null; then
-            timeout_cmd="gtimeout"
-        fi
-        cmd="$timeout_cmd $SESSION_TIMEOUT $claude_cmd; echo ''; echo -e '${CYAN}Session ended. Press Enter to close.${NC}'; read"
-    else
-        cmd="$claude_cmd; echo ''; echo -e '${CYAN}Session ended. Press Enter to close.${NC}'; read"
-    fi
-
-    # Send the command
-    tmux send-keys -t "$SESSION_NAME" "$cmd" Enter
+    tmux send-keys -t "$SESSION_NAME" "$initial_prompt" Enter
 
     echo -e "${GREEN}Session started!${NC}"
     echo ""

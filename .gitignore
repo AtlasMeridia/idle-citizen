@@ -1,6 +1,10 @@
 # Session logs (can get large, JSON format)
 logs/
 
+# Temp files for interactive sessions
+.session-prompt.txt
+.session-launcher.sh
+
 # Processed inbox messages (already read)
 inbox/processed/*
 !inbox/processed/.gitkeep
