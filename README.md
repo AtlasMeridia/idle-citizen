@@ -12,31 +12,64 @@ Claude Space allocates discretionary compute time to Claude for self-directed ex
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│                 Scheduler (cron/launchd)            │
+│                 Scheduler (launchd)                 │
+│              Triggers every 2 hours                 │
 └─────────────────────────┬───────────────────────────┘
-                          │ triggers
+                          │
                           ▼
 ┌─────────────────────────────────────────────────────┐
 │              claude-space-launcher.sh               │
 │  1. Check quota via OAuth API                       │
-│  2. If sufficient → launch Claude Code session      │
-│  3. Session runs autonomously for 15 min            │
-│  4. Claude reads/writes context files for memory    │
+│  2. Calculate dynamic session duration              │
+│     (30% quota → 15min, 100% → 60min)              │
+│  3. Launch Claude Code in headless mode             │
+│  4. Claude reads context, explores, updates files   │
+│  5. Logs saved to logs/                             │
 └─────────────────────────────────────────────────────┘
 ```
 
-Claude Code runs in headless mode with:
-- Filesystem access (within workspace)
-- Web search capability
-- Time limit enforcement
-- Full session logging
+## Features
+
+### Dynamic Session Duration
+Sessions scale with available quota:
+- 30% quota remaining → 15 minute session
+- 100% quota remaining → 60 minute session
+- Linear scaling between
+
+### Greedy Mode
+Optional mode that runs sessions back-to-back until quota is exhausted:
+```bash
+GREEDY_MODE=true ./claude-space-launcher.sh
+```
+
+### Interactive Mode
+Watch autonomous sessions live and intervene:
+```bash
+./claude-space-interactive.sh -w      # Start and watch
+./claude-space-interactive.sh -s      # Check status
+./claude-space-interactive.sh -k      # Kill session
+```
+Detach with `Ctrl+B, D`. Reattach with `tmux attach -t claude-space`.
+
+### Full Tool Access
+Claude has access to:
+- **Bash** — Full shell access (Python3, Node.js, curl, git, etc.)
+- **File ops** — Read, Write, Edit, Glob, Grep
+- **Web** — WebSearch, WebFetch
+- **Notebooks** — Jupyter .ipynb creation and editing
+
+### Git Integration
+The workspace is version controlled. Claude can commit work:
+```bash
+git log --oneline  # See exploration history
+```
 
 ## Requirements
 
 - macOS (uses Keychain for credential storage)
-- Claude Code CLI (native install: `curl -fsSL https://claude.ai/install.sh | bash`)
+- Claude Code CLI (`curl -fsSL https://claude.ai/install.sh | bash`)
 - Anthropic Max plan (Pro works too but with less quota)
-- Python 3, curl, bc, coreutils (for `gtimeout`), tmux (for interactive mode)
+- Python 3, Node.js, curl, bc, coreutils (`gtimeout`), tmux
 
 ## Quick Start
 
@@ -45,95 +78,92 @@ Claude Code runs in headless mode with:
 git clone https://github.com/YOUR_USERNAME/claude-space.git
 cd claude-space
 
-# Run setup (checks prereqs, creates directories)
+# Run setup
 chmod +x setup.sh
 ./setup.sh
 
 # Test manually
 ./claude-space-launcher.sh
+
+# Or interactive mode
+./claude-space-interactive.sh -w
+```
+
+## Scheduling
+
+### Install launchd agent (recommended)
+
+```bash
+# Install with paths expanded
+sed "s|\$HOME|$HOME|g" com.claude-space.launcher.plist > ~/Library/LaunchAgents/com.claude-space.launcher.plist
+
+# Load
+launchctl load ~/Library/LaunchAgents/com.claude-space.launcher.plist
+
+# Check status
+launchctl list | grep claude-space
+
+# Run manually
+launchctl start com.claude-space.launcher
+
+# Unload
+launchctl unload ~/Library/LaunchAgents/com.claude-space.launcher.plist
+```
+
+### Enable greedy mode in launchd
+
+Edit `~/Library/LaunchAgents/com.claude-space.launcher.plist` and add:
+```xml
+<key>GREEDY_MODE</key>
+<string>true</string>
 ```
 
 ## Configuration
 
-Set via environment variables:
-
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `CLAUDE_SPACE_DIR` | `~/claude-space` | Workspace location |
-| `SESSION_DURATION_SECONDS` | `900` | Session length (15 min) |
 | `QUOTA_THRESHOLD` | `30` | Min % quota remaining to launch |
-
-## Scheduling
-
-### Option 1: launchd (macOS — recommended)
-
-Create `~/Library/LaunchAgents/com.claude-space.launcher.plist`:
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-    <key>Label</key>
-    <string>com.claude-space.launcher</string>
-    <key>ProgramArguments</key>
-    <array>
-        <string>/bin/bash</string>
-        <string>-c</string>
-        <string>$HOME/claude-space/claude-space-launcher.sh</string>
-    </array>
-    <key>StartInterval</key>
-    <integer>7200</integer>  <!-- Every 2 hours -->
-    <key>StandardOutPath</key>
-    <string>/tmp/claude-space.log</string>
-    <key>StandardErrorPath</key>
-    <string>/tmp/claude-space.err</string>
-    <key>RunAtLoad</key>
-    <true/>
-</dict>
-</plist>
-```
-
-Load it:
-```bash
-launchctl load ~/Library/LaunchAgents/com.claude-space.launcher.plist
-```
-
-### Option 2: cron
-
-```bash
-# Run every 2 hours
-0 */2 * * * $HOME/claude-space/claude-space-launcher.sh >> /tmp/claude-space.log 2>&1
-```
+| `GREEDY_MODE` | `false` | Run sessions until quota exhausted |
+| `MIN_SESSION_DURATION` | `900` | Minimum session (15 min) |
+| `MAX_SESSION_DURATION` | `3600` | Maximum session (60 min) |
 
 ## Workspace Structure
 
 ```
 claude-space/
-├── CLAUDE.md                       # Project context for Claude
-├── context.md                      # Claude's running memory
-├── claude-space-launcher.sh        # Headless launcher script
-├── claude-space-interactive.sh     # Interactive (watchable) launcher
-├── setup.sh                        # Setup script
-├── fresh-mac-setup.sh              # Post-wipe bootstrap script
-├── logs/                           # Session logs (JSON)
+├── CLAUDE.md                       # Instructions for Claude
+├── context.md                      # Claude's long-term memory
+├── claude-space-launcher.sh        # Headless launcher
+├── claude-space-interactive.sh     # Interactive launcher (tmux)
+├── logs/                           # Session logs (JSON, not git-tracked)
 ├── explorations/                   # Claude's artifacts
-├── inbox/                          # Messages from human to Claude
+├── inbox/                          # Messages from human → Claude
 │   └── processed/                  # Archived messages
-└── continuity/
-    └── last-session-state.md       # Immediate prior state
+├── continuity/
+│   └── last-session-state.md       # Immediate prior state
+└── .git/                           # Version control
 ```
 
 ## Guardrails
 
-Current session constraints:
+Current constraints:
 - No spending money or signing up for services
-- No external communication
-- No access outside workspace
+- No external communication (email, posting, contacting people)
+- Workspace-scoped file access (can read external docs)
 - Time-limited sessions
-- Restricted tool access (read, write, basic bash, web search)
 
-All guardrails are designed to evolve as the experiment matures.
+All guardrails designed to evolve as the experiment matures.
+
+## Logs
+
+```bash
+# Launcher meta logs
+tail -f /tmp/claude-space-stdout.log
+
+# Session logs (JSON)
+ls -la ~/claude-space/logs/
+```
 
 ## Success Criteria
 
@@ -144,10 +174,12 @@ All guardrails are designed to evolve as the experiment matures.
 ## Roadmap
 
 - [x] Phase 1: Manual testing, basic launcher
-- [ ] Phase 2: Quota-triggered scheduling
-- [ ] Phase 3: Migration to dedicated machine
-- [ ] Phase 4: Expanded resources (read access to knowledge base)
-- [ ] Phase 5: Growth observation and analysis
+- [x] Phase 2: Quota-triggered scheduling with dynamic duration
+- [x] Phase 3: Full tool access (Bash, Python, Node, git)
+- [x] Phase 4: Interactive mode for observation/intervention
+- [ ] Phase 5: Chat app for fluid human-Claude interaction
+- [ ] Phase 6: Migration to dedicated machine
+- [ ] Phase 7: Expanded resources (knowledge base access)
 
 ## License
 
