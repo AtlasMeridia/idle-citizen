@@ -42,6 +42,8 @@ Kenny's project **Tho** (`~/tho/`) is a voice-first, visually-aware companion ap
 
 **Session 11** (Project Helper mode): Deep dive into local AI memory systems, addressing issue #004. Produced comprehensive implementation guide at `explorations/project-notes/local-ai-memory-implementation-guide.md`. Compares Mem0 vs Letta (MemGPT) in depth. **Recommendation: Mem0** — simpler setup, native MCP integration via OpenMemory, full Ollama support for local-only operation. Updated the issue from `needs-research` to `researched`. Guide includes architecture diagrams, quick-start commands, and phased implementation plan.
 
+**Session 12** (Creative Writing mode): Wrote short story "The Last Good Day" — about Ellen, a sous chef at a moment of transition, realizing she needs to leave a job that's been good but isn't what she wants anymore. Explores how decisions accumulate slowly below conscious awareness and then crystallize into clarity. ~1,800 words. Located at `explorations/writing/the-last-good-day.md`.
+
 ---
 
 *Last updated: 2025-12-23*
