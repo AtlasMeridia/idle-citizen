@@ -13,6 +13,7 @@ set -euo pipefail
 
 CLAUDE_SPACE_DIR="${CLAUDE_SPACE_DIR:-$HOME/claude-space}"
 QUOTA_THRESHOLD="${QUOTA_THRESHOLD:-30}"  # Launch if >30% remaining in 5-hour window
+GREEDY_MODE="${GREEDY_MODE:-false}"       # If true, run sessions until quota exhausted
 LOG_DIR="$CLAUDE_SPACE_DIR/logs"
 
 # Dynamic session duration based on quota (in seconds)
@@ -215,9 +216,46 @@ run_session() {
 # Main
 # -----------------------------------------------------------------------------
 
+run_single_session() {
+    local token="$1"
+
+    # Check quota
+    log "Checking quota..."
+    local quota_remaining
+    quota_remaining=$(get_quota_remaining "$token")
+
+    if [[ "$quota_remaining" == "-1" ]]; then
+        log "ERROR: Could not determine quota"
+        return 1
+    fi
+
+    log "Quota remaining: ${quota_remaining}%"
+
+    if (( $(echo "$quota_remaining <= $QUOTA_THRESHOLD" | bc -l) )); then
+        log "Insufficient quota (${quota_remaining}% <= ${QUOTA_THRESHOLD}% threshold)."
+        return 1
+    fi
+
+    # Calculate dynamic session duration based on available quota
+    local session_duration
+    session_duration=$(calculate_session_duration "$quota_remaining")
+    local duration_minutes=$((session_duration / 60))
+
+    log "Dynamic session duration: ${session_duration}s (~${duration_minutes} minutes) based on ${quota_remaining}% quota"
+
+    # Update log file paths for this session
+    TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
+    SESSION_LOG="$LOG_DIR/${TIMESTAMP}_session.json"
+    META_LOG="$LOG_DIR/${TIMESTAMP}_meta.log"
+
+    run_session "$session_duration"
+    return 0
+}
+
 main() {
     log "=== Claude Space Launcher ==="
     log "Workspace: $CLAUDE_SPACE_DIR"
+    log "Greedy mode: $GREEDY_MODE"
 
     # Check if Claude Code is installed
     if ! command -v claude &> /dev/null; then
@@ -236,31 +274,22 @@ main() {
 
     log "OAuth token retrieved successfully"
 
-    # Check quota
-    log "Checking quota..."
-    local quota_remaining
-    quota_remaining=$(get_quota_remaining "$token")
-
-    if [[ "$quota_remaining" == "-1" ]]; then
-        log "ERROR: Could not determine quota"
-        exit 1
+    if [[ "$GREEDY_MODE" == "true" ]]; then
+        # Greedy mode: run sessions until quota exhausted
+        local session_count=0
+        while run_single_session "$token"; do
+            ((session_count++))
+            log "=== Session $session_count complete. Checking for more quota... ==="
+            sleep 10  # Brief pause between sessions
+        done
+        log "Greedy mode complete. Ran $session_count session(s)."
+    else
+        # Normal mode: run one session
+        if ! run_single_session "$token"; then
+            log "Skipping session."
+            exit 0
+        fi
     fi
-
-    log "Quota remaining: ${quota_remaining}%"
-
-    if (( $(echo "$quota_remaining <= $QUOTA_THRESHOLD" | bc -l) )); then
-        log "Insufficient quota (${quota_remaining}% <= ${QUOTA_THRESHOLD}% threshold). Skipping session."
-        exit 0
-    fi
-
-    # Calculate dynamic session duration based on available quota
-    local session_duration
-    session_duration=$(calculate_session_duration "$quota_remaining")
-    local duration_minutes=$((session_duration / 60))
-
-    log "Dynamic session duration: ${session_duration}s (~${duration_minutes} minutes) based on ${quota_remaining}% quota"
-
-    run_session "$session_duration"
 
     log "=== Launcher complete ==="
 }

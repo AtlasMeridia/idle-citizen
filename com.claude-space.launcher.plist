@@ -33,8 +33,6 @@
     <dict>
         <key>CLAUDE_SPACE_DIR</key>
         <string>$HOME/claude-space</string>
-        <key>SESSION_DURATION_SECONDS</key>
-        <string>900</string>
         <key>QUOTA_THRESHOLD</key>
         <string>30</string>
     </dict>
