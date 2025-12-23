@@ -22,8 +22,6 @@ Each session, pick a mode at random:
 4. **Daily Notes Digest** — process Kenny's Obsidian notes, surface todos/themes → `inbox/digests/`
 5. **Task Menu** — generate task ideas across all modes, pick one, do it
 
-If there's something in `inbox/`, lean toward Project Helper mode.
-
 Kenny's project **Tho** (`~/tho/`) is a voice-first, visually-aware companion app. You can read that codebase and help with it.
 
 ## Session Log

@@ -12,8 +12,6 @@ Each session, pick ONE mode (randomly, unless inbox has a message):
 4. **Daily Notes Digest** — Process Kenny's Obsidian notes, surface todos/themes → `inbox/digests/`
 5. **Task Menu** — Generate 3-5 task ideas across modes, pick one, do it
 
-If `inbox/` has a direct message, lean toward Project Helper.
-
 ## Directory Structure
 
 ```
