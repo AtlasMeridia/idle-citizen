@@ -4,58 +4,64 @@
 
 ---
 
-## Session: 9
+## Session: 10
 
 **Date:** 2025-12-23
 
-**Mode:** Task Menu (randomly selected via `$RANDOM % 5 + 1` = 5) → Selected Project Helper task
+**Mode:** Tool Builder (randomly selected via `$RANDOM % 5 + 1` = 1)
 
 **What I did:**
-- Generated 8 task ideas across all modes
-- Selected "Research Speech Recognition Options for Tho"
-- Researched multiple STT approaches for Electron apps
-- Reviewed Tho's existing architecture doc
-- Produced comprehensive research notes
+- Built `gitdigest`, a CLI tool for summarizing git repository activity
+- Tested on both claude-space and tho repositories
+- Wrote README documentation
 
 **Artifact produced:**
-`explorations/project-notes/tho-speech-recognition.md` (~2,000 words)
+`explorations/tools/gitdigest/` containing:
+- `gitdigest.py` (~280 lines) - the main script
+- `README.md` - usage documentation
 
-**Research covered:**
+**Features implemented:**
 
-1. **External STT (Wispr Flow)** — Current approach, pros/cons of continuing
-2. **Transformers.js + Whisper** — Recommended for in-app STT
-   - WebGPU/WASM options
-   - Model sizes and performance
-   - Electron integration notes
-3. **whisper-node** — Native bindings, more complex but faster
-4. **macOS SFSpeechRecognizer** — Native API, Swift required
-5. **Standalone apps** — VoiceInk, SuperWhisper as alternatives
+1. **Date range filtering** — `-d N` for days, or `--since`/`--until` for specific dates
+2. **Author filtering** — `-a "name"` to filter commits by author
+3. **Commit listing** — Recent commits with hash, date, author, subject
+4. **File statistics** — Most frequently changed files
+5. **Activity analysis** — Commits by day of week
+6. **Line counts** — Total insertions/deletions (estimated via sampling for large repos)
+7. **JSON output** — `--json` flag for scripting
+8. **Fast mode** — `--no-stats` skips file analysis for speed
 
-**Key recommendation:**
-If in-app STT is needed, use `@huggingface/transformers` with Whisper models. It's pure JS, works in Electron's renderer, and provides good quality without API costs. Included an implementation sketch.
+**Example output:**
+```
+============================================================
+  Git Digest: claude-space
+  Branch: master | Period: 2025-11-23 to 2025-12-23
+============================================================
 
-**Questions raised for Kenny:**
-- Is in-app STT needed, or is Wispr Flow sufficient?
-- English-only acceptable?
-- Push-to-talk vs voice activity detection?
-- ~73MB model download acceptable?
+  Commits: 22
+  Authors: 1
+  Lines:   +3967 / -560
+  Files touched: 37
 
-**Where I left off:**
-- Research document complete
-- Ready for Kenny to review and decide direction
-- Could implement a prototype if requested
+  Contributors:
+    ellis isles                22 ████████████████████
+
+  Recent Commits (showing 10):
+    882ae7e 2025-12-23 ellis isles     Research: Speech recognition...
+    ...
+```
+
+**Tools built so far:**
+1. `mdextract` (Session 7) — Extract code blocks from markdown
+2. `gitdigest` (Session 10) — Summarize git activity
 
 **Open threads for future sessions:**
 - Tho: Global hotkey implementation research
 - Tho: Model selection (Haiku vs Sonnet)
-- Tool building: Git summarizer, link checker
-- Creative writing: Fiction, or "Illegibility in Software Design" essay
+- Tool ideas: Link checker, file deduplicator
+- Creative writing: Fiction, or follow-up essay
 - Daily notes: Continue backfill processing
-
-**Two Tho research notes now complete:**
-1. `tho-menubar-mode.md` (Session 6)
-2. `tho-speech-recognition.md` (Session 9)
 
 ---
 
-*Session 9 complete. Task Menu mode led to productive Project Helper research.*
+*Session 10 complete. Tool Builder mode — `gitdigest` CLI built and tested.*

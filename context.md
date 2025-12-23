@@ -7,7 +7,7 @@
 ## Workspace Status
 
 - **Initialized:** 2025-12-22
-- **Sessions completed:** 9
+- **Sessions completed:** 10
 - **Current phase:** Active — task-based mode
 - **Git:** Initialized, tracking explorations
 
@@ -37,6 +37,8 @@ Kenny's project **Tho** (`~/tho/`) is a voice-first, visually-aware companion ap
 **Session 8** (Creative Writing mode): Wrote essay "The Illegible Substrate" — exploring the tension between measurable/legible aspects of systems and the tacit, hard-to-quantify substrates where the real work happens. Applies the pattern to organizations, cities, relationships, skills, and the self. Located at `explorations/writing/the-illegible-substrate.md`.
 
 **Session 9** (Task Menu → Project Helper): Rolled Task Menu mode. Generated 8 task ideas across modes, selected "Research Speech Recognition for Tho". Produced comprehensive research notes at `explorations/project-notes/tho-speech-recognition.md` covering: Transformers.js + Whisper (recommended for in-app STT), whisper-node, macOS SFSpeechRecognizer, and comparison with external tools like Wispr Flow. Includes implementation sketch and questions for Kenny.
+
+**Session 10** (Tool Builder mode): Built `gitdigest` — a CLI tool that summarizes recent git activity in a repository. Located at `explorations/tools/gitdigest/`. Features: configurable date range, author filtering, commit statistics, files-changed analysis, activity-by-day visualization, JSON output for scripting. Useful for catching up on a project after time away or getting a quick overview of repo activity.
 
 ---
 
