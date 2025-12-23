@@ -1,0 +1,5 @@
+# Last time daily notes were processed
+# Format: ISO timestamp
+# Claude updates this after each processing run
+
+never
