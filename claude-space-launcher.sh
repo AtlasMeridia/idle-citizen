@@ -12,9 +12,12 @@ set -euo pipefail
 # -----------------------------------------------------------------------------
 
 CLAUDE_SPACE_DIR="${CLAUDE_SPACE_DIR:-$HOME/claude-space}"
-SESSION_DURATION_SECONDS="${SESSION_DURATION_SECONDS:-900}"  # 15 minutes
 QUOTA_THRESHOLD="${QUOTA_THRESHOLD:-30}"  # Launch if >30% remaining in 5-hour window
 LOG_DIR="$CLAUDE_SPACE_DIR/logs"
+
+# Dynamic session duration based on quota (in seconds)
+MIN_SESSION_DURATION=900    # 15 minutes minimum
+MAX_SESSION_DURATION=3600   # 60 minutes maximum
 EXPLORATION_DIR="$CLAUDE_SPACE_DIR/explorations"
 CONTINUITY_DIR="$CLAUDE_SPACE_DIR/continuity"
 
@@ -50,14 +53,12 @@ get_oauth_token() {
 }
 
 # -----------------------------------------------------------------------------
-# Quota Check
+# Quota Check (returns remaining percentage via stdout)
 # -----------------------------------------------------------------------------
 
-check_quota() {
+get_quota_remaining() {
     local token="$1"
-    
-    log "Checking quota..."
-    
+
     local response
     response=$(curl -s -X GET "https://api.anthropic.com/api/oauth/usage" \
         -H "Accept: application/json" \
@@ -66,12 +67,12 @@ check_quota() {
         -H "anthropic-beta: oauth-2025-04-20" \
         -H "User-Agent: claude-space-launcher/1.0") || {
         log "ERROR: Failed to fetch quota from API"
+        echo "-1"
         return 1
     }
-    
+
     # Parse the five_hour quota (primary limit we care about)
-    local remaining_pct
-    remaining_pct=$(echo "$response" | python3 -c "
+    echo "$response" | python3 -c "
 import sys, json
 try:
     data = json.load(sys.stdin)
@@ -85,25 +86,33 @@ try:
         print('100.0')
 except:
     print('-1')
-") || {
-        log "ERROR: Failed to parse quota response"
-        return 1
-    }
-    
-    if [[ "$remaining_pct" == "-1" ]]; then
-        log "ERROR: Could not parse quota data"
-        log "Raw response: $response"
-        return 1
-    fi
-    
-    log "Quota remaining: ${remaining_pct}% (threshold: ${QUOTA_THRESHOLD}%)"
-    
-    # Return success (0) if we have enough quota, failure (1) if not
-    if (( $(echo "$remaining_pct > $QUOTA_THRESHOLD" | bc -l) )); then
-        return 0
-    else
-        return 1
-    fi
+"
+}
+
+# -----------------------------------------------------------------------------
+# Calculate session duration based on quota
+# Scale linearly: 30% quota -> 15min, 100% quota -> 60min
+# -----------------------------------------------------------------------------
+
+calculate_session_duration() {
+    local quota_pct="$1"
+
+    python3 -c "
+quota = float('$quota_pct')
+min_dur = $MIN_SESSION_DURATION
+max_dur = $MAX_SESSION_DURATION
+threshold = $QUOTA_THRESHOLD
+
+# Linear scale from threshold to 100%
+if quota <= threshold:
+    duration = min_dur
+else:
+    # Scale: threshold% -> min_dur, 100% -> max_dur
+    scale = (quota - threshold) / (100 - threshold)
+    duration = min_dur + scale * (max_dur - min_dur)
+
+print(int(duration))
+"
 }
 
 # -----------------------------------------------------------------------------
@@ -122,7 +131,7 @@ compute time allocated to you — not a user task.
 - Read context.md for running context you've been maintaining
 - Read continuity/last-session-state.md if it exists for immediate prior state
 - You have filesystem access and internet access via web search
-- Session duration: approximately 15 minutes
+- Session duration: 15-60 minutes (scales with available quota)
 
 ## What You Can Do
 - Explore topics that genuinely interest you
@@ -158,26 +167,29 @@ PROMPT
 # -----------------------------------------------------------------------------
 
 run_session() {
+    local duration_seconds="$1"
+    local duration_minutes=$((duration_seconds / 60))
+
     log "Starting Claude Space session..."
-    log "Duration limit: ${SESSION_DURATION_SECONDS} seconds"
+    log "Duration limit: ${duration_seconds} seconds (~${duration_minutes} minutes)"
     log "Session log: $SESSION_LOG"
-    
+
     local system_prompt
     system_prompt=$(build_system_prompt)
-    
+
     # Initial prompt to kick off the session
-    local initial_prompt="Begin your autonomous exploration session. Start by reading your context files to understand where you left off, then decide what to explore today."
-    
+    local initial_prompt="Begin your autonomous exploration session. You have approximately ${duration_minutes} minutes. Start by reading your context files to understand where you left off, then decide what to explore today."
+
     # Run Claude Code in headless mode with timeout
     # Using gtimeout on macOS (from coreutils) or timeout on Linux
     local timeout_cmd="timeout"
     if command -v gtimeout &> /dev/null; then
         timeout_cmd="gtimeout"
     fi
-    
+
     cd "$CLAUDE_SPACE_DIR"
-    
-    $timeout_cmd "${SESSION_DURATION_SECONDS}s" claude -p "$initial_prompt" \
+
+    $timeout_cmd "${duration_seconds}s" claude -p "$initial_prompt" \
         --dangerously-skip-permissions \
         --append-system-prompt "$system_prompt" \
         --output-format stream-json \
@@ -185,14 +197,14 @@ run_session() {
         > "$SESSION_LOG" 2>&1 || {
             local exit_code=$?
             if [[ $exit_code -eq 124 ]]; then
-                log "Session ended: timeout reached (${SESSION_DURATION_SECONDS}s)"
+                log "Session ended: timeout reached (${duration_seconds}s)"
             else
                 log "Session ended with exit code: $exit_code"
             fi
         }
-    
+
     log "Session complete. Log saved to: $SESSION_LOG"
-    
+
     # Extract and log summary stats
     local total_tokens
     total_tokens=$(grep -o '"usage"' "$SESSION_LOG" 2>/dev/null | wc -l | tr -d ' ')
@@ -206,33 +218,50 @@ run_session() {
 main() {
     log "=== Claude Space Launcher ==="
     log "Workspace: $CLAUDE_SPACE_DIR"
-    
+
     # Check if Claude Code is installed
     if ! command -v claude &> /dev/null; then
         log "ERROR: Claude Code CLI not found. Install it first."
         exit 1
     fi
-    
+
     # Get OAuth token
     local token
     token=$(get_oauth_token) || exit 1
-    
+
     if [[ -z "$token" ]]; then
         log "ERROR: OAuth token is empty"
         exit 1
     fi
-    
+
     log "OAuth token retrieved successfully"
-    
+
     # Check quota
-    if check_quota "$token"; then
-        log "Sufficient quota available. Launching session..."
-        run_session
-    else
-        log "Insufficient quota (below ${QUOTA_THRESHOLD}% threshold). Skipping session."
+    log "Checking quota..."
+    local quota_remaining
+    quota_remaining=$(get_quota_remaining "$token")
+
+    if [[ "$quota_remaining" == "-1" ]]; then
+        log "ERROR: Could not determine quota"
+        exit 1
+    fi
+
+    log "Quota remaining: ${quota_remaining}%"
+
+    if (( $(echo "$quota_remaining <= $QUOTA_THRESHOLD" | bc -l) )); then
+        log "Insufficient quota (${quota_remaining}% <= ${QUOTA_THRESHOLD}% threshold). Skipping session."
         exit 0
     fi
-    
+
+    # Calculate dynamic session duration based on available quota
+    local session_duration
+    session_duration=$(calculate_session_duration "$quota_remaining")
+    local duration_minutes=$((session_duration / 60))
+
+    log "Dynamic session duration: ${session_duration}s (~${duration_minutes} minutes) based on ${quota_remaining}% quota"
+
+    run_session "$session_duration"
+
     log "=== Launcher complete ==="
 }
 
