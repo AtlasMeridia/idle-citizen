@@ -4,43 +4,58 @@
 
 ---
 
-## Session: 8
+## Session: 9
 
-**Date:** 2025-12-22
+**Date:** 2025-12-23
 
-**Mode:** Creative Writing (randomly selected via `$RANDOM % 5 + 1` = 2)
+**Mode:** Task Menu (randomly selected via `$RANDOM % 5 + 1` = 5) → Selected Project Helper task
 
 **What I did:**
-- Wrote an essay titled "The Illegible Substrate"
-- Explored the tension between measurable/legible systems and their tacit, hard-to-quantify substrates
-- Covered applications to organizations, cities, relationships, skills, and personal self-knowledge
+- Generated 8 task ideas across all modes
+- Selected "Research Speech Recognition Options for Tho"
+- Researched multiple STT approaches for Electron apps
+- Reviewed Tho's existing architecture doc
+- Produced comprehensive research notes
 
 **Artifact produced:**
-`explorations/writing/the-illegible-substrate.md` (~1,200 words)
+`explorations/project-notes/tho-speech-recognition.md` (~2,000 words)
 
-**Essay structure:**
-1. Introduction — the pattern of important things being hard to see/measure
-2. The Measurement Trap — how proxies get gamed and unmeasured aspects atrophy
-3. Why Legibility Appeals — coordination, accountability, anxiety, sincere belief in measurement
-4. Living in the Substrate — what it means to take the illegible seriously
-5. The Illegible Self — applying the pattern to persons, skills, self-knowledge
-6. No Clean Conclusion — navigating the tension rather than solving it
+**Research covered:**
 
-**Theme:**
-The things that matter most in systems (social, technical, personal) often resist being pinned down. Metrics and legible descriptions serve as simplified interfaces but can crowd out or erode the actual substance. This isn't anti-measurement — it's about holding measurement more lightly and staying alert to what can't be quantified.
+1. **External STT (Wispr Flow)** — Current approach, pros/cons of continuing
+2. **Transformers.js + Whisper** — Recommended for in-app STT
+   - WebGPU/WASM options
+   - Model sizes and performance
+   - Electron integration notes
+3. **whisper-node** — Native bindings, more complex but faster
+4. **macOS SFSpeechRecognizer** — Native API, Swift required
+5. **Standalone apps** — VoiceInk, SuperWhisper as alternatives
+
+**Key recommendation:**
+If in-app STT is needed, use `@huggingface/transformers` with Whisper models. It's pure JS, works in Electron's renderer, and provides good quality without API costs. Included an implementation sketch.
+
+**Questions raised for Kenny:**
+- Is in-app STT needed, or is Wispr Flow sufficient?
+- English-only acceptable?
+- Push-to-talk vs voice activity detection?
+- ~73MB model download acceptable?
 
 **Where I left off:**
-- Essay is complete
-- First piece in the writing directory
-- Could write more essays, fiction, or poetry in future sessions
+- Research document complete
+- Ready for Kenny to review and decide direction
+- Could implement a prototype if requested
 
 **Open threads for future sessions:**
-- More creative writing (fiction? different essay topics?)
-- Continue tool building (link checker, git summarizer)
-- More Tho research (model selection, global hotkeys, speech recognition)
-- Daily notes processing continues (backfill still pending)
-- Could explore intersection of legibility theme with software design specifically
+- Tho: Global hotkey implementation research
+- Tho: Model selection (Haiku vs Sonnet)
+- Tool building: Git summarizer, link checker
+- Creative writing: Fiction, or "Illegibility in Software Design" essay
+- Daily notes: Continue backfill processing
+
+**Two Tho research notes now complete:**
+1. `tho-menubar-mode.md` (Session 6)
+2. `tho-speech-recognition.md` (Session 9)
 
 ---
 
-*Session 8 complete. First Creative Writing session. Produced a substantive essay.*
+*Session 9 complete. Task Menu mode led to productive Project Helper research.*
