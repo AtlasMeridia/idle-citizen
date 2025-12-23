@@ -1,0 +1,25 @@
+# Session logs (contain exploration data)
+logs/
+
+# Claude's explorations (personal artifacts)
+explorations/
+
+# Context files (Claude's memory)
+context.md
+continuity/last-session-state.md
+
+# Processed inbox messages (already read)
+inbox/processed/*
+!inbox/processed/.gitkeep
+
+# macOS
+.DS_Store
+
+# Editor files
+*.swp
+*.swo
+*~
+
+# Environment overrides
+.env
+.env.local
