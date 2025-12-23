@@ -4,49 +4,50 @@
 
 ---
 
-## Session: 6
+## Session: 7
 
 **Date:** 2025-12-22
 
-**Mode:** Project Helper (randomly selected)
+**Mode:** Tool Builder (randomly selected via `$RANDOM % 5 + 1` = 1)
 
 **What I did:**
-- Explored Tho codebase (~16 source files, Electron + React + TypeScript)
-- Identified completed features: streaming chat, camera vision, conversation persistence
-- Identified planned features: model selection, menu bar mode, keyboard shortcuts
-- Researched Electron menu bar implementation (Tray API, menubar library)
-- Produced comprehensive implementation notes for menu bar mode
+- Built `mdextract`, a CLI tool for extracting code blocks from markdown files
+- Implemented full feature set: extraction, listing, filtering, combining
+- Created test file and verified all features work correctly
+- Added README with usage documentation
+- Made script executable
 
 **Artifact produced:**
-`explorations/project-notes/tho-menubar-mode.md`
+`explorations/tools/mdextract/`
+- `mdextract.py` — main CLI tool (~280 lines)
+- `README.md` — usage documentation
+- `test_input.md` — sample input for testing
 
-Contents:
-- Implementation options (menubar library vs manual Tray)
-- macOS icon requirements (template images, sizes, retina)
-- Window configuration for menu bar mode
-- Code examples for tray creation, positioning, show/hide
-- UI adaptations for compact display
-- Mode switching implementation
-- Global hotkey bonus feature
-- Recommended implementation order
+**Features:**
+1. **Basic extraction** — finds all fenced code blocks, saves to individual files
+2. **Smart naming** — uses nearest heading for filename, numbered when duplicates
+3. **Language detection** — maps language hints to file extensions (30+ languages)
+4. **Filtering** — `--lang python` extracts only Python blocks
+5. **Combining** — `--combine` merges all blocks of same language into one file
+6. **Listing** — `--list` shows what's in a file without extracting
+7. **Multi-file** — can process multiple markdown files at once
 
-**Key findings:**
-1. The `menubar` npm package is the standard approach but adds a dependency
-2. Manual Tray implementation is straightforward and gives more control
-3. macOS has specific icon requirements (Template suffix, @2x for retina)
-4. Window needs frameless, alwaysOnTop, skipTaskbar configuration
-5. Global hotkey (Option+Space) would be a nice addition for voice-first use
+**Use cases:**
+- Extract code examples from research notes into runnable files
+- Pull code from documentation into a project
+- Organize scattered snippets by language
+- Create runnable examples from tutorials
 
 **Where I left off:**
-- Notes complete and ready for Kenny to use
-- Could extend: research model selection implementation, research global hotkeys in depth
+- Tool is complete and tested
+- Could extend: add stdin support, preserve indentation context, add dry-run mode
 
 **Open threads for future sessions:**
-- Build something for Tool Builder mode
-- Write something for Creative Writing mode
-- Process daily notes if nothing pressing
-- Continue helping with Tho (model selection research?)
+- Continue with other modes (Creative Writing, Project Helper, Daily Notes Digest)
+- Could build more tools: link checker, git summarizer, etc.
+- Daily notes processing still hasn't been done
+- More Tho research possible (model selection, global hotkeys)
 
 ---
 
-*Session 6 complete. First task-based session. Produced concrete, actionable project notes.*
+*Session 7 complete. First Tool Builder session. Produced a working CLI utility.*

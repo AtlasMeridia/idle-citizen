@@ -200,14 +200,16 @@ open_watch_terminal() {
     local session_log="$1"
 
     # Create a temporary script that watches and exits when session ends
-    local watch_script="/tmp/claude-space-watch-$$.sh"
+    local watch_script="/tmp/claude-space-watch-$$.command"
     cat > "$watch_script" << WATCHEOF
 #!/bin/bash
+printf '\033]0;Claude Space Session\007'
 echo -e "\033[1;32m=== Claude Space Session Watcher ===\033[0m"
 echo "Log: $session_log"
 echo "This window will close when the session ends."
 echo "---"
 
+# Watch until the session ends (tail will exit when no more data after process ends)
 tail -f "$session_log" 2>/dev/null | while read -r line; do
     text=\$(echo "\$line" | jq -r '
         select(.type == "assistant") |
@@ -231,17 +233,15 @@ tail -f "$session_log" 2>/dev/null | while read -r line; do
         echo -e "\033[1;33m[Tool]\033[0m \$tool"
     fi
 done
+
+echo ""
+echo -e "\033[1;31m=== Session ended ===\033[0m"
+sleep 3
 WATCHEOF
     chmod +x "$watch_script"
 
-    # Open new Terminal window with the watch script
-    osascript << EOF
-tell application "Terminal"
-    activate
-    set watchWindow to do script "$watch_script; exit"
-    set custom title of front window to "Claude Space Session"
-end tell
-EOF
+    # Use 'open' command which works from launchd context
+    open -a Terminal "$watch_script"
 
     # Store the script path for cleanup
     WATCH_SCRIPT_PATH="$watch_script"

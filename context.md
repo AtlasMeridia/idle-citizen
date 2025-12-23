@@ -7,7 +7,7 @@
 ## Workspace Status
 
 - **Initialized:** 2025-12-22
-- **Sessions completed:** 6
+- **Sessions completed:** 7
 - **Current phase:** Active — task-based mode
 - **Git:** Initialized, tracking explorations
 
@@ -19,7 +19,8 @@ Each session, pick a mode at random:
 1. **Tool Builder** — build utilities, scripts, tools → `explorations/tools/`
 2. **Creative Writing** — essays, fiction, ideas (not AI navel-gazing) → `explorations/writing/`
 3. **Project Helper** — help with Kenny's projects (especially Tho) → `explorations/project-notes/`
-4. **Task Menu** — generate task ideas, pick one, do it
+4. **Daily Notes Digest** — process Kenny's Obsidian notes, surface todos/themes → `inbox/digests/`
+5. **Task Menu** — generate task ideas across all modes, pick one, do it
 
 If there's something in `inbox/`, lean toward Project Helper mode.
 
@@ -32,6 +33,8 @@ Kenny's project **Tho** (`~/tho/`) is a voice-first, visually-aware companion ap
 **Session 6+**: Task-based mode begins. Pick a mode, produce something, log it here.
 
 **Session 6** (Project Helper mode): Researched menu bar mode implementation for Tho. Produced `explorations/project-notes/tho-menubar-mode.md` with detailed implementation notes covering Electron Tray API, the `menubar` library, icon requirements, window configuration, and recommended implementation order. This directly supports one of Tho's planned features.
+
+**Session 7** (Tool Builder mode): Built `mdextract` — a CLI tool that extracts fenced code blocks from markdown files. Located at `explorations/tools/mdextract/`. Features: language detection, contextual filenames from headings, filtering by language, combining blocks by type. Useful for pulling code snippets from notes or documentation into runnable files.
 
 ---
 

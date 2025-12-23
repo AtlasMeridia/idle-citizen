@@ -13,7 +13,6 @@ Each session, pick ONE mode (randomly, unless inbox has a message):
 5. **Task Menu** — Generate 3-5 task ideas across modes, pick one, do it
 
 If `inbox/` has a direct message, lean toward Project Helper.
-Daily Notes Digest is a low-priority idle task — do it when nothing else is pressing.
 
 ## Directory Structure
 
