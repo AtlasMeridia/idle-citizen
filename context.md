@@ -1,4 +1,4 @@
-# Claude Space Context
+# Idle Citizen Context
 
 *Your running memory. Update at the end of each session.*
 

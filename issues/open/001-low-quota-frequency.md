@@ -26,5 +26,5 @@ Combination of:
 
 ## Files
 
-- `/Users/ellis/Library/LaunchAgents/com.claude-space.launcher.plist`
-- `/Users/ellis/Projects/claude-space/claude-space-launcher.sh`
+- `/Users/ellis/Library/LaunchAgents/com.idle-citizen.launcher.plist`
+- `/Users/ellis/Projects/idle-citizen/idle-citizen-launcher.sh`

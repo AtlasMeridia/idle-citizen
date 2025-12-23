@@ -12,7 +12,7 @@
 
 **What I did:**
 - Built `gitdigest`, a CLI tool for summarizing git repository activity
-- Tested on both claude-space and tho repositories
+- Tested on both idle-citizen and tho repositories
 - Wrote README documentation
 
 **Artifact produced:**
@@ -34,7 +34,7 @@
 **Example output:**
 ```
 ============================================================
-  Git Digest: claude-space
+  Git Digest: idle-citizen
   Branch: master | Period: 2025-11-23 to 2025-12-23
 ============================================================
 

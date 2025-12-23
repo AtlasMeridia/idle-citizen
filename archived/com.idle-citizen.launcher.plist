@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>com.claude-space.launcher</string>
+    <string>com.idle-citizen.launcher</string>
     
     <key>ProgramArguments</key>
     <array>
@@ -11,7 +11,7 @@
         <string>-l</string>
         <string>-c</string>
         <!-- Update this path to your actual location -->
-        <string>$HOME/claude-space/claude-space-launcher.sh</string>
+        <string>$HOME/idle-citizen/idle-citizen-launcher.sh</string>
     </array>
     
     <!-- Run every 2 hours (7200 seconds) -->
@@ -24,15 +24,15 @@
     
     <!-- Log output -->
     <key>StandardOutPath</key>
-    <string>/tmp/claude-space-stdout.log</string>
+    <string>/tmp/idle-citizen-stdout.log</string>
     <key>StandardErrorPath</key>
-    <string>/tmp/claude-space-stderr.log</string>
+    <string>/tmp/idle-citizen-stderr.log</string>
     
     <!-- Environment variables (optional overrides) -->
     <key>EnvironmentVariables</key>
     <dict>
-        <key>CLAUDE_SPACE_DIR</key>
-        <string>$HOME/claude-space</string>
+        <key>IDLE_CITIZEN_DIR</key>
+        <string>$HOME/idle-citizen</string>
         <key>QUOTA_THRESHOLD</key>
         <string>30</string>
     </dict>
@@ -51,24 +51,24 @@
 INSTALLATION:
 
 1. Copy this file to ~/Library/LaunchAgents/:
-   cp com.claude-space.launcher.plist ~/Library/LaunchAgents/
+   cp com.idle-citizen.launcher.plist ~/Library/LaunchAgents/
 
 2. Edit the file to fix the $HOME path (launchd doesn't expand $HOME):
-   sed -i '' "s|\$HOME|$HOME|g" ~/Library/LaunchAgents/com.claude-space.launcher.plist
+   sed -i '' "s|\$HOME|$HOME|g" ~/Library/LaunchAgents/com.idle-citizen.launcher.plist
 
 3. Load the agent:
-   launchctl load ~/Library/LaunchAgents/com.claude-space.launcher.plist
+   launchctl load ~/Library/LaunchAgents/com.idle-citizen.launcher.plist
 
 4. Check status:
-   launchctl list | grep claude-space
+   launchctl list | grep idle-citizen
 
 5. To unload:
-   launchctl unload ~/Library/LaunchAgents/com.claude-space.launcher.plist
+   launchctl unload ~/Library/LaunchAgents/com.idle-citizen.launcher.plist
 
 6. To run manually (test):
-   launchctl start com.claude-space.launcher
+   launchctl start com.idle-citizen.launcher
 
 7. View logs:
-   tail -f /tmp/claude-space-stdout.log
-   tail -f /tmp/claude-space-stderr.log
+   tail -f /tmp/idle-citizen-stdout.log
+   tail -f /tmp/idle-citizen-stderr.log
 -->

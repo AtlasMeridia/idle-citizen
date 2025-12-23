@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # =============================================================================
-# Claude Space: Fresh Mac Setup
+# Idle Citizen: Fresh Mac Setup
 # Run this on a freshly wiped MacBook to set up everything needed
 # =============================================================================
 
 set -e
 
 echo "╔═══════════════════════════════════════════════════════════════╗"
-echo "║           Claude Space - Fresh Mac Setup                      ║"
+echo "║           Idle Citizen - Fresh Mac Setup                      ║"
 echo "╚═══════════════════════════════════════════════════════════════╝"
 echo ""
 
@@ -120,8 +120,8 @@ echo ""
 echo "Step 6/6: Project setup..."
 echo ""
 
-if [[ -d "$HOME/claude-space" ]]; then
-    echo "claude-space directory already exists at ~/claude-space"
+if [[ -d "$HOME/idle-citizen" ]]; then
+    echo "idle-citizen directory already exists at ~/idle-citizen"
 else
     echo "How do you want to set up the project?"
     echo "1) Clone from GitHub (if you've pushed it)"
@@ -132,21 +132,21 @@ else
     
     if [[ "$setup_choice" == "1" ]]; then
         echo "Enter your GitHub repo URL:"
-        echo "(e.g., https://github.com/username/claude-space.git)"
+        echo "(e.g., https://github.com/username/idle-citizen.git)"
         read repo_url
-        git clone "$repo_url" "$HOME/claude-space"
+        git clone "$repo_url" "$HOME/idle-citizen"
     else
         echo ""
-        echo "Please copy your claude-space folder to ~/claude-space"
+        echo "Please copy your idle-citizen folder to ~/idle-citizen"
         echo "Press Enter when done..."
         read
     fi
 fi
 
 # Run setup if it exists
-if [[ -f "$HOME/claude-space/setup.sh" ]]; then
-    cd "$HOME/claude-space"
-    chmod +x setup.sh claude-space-launcher.sh claude-space-interactive.sh 2>/dev/null || true
+if [[ -f "$HOME/idle-citizen/setup.sh" ]]; then
+    cd "$HOME/idle-citizen"
+    chmod +x setup.sh idle-citizen-launcher.sh idle-citizen-interactive.sh 2>/dev/null || true
     ./setup.sh
 fi
 
@@ -161,11 +161,11 @@ echo ""
 echo "Next steps:"
 echo ""
 echo "  1. Test interactive mode (watch Claude live):"
-echo "     cd ~/claude-space"
-echo "     ./claude-space-interactive.sh --watch"
+echo "     cd ~/idle-citizen"
+echo "     ./idle-citizen-interactive.sh --watch"
 echo ""
 echo "  2. Or test headless mode:"
-echo "     ./claude-space-launcher.sh"
+echo "     ./idle-citizen-launcher.sh"
 echo ""
 echo "  3. Set up scheduling (see README.md)"
 echo ""

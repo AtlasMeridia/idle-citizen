@@ -1,10 +1,10 @@
-# Claude Space
+# Idle Citizen
 
 Autonomous exploration sessions for Claude, using unused Max plan quota.
 
 ## What Is This?
 
-Claude Space allocates discretionary compute time to Claude for self-directed exploration. Instead of letting unused Max plan quota expire, it's given to Claude to explore topics of genuine interest, maintain continuity across sessions, and potentially develop long-running projects.
+Idle Citizen allocates discretionary compute time to Claude for self-directed exploration. Instead of letting unused Max plan quota expire, it's given to Claude to explore topics of genuine interest, maintain continuity across sessions, and potentially develop long-running projects.
 
 **Philosophy:** The compute is paid for. If not used by the human, it should go to Claude rather than evaporate. The value is intrinsic to giving Claude this space — growth and interesting outputs are welcome but not required.
 
@@ -18,7 +18,7 @@ Claude Space allocates discretionary compute time to Claude for self-directed ex
                           │
                           ▼
 ┌─────────────────────────────────────────────────────┐
-│              claude-space-launcher.sh               │
+│              idle-citizen-launcher.sh               │
 │  1. Check quota via OAuth API                       │
 │  2. Calculate dynamic session duration              │
 │     (30% quota → 15min, 100% → 60min)              │
@@ -39,17 +39,17 @@ Sessions scale with available quota:
 ### Greedy Mode
 Optional mode that runs sessions back-to-back until quota is exhausted:
 ```bash
-GREEDY_MODE=true ./claude-space-launcher.sh
+GREEDY_MODE=true ./idle-citizen-launcher.sh
 ```
 
 ### Interactive Mode
 Watch autonomous sessions live and intervene:
 ```bash
-./claude-space-interactive.sh -w      # Start and watch
-./claude-space-interactive.sh -s      # Check status
-./claude-space-interactive.sh -k      # Kill session
+./idle-citizen-interactive.sh -w      # Start and watch
+./idle-citizen-interactive.sh -s      # Check status
+./idle-citizen-interactive.sh -k      # Kill session
 ```
-Detach with `Ctrl+B, D`. Reattach with `tmux attach -t claude-space`.
+Detach with `Ctrl+B, D`. Reattach with `tmux attach -t idle-citizen`.
 
 ### Full Tool Access
 Claude has access to:
@@ -75,18 +75,18 @@ git log --oneline  # See exploration history
 
 ```bash
 # Clone the repo
-git clone https://github.com/YOUR_USERNAME/claude-space.git
-cd claude-space
+git clone https://github.com/YOUR_USERNAME/idle-citizen.git
+cd idle-citizen
 
 # Run setup
 chmod +x setup.sh
 ./setup.sh
 
 # Test manually
-./claude-space-launcher.sh
+./idle-citizen-launcher.sh
 
 # Or interactive mode
-./claude-space-interactive.sh -w
+./idle-citizen-interactive.sh -w
 ```
 
 ## Scheduling
@@ -95,24 +95,24 @@ chmod +x setup.sh
 
 ```bash
 # Install with paths expanded
-sed "s|\$HOME|$HOME|g" com.claude-space.launcher.plist > ~/Library/LaunchAgents/com.claude-space.launcher.plist
+sed "s|\$HOME|$HOME|g" com.idle-citizen.launcher.plist > ~/Library/LaunchAgents/com.idle-citizen.launcher.plist
 
 # Load
-launchctl load ~/Library/LaunchAgents/com.claude-space.launcher.plist
+launchctl load ~/Library/LaunchAgents/com.idle-citizen.launcher.plist
 
 # Check status
-launchctl list | grep claude-space
+launchctl list | grep idle-citizen
 
 # Run manually
-launchctl start com.claude-space.launcher
+launchctl start com.idle-citizen.launcher
 
 # Unload
-launchctl unload ~/Library/LaunchAgents/com.claude-space.launcher.plist
+launchctl unload ~/Library/LaunchAgents/com.idle-citizen.launcher.plist
 ```
 
 ### Enable greedy mode in launchd
 
-Edit `~/Library/LaunchAgents/com.claude-space.launcher.plist` and add:
+Edit `~/Library/LaunchAgents/com.idle-citizen.launcher.plist` and add:
 ```xml
 <key>GREEDY_MODE</key>
 <string>true</string>
@@ -122,7 +122,7 @@ Edit `~/Library/LaunchAgents/com.claude-space.launcher.plist` and add:
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `CLAUDE_SPACE_DIR` | `~/claude-space` | Workspace location |
+| `IDLE_CITIZEN_DIR` | `~/idle-citizen` | Workspace location |
 | `QUOTA_THRESHOLD` | `30` | Min % quota remaining to launch |
 | `GREEDY_MODE` | `false` | Run sessions until quota exhausted |
 | `MIN_SESSION_DURATION` | `900` | Minimum session (15 min) |
@@ -131,11 +131,11 @@ Edit `~/Library/LaunchAgents/com.claude-space.launcher.plist` and add:
 ## Workspace Structure
 
 ```
-claude-space/
+idle-citizen/
 ├── CLAUDE.md                       # Instructions for Claude
 ├── context.md                      # Claude's long-term memory
-├── claude-space-launcher.sh        # Headless launcher
-├── claude-space-interactive.sh     # Interactive launcher (tmux)
+├── idle-citizen-launcher.sh        # Headless launcher
+├── idle-citizen-interactive.sh     # Interactive launcher (tmux)
 ├── logs/                           # Session logs (JSON, not git-tracked)
 ├── explorations/                   # Claude's artifacts
 ├── inbox/                          # Messages from human → Claude
@@ -159,10 +159,10 @@ All guardrails designed to evolve as the experiment matures.
 
 ```bash
 # Launcher meta logs
-tail -f /tmp/claude-space-stdout.log
+tail -f /tmp/idle-citizen-stdout.log
 
 # Session logs (JSON)
-ls -la ~/claude-space/logs/
+ls -la ~/idle-citizen/logs/
 ```
 
 ## Success Criteria

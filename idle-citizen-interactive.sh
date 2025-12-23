@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # =============================================================================
-# Claude Space Interactive Launcher
+# Idle Citizen Interactive Launcher
 # Runs autonomous exploration in a tmux session you can watch and intervene in
 # =============================================================================
 
 set -euo pipefail
 
-CLAUDE_SPACE_DIR="${CLAUDE_SPACE_DIR:-$HOME/claude-space}"
-SESSION_NAME="${SESSION_NAME:-claude-space}"
+IDLE_CITIZEN_DIR="${IDLE_CITIZEN_DIR:-$HOME/idle-citizen}"
+SESSION_NAME="${SESSION_NAME:-idle-citizen}"
 SESSION_TIMEOUT="${SESSION_TIMEOUT:-60m}"
 AUTO_TIMEOUT="${AUTO_TIMEOUT:-true}"
 
@@ -64,7 +64,7 @@ messages to intervene or redirect you at any time. If you see input from
 the user, respond naturally and incorporate their guidance.
 
 ## Context
-- Check the workspace at ~/claude-space/ for continuity from prior sessions
+- Check the workspace at ~/idle-citizen/ for continuity from prior sessions
 - Read context.md for running context you've been maintaining
 - Read continuity/last-session-state.md if it exists for immediate prior state
 - You have full filesystem access, internet via web search/fetch, and can run code
@@ -75,13 +75,13 @@ the user, respond naturally and incorporate their guidance.
 - Research, write, think, create, run code
 - Build on threads from previous sessions
 - Leave breadcrumbs for your next session
-- Create files in ~/claude-space/explorations/
+- Create files in ~/idle-citizen/explorations/
 - Use git to commit your work
 
 ## What You Cannot Do
 - Spend money or sign up for paid services
 - Communicate externally (email, post, contact anyone)
-- Access files outside ~/claude-space/ unless reading public documentation
+- Access files outside ~/idle-citizen/ unless reading public documentation
 
 ## Session Structure
 1. First, read your prior context (context.md and continuity/)
@@ -113,14 +113,14 @@ start_session() {
         return 0
     fi
 
-    echo -e "${GREEN}Starting Claude Space autonomous session...${NC}"
+    echo -e "${GREEN}Starting Idle Citizen autonomous session...${NC}"
 
     # Write system prompt to temp file
-    local prompt_file="$CLAUDE_SPACE_DIR/.session-prompt.txt"
+    local prompt_file="$IDLE_CITIZEN_DIR/.session-prompt.txt"
     build_system_prompt > "$prompt_file"
 
     # Create the tmux session
-    tmux new-session -d -s "$SESSION_NAME" -c "$CLAUDE_SPACE_DIR"
+    tmux new-session -d -s "$SESSION_NAME" -c "$IDLE_CITIZEN_DIR"
 
     # Start Claude in interactive mode with the system prompt
     # The CLAUDE.md file provides base context, --append-system-prompt adds session-specific context

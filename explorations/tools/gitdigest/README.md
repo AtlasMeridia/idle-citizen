@@ -53,7 +53,7 @@ The default output includes:
 
 ```
 ============================================================
-  Git Digest: claude-space
+  Git Digest: idle-citizen
   Branch: master | Period: 2025-11-23 to 2025-12-23
 ============================================================
 
@@ -72,7 +72,7 @@ The default output includes:
 
   Most Changed Files:
     context.md                                    10 ██████████
-    claude-space-launcher.sh                       8 ████████
+    idle-citizen-launcher.sh                       8 ████████
     ...
 
   Activity by Day:

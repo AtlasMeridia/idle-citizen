@@ -2,7 +2,7 @@
 # Watch the current autonomous session in real-time
 # Shows Claude's text output and tool calls
 
-LOG_DIR="$HOME/claude-space/logs"
+LOG_DIR="$HOME/idle-citizen/logs"
 
 # Find the most recent session log
 LATEST_LOG=$(ls -t "$LOG_DIR"/*.json 2>/dev/null | head -1)

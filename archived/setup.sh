@@ -1,16 +1,16 @@
 #!/bin/bash
 
 # =============================================================================
-# Claude Space Setup Script
+# Idle Citizen Setup Script
 # Run this once to set up the workspace on a new machine
 # =============================================================================
 
 set -euo pipefail
 
-CLAUDE_SPACE_DIR="${CLAUDE_SPACE_DIR:-$HOME/claude-space}"
+IDLE_CITIZEN_DIR="${IDLE_CITIZEN_DIR:-$HOME/idle-citizen}"
 
-echo "=== Claude Space Setup ==="
-echo "Target directory: $CLAUDE_SPACE_DIR"
+echo "=== Idle Citizen Setup ==="
+echo "Target directory: $IDLE_CITIZEN_DIR"
 echo ""
 
 # Check prerequisites
@@ -77,33 +77,33 @@ echo ""
 
 # Create directory structure
 echo "Creating directory structure..."
-mkdir -p "$CLAUDE_SPACE_DIR/logs"
-mkdir -p "$CLAUDE_SPACE_DIR/explorations"
-mkdir -p "$CLAUDE_SPACE_DIR/continuity"
+mkdir -p "$IDLE_CITIZEN_DIR/logs"
+mkdir -p "$IDLE_CITIZEN_DIR/explorations"
+mkdir -p "$IDLE_CITIZEN_DIR/continuity"
 echo "✓ Directories created"
 
 # Copy files if running from repo
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 if [[ -f "$SCRIPT_DIR/CLAUDE.md" ]]; then
-    cp "$SCRIPT_DIR/CLAUDE.md" "$CLAUDE_SPACE_DIR/"
+    cp "$SCRIPT_DIR/CLAUDE.md" "$IDLE_CITIZEN_DIR/"
     echo "✓ Copied CLAUDE.md"
 fi
 
 if [[ -f "$SCRIPT_DIR/context.md" ]]; then
-    cp "$SCRIPT_DIR/context.md" "$CLAUDE_SPACE_DIR/"
+    cp "$SCRIPT_DIR/context.md" "$IDLE_CITIZEN_DIR/"
     echo "✓ Copied context.md"
 fi
 
 if [[ -f "$SCRIPT_DIR/continuity/last-session-state.md" ]]; then
-    cp "$SCRIPT_DIR/continuity/last-session-state.md" "$CLAUDE_SPACE_DIR/continuity/"
+    cp "$SCRIPT_DIR/continuity/last-session-state.md" "$IDLE_CITIZEN_DIR/continuity/"
     echo "✓ Copied last-session-state.md"
 fi
 
-if [[ -f "$SCRIPT_DIR/claude-space-launcher.sh" ]]; then
-    cp "$SCRIPT_DIR/claude-space-launcher.sh" "$CLAUDE_SPACE_DIR/"
-    chmod +x "$CLAUDE_SPACE_DIR/claude-space-launcher.sh"
-    echo "✓ Copied and made executable: claude-space-launcher.sh"
+if [[ -f "$SCRIPT_DIR/idle-citizen-launcher.sh" ]]; then
+    cp "$SCRIPT_DIR/idle-citizen-launcher.sh" "$IDLE_CITIZEN_DIR/"
+    chmod +x "$IDLE_CITIZEN_DIR/idle-citizen-launcher.sh"
+    echo "✓ Copied and made executable: idle-citizen-launcher.sh"
 fi
 
 echo ""
@@ -111,13 +111,13 @@ echo "=== Setup Complete ==="
 echo ""
 echo "Next steps:"
 echo "1. Test the launcher manually:"
-echo "   cd $CLAUDE_SPACE_DIR"
-echo "   ./claude-space-launcher.sh"
+echo "   cd $IDLE_CITIZEN_DIR"
+echo "   ./idle-citizen-launcher.sh"
 echo ""
 echo "2. Once working, set up scheduling (see README.md)"
 echo ""
 echo "Configuration (environment variables):"
-echo "  CLAUDE_SPACE_DIR      - Workspace location (default: ~/claude-space)"
+echo "  IDLE_CITIZEN_DIR      - Workspace location (default: ~/idle-citizen)"
 echo "  SESSION_DURATION_SECONDS - Session length (default: 900 = 15 min)"
 echo "  QUOTA_THRESHOLD       - Min % remaining to launch (default: 30)"
 echo ""

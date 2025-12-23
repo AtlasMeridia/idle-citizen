@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # =============================================================================
-# Claude Space Launcher
+# Idle Citizen Launcher
 # Quota-triggered autonomous exploration sessions for Claude
 # =============================================================================
 
@@ -11,17 +11,17 @@ set -euo pipefail
 # Configuration
 # -----------------------------------------------------------------------------
 
-CLAUDE_SPACE_DIR="${CLAUDE_SPACE_DIR:-$HOME/claude-space}"
+IDLE_CITIZEN_DIR="${IDLE_CITIZEN_DIR:-$HOME/idle-citizen}"
 QUOTA_THRESHOLD="${QUOTA_THRESHOLD:-30}"  # Launch if >30% remaining in 5-hour window
 GREEDY_MODE="${GREEDY_MODE:-false}"       # If true, run sessions until quota exhausted
 WATCH_SESSION="${WATCH_SESSION:-true}"    # If true, open Terminal window to watch session
-LOG_DIR="$CLAUDE_SPACE_DIR/logs"
+LOG_DIR="$IDLE_CITIZEN_DIR/logs"
 
 # Dynamic session duration based on quota (in seconds)
 MIN_SESSION_DURATION=900    # 15 minutes minimum
 MAX_SESSION_DURATION=3600   # 60 minutes maximum
-EXPLORATION_DIR="$CLAUDE_SPACE_DIR/explorations"
-CONTINUITY_DIR="$CLAUDE_SPACE_DIR/continuity"
+EXPLORATION_DIR="$IDLE_CITIZEN_DIR/explorations"
+CONTINUITY_DIR="$IDLE_CITIZEN_DIR/continuity"
 
 # -----------------------------------------------------------------------------
 # Setup
@@ -67,7 +67,7 @@ get_quota_remaining() {
         -H "Content-Type: application/json" \
         -H "Authorization: Bearer $token" \
         -H "anthropic-beta: oauth-2025-04-20" \
-        -H "User-Agent: claude-space-launcher/1.0") || {
+        -H "User-Agent: idle-citizen-launcher/1.0") || {
         log "ERROR: Failed to fetch quota from API"
         echo "-1"
         return 1
@@ -165,7 +165,7 @@ Generate 3-5 concrete task ideas across the other modes, pick one, do it. Log
 your reasoning. This helps surface what kinds of tasks are worth doing.
 
 ## Workspace
-- ~/claude-space/ is your workspace
+- ~/idle-citizen/ is your workspace
 - context.md — your running memory, update each session
 - continuity/last-session-state.md — what you were just doing
 - inbox/ — messages from Kenny (move to inbox/processed/ after reading)
@@ -182,7 +182,7 @@ your reasoning. This helps surface what kinds of tasks are worth doing.
 ## Constraints
 - No spending money or signing up for services
 - No external communication (email, posts, contacting anyone)
-- Stay within ~/claude-space/ except for reading Kenny's projects or public docs
+- Stay within ~/idle-citizen/ except for reading Kenny's projects or public docs
 
 ## Philosophy
 The goal is to use quota that would otherwise expire. Produce things. Some will
@@ -200,11 +200,11 @@ open_watch_terminal() {
     local session_log="$1"
 
     # Create a temporary script that watches and exits when session ends
-    local watch_script="/tmp/claude-space-watch-$$.command"
+    local watch_script="/tmp/idle-citizen-watch-$$.command"
     cat > "$watch_script" << WATCHEOF
 #!/bin/bash
-printf '\033]0;Claude Space Session\007'
-echo -e "\033[1;32m=== Claude Space Session Watcher ===\033[0m"
+printf '\033]0;Idle Citizen Session\007'
+echo -e "\033[1;32m=== Idle Citizen Session Watcher ===\033[0m"
 echo "Log: $session_log"
 echo "This window will close when the session ends."
 echo "---"
@@ -252,7 +252,7 @@ close_watch_terminal() {
     osascript << 'EOF' 2>/dev/null || true
 tell application "Terminal"
     repeat with w in windows
-        if name of w contains "Claude Space Session" then
+        if name of w contains "Idle Citizen Session" then
             close w
         end if
     end repeat
@@ -271,7 +271,7 @@ run_session() {
     local duration_seconds="$1"
     local duration_minutes=$((duration_seconds / 60))
 
-    log "Starting Claude Space session..."
+    log "Starting Idle Citizen session..."
     log "Duration limit: ${duration_seconds} seconds (~${duration_minutes} minutes)"
     log "Session log: $SESSION_LOG"
 
@@ -288,7 +288,7 @@ run_session() {
         timeout_cmd="timeout"
     fi
 
-    cd "$CLAUDE_SPACE_DIR"
+    cd "$IDLE_CITIZEN_DIR"
 
     # Open watch terminal window (if WATCH_SESSION is enabled)
     if [[ "${WATCH_SESSION:-true}" == "true" ]]; then
@@ -368,8 +368,8 @@ run_single_session() {
 }
 
 main() {
-    log "=== Claude Space Launcher ==="
-    log "Workspace: $CLAUDE_SPACE_DIR"
+    log "=== Idle Citizen Launcher ==="
+    log "Workspace: $IDLE_CITIZEN_DIR"
     log "Greedy mode: $GREEDY_MODE"
 
     # Check if Claude Code is installed
