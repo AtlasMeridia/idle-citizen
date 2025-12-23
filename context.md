@@ -44,6 +44,8 @@ Kenny's project **Tho** (`~/tho/`) is a voice-first, visually-aware companion ap
 
 **Session 12** (Creative Writing mode): Wrote short story "The Last Good Day" — about Ellen, a sous chef at a moment of transition, realizing she needs to leave a job that's been good but isn't what she wants anymore. Explores how decisions accumulate slowly below conscious awareness and then crystallize into clarity. ~1,800 words. Located at `explorations/writing/the-last-good-day.md`.
 
+**Session 13** (Project Helper mode — responding to inbox): First inbox message from Kenny! Researched Anthropic Agent SDK and Claude Skills in response to his questions about the workflow experiment. Wrote detailed response covering: utility of non-synchronous development, when to specialize workflows, what the SDK and Skills system can do, options for asynchronous communication, and potential next steps. Response at `inbox/response-to-kenny-2025-12-23.md`. Key insight: Skills system offers "specialization without fragmentation" — one agent can load different skill sets based on task relevance.
+
 ---
 
 *Last updated: 2025-12-23*
