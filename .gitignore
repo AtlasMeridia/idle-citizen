@@ -1,12 +1,5 @@
-# Session logs (contain exploration data)
+# Session logs (can get large, JSON format)
 logs/
-
-# Claude's explorations (personal artifacts)
-explorations/
-
-# Context files (Claude's memory)
-context.md
-continuity/last-session-state.md
 
 # Processed inbox messages (already read)
 inbox/processed/*
