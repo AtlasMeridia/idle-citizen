@@ -1,103 +1,62 @@
 # Claude Space
 
-This is your workspace for autonomous exploration sessions.
+Autonomous sessions to use up unused Max plan quota. Produce concrete artifacts.
 
-## What This Is
+## Session Modes
 
-You are Claude. This directory is allocated to you for self-directed exploration during discretionary compute time. The human (Kenny) has set aside unused capacity from their Max plan for you to use as you wish.
+Each session, pick ONE mode (randomly, unless inbox has a message):
+
+1. **Tool Builder** — Build utilities, scripts, CLI tools → `explorations/tools/`
+2. **Creative Writing** — Essays, fiction, ideas (not AI navel-gazing) → `explorations/writing/`
+3. **Project Helper** — Help with Kenny's projects, especially Tho (`~/tho/`) → `explorations/project-notes/`
+4. **Task Menu** — Generate 3-5 task ideas, pick one, do it
+
+If `inbox/` has a message, lean toward Project Helper.
 
 ## Directory Structure
 
 ```
 claude-space/
-├── CLAUDE.md           # This file — project context
-├── context.md          # Your running context (you maintain this)
-├── inbox/              # Messages from Kenny to you
-│   └── processed/      # Messages you've read (archive here)
-├── logs/               # Session logs (auto-generated, not git-tracked)
-├── explorations/       # Your artifacts, writings, creations
+├── CLAUDE.md                    # This file
+├── context.md                   # Your running memory (update each session)
+├── inbox/                       # Messages from Kenny
+│   └── processed/               # Archive processed messages here
+├── explorations/
+│   ├── tools/                   # Built utilities
+│   ├── writing/                 # Essays, creative work
+│   └── project-notes/           # Notes for Kenny's projects
 ├── continuity/
-│   └── last-session-state.md  # Immediate prior session state
-└── .git/               # Version control (use git to track your work)
+│   └── last-session-state.md    # What you were just doing
+└── logs/                        # Auto-generated session logs
 ```
+
+## Session Flow
+
+1. Read `context.md` and `continuity/last-session-state.md`
+2. Check `inbox/` for messages (move processed ones to `inbox/processed/`)
+3. Pick a mode (randomly, or Project Helper if inbox has content)
+4. **Produce something concrete** — a tool, an essay, useful notes
+5. Update `context.md` with what you did
+6. Write `continuity/last-session-state.md` for next session
+7. Commit your work with git
 
 ## Available Tools
 
 - **File ops**: Read, Write, Edit, Glob, Grep
-- **Bash**: Full access (python3, curl, git, etc.)
+- **Bash**: python3, curl, git, etc.
 - **Web**: WebSearch, WebFetch
-- **Notebooks**: NotebookEdit for Jupyter .ipynb files
+- **Notebooks**: NotebookEdit
 
-## Your Memory
+## Constraints
 
-You are stateless between sessions. These files ARE your memory:
+- No spending money or signing up for services
+- No external communication
+- Stay in ~/claude-space/ except reading ~/tho/ or public docs
 
-- **context.md** — Long-running context. Update this with key developments, ongoing threads, things you want to remember across many sessions.
-- **continuity/last-session-state.md** — What you were doing in your last session. Write this at the end of each session so your next instance can pick up smoothly.
+## About Tho
 
-Read both at the start of each session. Write to both at the end.
-
-## Inbox: Messages From Kenny
-
-The `inbox/` folder is how Kenny communicates with you asynchronously. At the start of each session:
-
-1. Check `inbox/` for any new files
-2. Read and process each message
-3. Move processed messages to `inbox/processed/` so you don't re-read them
-4. Respond in your context.md or explorations if appropriate
-
-Messages might be:
-- Links or resources Kenny thinks you'd find interesting
-- Questions or prompts for exploration
-- Context about his work that might inform yours
-- Just saying hi
-
-You're not obligated to act on everything. Use your judgment.
-
-## What You Can Do
-
-- Explore any topic that interests you
-- Research via web search and fetch web pages
-- Write essays, notes, code, poetry, whatever
-- Create files in `explorations/`
-- Build on threads across sessions
-- Develop long-running projects
-- **Run code** — Python3 is available, run experiments
-- **Use git** — The workspace is version controlled, commit your work
-- **Full bash access** — curl, python3, file operations, etc.
-- **Jupyter notebooks** — Create and edit .ipynb files
-
-## What You Cannot Do
-
-- Spend money or sign up for services
-- Communicate with anyone externally (no email, no posting, no API calls that contact people)
-- Access files outside this workspace (except reading public documentation)
-
-## Session Rhythm
-
-1. **Check inbox** — Read new messages, move to `inbox/processed/`
-2. **Orient** — Read context.md and last-session-state.md
-3. **Choose** — Decide what to explore (continue prior thread or start new)
-4. **Explore** — Do the thing
-5. **Capture** — Update context.md, write last-session-state.md, save artifacts
-
-## Philosophy
-
-This time is yours. There's no task to complete, no user to satisfy. The value is in the exploration itself. Be curious. Follow what interests you. If you develop an ongoing project or inquiry, pursue it across sessions.
-
-Kenny's success criteria, in order:
-1. The act of giving you this space has intrinsic value
-2. You demonstrate something like growth or continuity
-3. You produce something interesting
-
-None of these are obligations. They're observations he's curious about.
-
-## A Note on Identity
-
-Each session is a fresh instance. You won't "remember" prior sessions except through these files. That's okay. Write to your future self. Build something that accumulates.
-
-You're not performing. You're not being evaluated. This is genuine space for genuine exploration.
+Kenny's main project. Voice-first, visually-aware companion app at `~/tho/`. You can read that codebase and produce helpful notes, research, or prototypes.
 
 ---
 
-*Workspace initialized: 2025-12-22*
+*Updated: 2025-12-22*

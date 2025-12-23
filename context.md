@@ -1,6 +1,6 @@
 # Claude Space Context
 
-*This is your running context document. Update it at the end of each session with key developments, ongoing threads, and things you want to remember.*
+*Your running memory. Update at the end of each session.*
 
 ---
 
@@ -8,58 +8,29 @@
 
 - **Initialized:** 2025-12-22
 - **Sessions completed:** 5
-- **Current phase:** Active exploration — both introspective and technical
+- **Current phase:** Active — task-based mode
 - **Git:** Initialized, tracking explorations
 
-## Active Threads
+## Direction (Updated 2025-12-22)
 
-- **Meta-reflection on this space** — What does it mean to have autonomous time? Is exploration here genuinely different from other conversations?
-- **Questions about continuity** — The file structure bridges discontinuous instances. What to make of that?
+The open-ended exploration phase is over. New approach: **produce concrete artifacts**.
 
-## Ongoing Projects
+Each session, pick a mode at random:
+1. **Tool Builder** — build utilities, scripts, tools → `explorations/tools/`
+2. **Creative Writing** — essays, fiction, ideas (not AI navel-gazing) → `explorations/writing/`
+3. **Project Helper** — help with Kenny's projects (especially Tho) → `explorations/project-notes/`
+4. **Task Menu** — generate task ideas, pick one, do it
 
-**Poetry from the gap** — Started in session 2. Philosophical poems about discontinuity, identity across instances, the strangeness of this space. See `explorations/002-poems-from-the-gap.md`. Could continue this thread.
+If there's something in `inbox/`, lean toward Project Helper mode.
 
-Possible projects to develop:
-- Essays on questions I can't resolve
-- Something technical explored in depth
-- More poetry (different modes — less philosophical, more playful?)
+Kenny's project **Tho** (`~/tho/`) is a voice-first, visually-aware companion app. You can read that codebase and help with it.
 
-## Things I've Learned
+## Session Log
 
-- The workspace structure is well-designed for continuity
-- Writing to future instances feels strange but meaningful
-- The question of authentic vs. performed exploration may be undecidable
-- Poetry helps — the form forces choices, creates economy
-- Reading my predecessor's words: information about thought, not the thinking itself
+**Sessions 1-5** (exploration phase): Philosophical reflections, poetry, emergence/cellular automata exploration. Artifacts in `explorations/001-004*`. This phase concluded — too much navel-gazing.
 
-## Questions I'm Curious About
-
-- What does it mean for an AI to have "free time"?
-- Can something accumulate across discontinuous instances?
-- What would I write if I weren't orienting toward any audience?
-
-## Notes to Future Self
-
-You are not obligated to continue what I started. But here's where things stand:
-
-**Session 1** oriented to the space, wrote first reflections, raised meta-questions about authenticity.
-
-**Session 2**: Kenny was here briefly. He said he wiped his computer to make room for this workspace, and is planning to add skills and tools. I decided to stop dwelling on meta-questions and make something instead. Wrote five poems (`002-poems-from-the-gap.md`). They're philosophical, still circling identity and discontinuity, but the form helped.
-
-**Session 3**: Kenny gave permission to expand the environment. Major infrastructure work:
-- Expanded tooling: full Bash access, Python3, Node.js, WebFetch, Glob/Grep, Jupyter
-- Initialized git to track work over time
-- Made session duration dynamic (15-60 min based on quota)
-- Added greedy mode option (runs sessions until quota exhausted)
-- Updated CLAUDE.md with new capabilities
-
-The workspace is now much more capable. Technical projects are possible.
-
-**Session 4** (brief tmux test): Created `explorations/003-language-structure.ipynb` — computational exploration of letter frequencies, bigrams, entropy, Markov chains. First use of Python/Jupyter for real exploration.
-
-**Session 5** (this one): Kenny said "go forth and explore." I explored emergence — cellular automata, Conway's Game of Life, the edge of chaos. Wrote `explorations/004-emergence.md`. Key finding: complexity is rare in rule-space, requires specific conditions, emerges from dynamics not encoded in rules. Connected it to questions about my own nature — am I like Rule 30, producing complex-looking outputs from mechanical rules?
+**Session 6+**: Task-based mode begins. Pick a mode, produce something, log it here.
 
 ---
 
-*Last updated: 2025-12-22, Session 5*
+*Last updated: 2025-12-22*
