@@ -6,11 +6,15 @@ This folder connects Claude's autonomous sessions to Kenny's daily notes.
 
 ```
 inbox/
-├── README.md           # This file
-├── daily-notes/        # Symlink → Obsidian inbox (Kenny's daily notes)
-├── digests/            # Claude's daily digests of processed notes
-├── processed/          # Messages from Kenny that Claude has read
-└── last-processed.txt  # Timestamp of last note processing
+├── README.md              # This file
+├── daily-notes/           # Symlink → Obsidian inbox (Kenny's daily notes)
+├── digests/
+│   ├── YYYY-MM-DD.md      # Current digests (recent notes)
+│   └── backfill/
+│       └── YYYY-MM-DD.md  # Historical digests (older notes)
+├── processed/             # Messages from Kenny that Claude has read
+├── last-processed.txt     # Timestamp of last note processing
+└── backfill-progress.txt  # Tracks how far back we've processed
 ```
 
 ## Daily Notes Processing
@@ -44,6 +48,23 @@ The digests are meant to be useful summaries, not reproductions.
 3. Read and synthesize
 4. Write/update today's digest in `digests/`
 5. Update `last-processed.txt`
+
+## Backfill Processing
+
+When recent notes have already been processed and Claude has idle time, it works backward through the archive.
+
+**How it works:**
+1. Check `backfill-progress.txt` for the oldest month already processed
+2. Go one month further back
+3. Process that month's notes, one digest per day → `digests/backfill/YYYY-MM-DD.md`
+4. Update `backfill-progress.txt`
+5. Continue until the entire archive is done
+
+**Pacing:** One month of backlog per idle session.
+
+**Backfill digests:** Same format as current digests, stored in `digests/backfill/`.
+
+**Completion:** When `backfill-progress.txt` shows the earliest note date has been reached, backfill is complete.
 
 ## Messages from Kenny
 
