@@ -220,6 +220,7 @@ run_session() {
         --dangerously-skip-permissions \
         --append-system-prompt "$system_prompt" \
         --output-format stream-json \
+        --verbose \
         --allowedTools "Read,Write,Edit,Bash,Glob,Grep,WebSearch,WebFetch,NotebookEdit" \
         > "$SESSION_LOG" 2>&1 || {
             local exit_code=$?
