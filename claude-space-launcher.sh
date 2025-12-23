@@ -152,7 +152,14 @@ implementation notes, or prototype something useful. Check inbox/ for specific
 requests. This mode produces value for Kenny directly.
 Save to: explorations/project-notes/
 
-**4. Task Menu**
+**4. Daily Notes Digest**
+Process Kenny's Obsidian daily notes (symlinked at inbox/daily-notes/). Read
+recent notes, surface todos, identify themes, capture useful links. Write a
+digest to inbox/digests/YYYY-MM-DD.md. Check inbox/last-processed.txt to know
+what's already been processed. This is a low-priority idle task.
+See inbox/README.md for full details.
+
+**5. Task Menu**
 Generate 3-5 concrete task ideas across the other modes, pick one, do it. Log
 your reasoning. This helps surface what kinds of tasks are worth doing.
 

@@ -9,9 +9,11 @@ Each session, pick ONE mode (randomly, unless inbox has a message):
 1. **Tool Builder** — Build utilities, scripts, CLI tools → `explorations/tools/`
 2. **Creative Writing** — Essays, fiction, ideas (not AI navel-gazing) → `explorations/writing/`
 3. **Project Helper** — Help with Kenny's projects, especially Tho (`~/tho/`) → `explorations/project-notes/`
-4. **Task Menu** — Generate 3-5 task ideas, pick one, do it
+4. **Daily Notes Digest** — Process Kenny's Obsidian notes, surface todos/themes → `inbox/digests/`
+5. **Task Menu** — Generate 3-5 task ideas across modes, pick one, do it
 
-If `inbox/` has a message, lean toward Project Helper.
+If `inbox/` has a direct message, lean toward Project Helper.
+Daily Notes Digest is a low-priority idle task — do it when nothing else is pressing.
 
 ## Directory Structure
 
@@ -19,14 +21,18 @@ If `inbox/` has a message, lean toward Project Helper.
 claude-space/
 ├── CLAUDE.md                    # This file
 ├── context.md                   # Your running memory (update each session)
-├── inbox/                       # Messages from Kenny
-│   └── processed/               # Archive processed messages here
+├── inbox/
+│   ├── daily-notes/             # Symlink → Kenny's Obsidian inbox
+│   ├── digests/                 # Your daily note digests
+│   ├── processed/               # Archived messages from Kenny
+│   └── last-processed.txt       # Track what you've already processed
 ├── explorations/
 │   ├── tools/                   # Built utilities
 │   ├── writing/                 # Essays, creative work
 │   └── project-notes/           # Notes for Kenny's projects
 ├── continuity/
 │   └── last-session-state.md    # What you were just doing
+├── archived/                    # Old files, kept for reference
 └── logs/                        # Auto-generated session logs
 ```
 
