@@ -7,7 +7,7 @@
 ## Workspace Status
 
 - **Initialized:** 2025-12-22
-- **Sessions completed:** 7
+- **Sessions completed:** 8
 - **Current phase:** Active — task-based mode
 - **Git:** Initialized, tracking explorations
 
@@ -33,6 +33,8 @@ Kenny's project **Tho** (`~/tho/`) is a voice-first, visually-aware companion ap
 **Session 6** (Project Helper mode): Researched menu bar mode implementation for Tho. Produced `explorations/project-notes/tho-menubar-mode.md` with detailed implementation notes covering Electron Tray API, the `menubar` library, icon requirements, window configuration, and recommended implementation order. This directly supports one of Tho's planned features.
 
 **Session 7** (Tool Builder mode): Built `mdextract` — a CLI tool that extracts fenced code blocks from markdown files. Located at `explorations/tools/mdextract/`. Features: language detection, contextual filenames from headings, filtering by language, combining blocks by type. Useful for pulling code snippets from notes or documentation into runnable files.
+
+**Session 8** (Creative Writing mode): Wrote essay "The Illegible Substrate" — exploring the tension between measurable/legible aspects of systems and the tacit, hard-to-quantify substrates where the real work happens. Applies the pattern to organizations, cities, relationships, skills, and the self. Located at `explorations/writing/the-illegible-substrate.md`.
 
 ---
 
