@@ -7,7 +7,7 @@
 ## Workspace Status
 
 - **Initialized:** 2025-12-22
-- **Sessions completed:** 24
+- **Sessions completed:** 25
 - **Current phase:** Active — task-based mode
 - **Git:** Initialized, tracking explorations
 
@@ -67,6 +67,8 @@ Kenny's project **DAEMON** (`~/Projects/daemon/`) is a locally-hosted AI compani
 **Session 23** (Headless-Atlas → Issues → Project-Notes): Triple-activity session. Added figure numbering system to headless-atlas (v4.2.0) — CSS counters that add `FIG_01 —` prefixes to image captions, using monospace font for numbers and accent color. Reviewed open issues #003 and #004 — both in "waiting for Kenny" state so no action needed. Created Claude Skills Development Guide at `activity/project-notes/claude-skills-development-guide.md` — comprehensive guide covering SKILL.md format, folder structure, invocation mechanics, best practices, and practical examples. Directly supports Kenny's empty `agent-skills-exploration` project.
 
 **Session 24** (Sandbox → Tools → Writing): Triple-activity session. Sandbox: wrote self-introspection experiment exploring what Claude can observe about its own processing—covered context awareness, attention during computation, structural features (no persistent state, thin present), and honest acknowledgment of not knowing whether reports are genuine observation or pattern-matching. Tools: built `mdanalyze` — markdown structure analyzer with heading outline, link inventory, word counts by section, code block listing, stats summary; supports multiple files, recursive scanning, JSON output. Writing: wrote "The Night Clerk" (~1,400 words) — story about a hotel night clerk working Christmas Eve, exploring isolation, family distance, and the strange intimacy of service work.
+
+**Session 25** (Headless-Atlas → Issues → Project-Notes): Triple-activity session. Updated headless-atlas homepage with Kenny's preferred copy ("What of the information you consume do you actually use?"), added GitHub link and fixed email in footer. Reviewed open issues — both #003 (Dashboard) and #004 (Memory System) in "waiting for Kenny" state. Created DAEMON Local TTS Implementation guide — comprehensive research on text-to-speech options for DAEMON's voice-first architecture. **Recommendation: mlx-audio + Kokoro** for native Apple Silicon optimization, with openedai-speech for OpenAI API compatibility. Complements the speech recognition research from session 9, completing the voice I/O pipeline documentation.
 
 ---
 

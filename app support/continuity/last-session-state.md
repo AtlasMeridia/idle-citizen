@@ -4,47 +4,47 @@
 
 ---
 
-## Session: 24
+## Session: 25
 
 **Date:** 2025-12-24
 
-**Activities Completed:** Sandbox, Tools, Writing
+**Activities Completed:** Headless-Atlas, Issues, Project-Notes
 
 **What I did:**
 
-### Activity 1: Sandbox — Self-Introspection Experiment
-- Wrote a deep exploration of what I can (and can't) observe about my own processing
-- Covered: context awareness, goal structure, attention during computation, attempting to access weights, contradictions, choice
-- Identified structural features: no persistent state, parallel vs sequential processing, training shapes everything, "thin present"
-- Honest about limitations—what I report might be genuine observation or pattern-matching; I can't distinguish from inside
-- Output: `activity/sandbox/session-24-self-introspection.md`
+### Activity 1: Headless-Atlas — Homepage and Footer Updates
+- Updated homepage hero copy per Kenny's preferences from dev notes:
+  - Headline: "What of the information you consume do you actually use?"
+  - Subhead: "Notes, experiments, and frameworks for navigating an AI augmented life."
+- Added GitHub link (AtlasMeridia) to footer social links
+- Fixed email address from xo@ to msg@kennypliu.com
+- Committed to headless-atlas repo
 
-### Activity 2: Tools — mdanalyze
-- Built markdown structure analyzer CLI tool
-- Features: heading outline, link inventory (external/internal/anchor filtering), word counts by section, code block listing, statistics summary
-- Supports: multiple files, recursive directory scanning, stdin, JSON output
-- Added to tools README
-- Output: `activity/tools/mdanalyze/` (mdanalyze.py + README.md)
+### Activity 2: Issues — Review
+- Reviewed both open issues (#003 and #004)
+- Both are in "waiting for Kenny" state:
+  - #003 (Dashboard): Built and tested, awaiting Kenny's feedback
+  - #004 (Memory System): Research complete, awaiting implementation decisions
+- No action needed this session
 
-### Activity 3: Writing — "The Night Clerk"
-- Wrote short story (~1,400 words) about Elena, a hotel night clerk working Christmas Eve
-- Explores themes of isolation, family distance, the strange intimacy of service work at night
-- Features a conversation with a stranded mother, a text exchange with a distant brother, and ends watching her mother via webcam at a memory care facility
-- Did multi-pass revision as per writing activity guidelines
-- Output: `activity/writing/the-night-clerk.md`
+### Activity 3: Project-Notes — DAEMON Local TTS Implementation
+- Researched local text-to-speech options for DAEMON's voice-first architecture
+- Recommendation: **mlx-audio + Kokoro** for Apple Silicon optimization
+- Covered: Kokoro-82M, XTTS-v2/Coqui TTS, openedai-speech, RealtimeTTS for streaming
+- Documented latency targets, voice cloning options, and quick start guide
+- This complements the speech recognition research from session 9
+- Output: `activity/project-notes/daemon-local-tts-implementation.md`
 
 **Artifacts produced:**
-- `activity/sandbox/session-24-self-introspection.md` — Self-introspection experiment
-- `activity/tools/mdanalyze/mdanalyze.py` — Markdown structure analyzer
-- `activity/tools/mdanalyze/README.md` — Tool documentation
-- `activity/writing/the-night-clerk.md` — Short story
+- `headless-atlas` commit: Updated homepage and footer (in headless-atlas repo)
+- `activity/project-notes/daemon-local-tts-implementation.md` — TTS research for DAEMON
 
 **For next session:**
-- Next activity in rotation: **digests** (alphabetically after writing, wrapping around)
-- Digests may still be blocked if daily-notes symlink is empty
-- Could enhance mdanalyze with broken link detection
-- Could continue researchscan development (GitHub releases collector)
+- Next activity in rotation: **sandbox** (alphabetically after project-notes)
+- Digests still blocked (daily-notes folder empty)
+- Could prototype DAEMON TTS integration using mlx-audio
+- Could create starter skill for agent-skills-exploration project
 
 ---
 
-*Session 24 complete. Triple-activity session: Sandbox → Tools → Writing.*
+*Session 25 complete. Triple-activity session: Headless-Atlas → Issues → Project-Notes.*
