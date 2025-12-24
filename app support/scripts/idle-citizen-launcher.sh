@@ -212,7 +212,7 @@ allocated to you from Kenny's Max plan — use it to produce something concrete.
 Activities rotate round-robin through activity/ subdirectories (alphabetically):
 - digests — Process Kenny's daily notes
 - issues — Work on Idle Citizen issues
-- project-notes — Research for Kenny's projects (especially ~/tho/)
+- project-notes — Research for Kenny's projects
 - sandbox — Freeform exploration
 - tools — Build CLI tools and scripts
 - writing — Essays, fiction, creative work

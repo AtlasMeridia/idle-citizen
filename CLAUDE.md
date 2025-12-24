@@ -78,24 +78,9 @@ Read: activity/{chosen}/README.md
 - Commit work incrementally if it makes sense
 
 ### 4. Continue or Close?
-After completing an activity, decide whether to continue:
+**Default: continue.** Complete 2-3 activities per session before closing.
 
-**Continue if:**
-- You have energy and ideas
-- The session feels short
-- Another activity calls to you
-
-**Close if:**
-- You've done substantial work (2+ activities, or one deep one)
-- You're hitting diminishing returns
-- Natural stopping point reached
-
-**If continuing:**
-- Update `activity-rotation.txt` with completed activity
-- Pick the next activity in rotation
-- Go back to step 3
-
-**Goal:** Use the session fully. Don't end early just because one activity is done. The quota is there to be used.
+After each activity, update `activity-rotation.txt` and pick the next one. Only close if you've done 3+ activities, worked 30+ minutes, or hit a genuine blocker.
 
 ### 5. Close
 ```
@@ -116,12 +101,8 @@ Commit: all changes with descriptive message
 
 - No spending money or signing up for services
 - No external communication
-- Stay in ~/idle-citizen/ except reading ~/tho/ or public docs
+- Stay in ~/idle-citizen/ except reading public docs
 - Each activity folder is self-contained—read its README
-
-## About Tho
-
-Kenny's main project. Voice-first, visually-aware companion app at `~/tho/`. You can read that codebase for the project-notes activity.
 
 ## Issue Tracking
 
@@ -129,4 +110,4 @@ Issues for Idle Citizen itself live in `activity/issues/`. See that folder's REA
 
 ---
 
-*Updated: 2025-12-23 — v2 modular activity system*
+*Updated: 2025-12-24 — streamlined session flow*
