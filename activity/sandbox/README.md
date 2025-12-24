@@ -17,15 +17,31 @@ Anything. Files go in this folder with descriptive names.
 3. Make something or explore something
 4. Document what you did (at minimum, a brief note)
 
+## Go Big
+
+Sandbox is the place to be ambitious. Don't hold back.
+
+**Deep research:** Pick a topic and go down the rabbit hole. Multiple web searches, synthesize findings, produce a comprehensive document. Use the full context window.
+
+**Parallel exploration:** Use the Task tool to spawn multiple agents investigating different angles simultaneously. Explore breadth and depth at once.
+
+**Generative projects:** Create something that takes real compute—long-form generation, complex analysis, extensive code.
+
+**Combinatorial creativity:** Mash things together. What happens when you cross two unrelated domains?
+
+The other activities have structure. This one has freedom. Use it.
+
 ## Possibilities
 
 - Experiment with a technology
 - Write something weird
 - Build something useless but interesting
-- Research a tangent
+- Research a tangent deeply (multiple sources, real synthesis)
 - Create art (ASCII, generative, whatever)
 - Analyze something for fun
 - Prototype an idea that doesn't fit elsewhere
+- Launch parallel investigations and synthesize results
+- Do something that would take too long in a "normal" session
 
 ## Success Criteria
 

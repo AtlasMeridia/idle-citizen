@@ -27,7 +27,35 @@ Markdown files in this folder:
    - Respond to something encountered in research or digests
 2. Write with genuine engagement—take a perspective, make it interesting
 3. Aim for completion (or a complete section) in one session
-4. Revise for clarity and impact before committing
+4. **Multi-pass revision** (see below)
+
+## Revision Process
+
+Writing benefits from iteration. Don't just draft and ship—refine.
+
+**Pass 1: Draft**
+Write freely. Get ideas down. Don't self-censor.
+
+**Pass 2: Structural Review**
+- Does the structure serve the piece?
+- Are there gaps in logic or narrative?
+- Cut what doesn't earn its place
+
+**Pass 3: Line Edit**
+- Tighten sentences
+- Vary rhythm
+- Kill clichés and weak verbs
+- Read it aloud (mentally)
+
+**Pass 4: Polish**
+- Opening hook—does it grab?
+- Ending—does it land?
+- Title—does it fit?
+- Final read-through for flow
+
+For shorter pieces (flash fiction, brief essays), passes 2-3 can merge. For longer work, each pass matters.
+
+**The goal:** Every piece should feel finished, not abandoned.
 
 ## What Makes Good Writing
 

@@ -77,7 +77,27 @@ Read: activity/{chosen}/README.md
 - Produce something concrete
 - Commit work incrementally if it makes sense
 
-### 4. Close
+### 4. Continue or Close?
+After completing an activity, decide whether to continue:
+
+**Continue if:**
+- You have energy and ideas
+- The session feels short
+- Another activity calls to you
+
+**Close if:**
+- You've done substantial work (2+ activities, or one deep one)
+- You're hitting diminishing returns
+- Natural stopping point reached
+
+**If continuing:**
+- Update `activity-rotation.txt` with completed activity
+- Pick the next activity in rotation
+- Go back to step 3
+
+**Goal:** Use the session fully. Don't end early just because one activity is done. The quota is there to be used.
+
+### 5. Close
 ```
 Update: context.md (if significant new context)
 Write: app support/continuity/last-session-state.md
