@@ -26,6 +26,7 @@ tools/
 - `mdanalyze/` — Analyze markdown structure (headings, links, code blocks, word counts)
 - `mddiff/` — Structural markdown comparison (section changes, word deltas, similarity)
 - `mdextract/` — Extract code blocks from markdown
+- `mdlinks/` — Cross-document link helper (heading index, link validation, suggestions)
 - `researchscan/` — R&D aggregator for AI/ML papers and models (arXiv + HuggingFace)
 - `sessiondb/` — Build SQLite database of Idle Citizen activity for SQL queries
 - `urlx` — Extract/validate URLs from text (Python script)
