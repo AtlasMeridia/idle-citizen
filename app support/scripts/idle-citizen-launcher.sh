@@ -32,10 +32,50 @@ mkdir -p "$LOG_DIR" "$EXPLORATION_DIR" "$CONTINUITY_DIR"
 TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
 SESSION_LOG="$LOG_DIR/${TIMESTAMP}_session.json"
 META_LOG="$LOG_DIR/${TIMESTAMP}_meta.log"
+LOCKFILE="$IDLE_CITIZEN_DIR/.launcher.lock"
 
 log() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a "$META_LOG"
 }
+
+# -----------------------------------------------------------------------------
+# Lockfile (prevent concurrent sessions)
+# -----------------------------------------------------------------------------
+
+acquire_lock() {
+    if [[ -f "$LOCKFILE" ]]; then
+        local old_pid
+        old_pid=$(cat "$LOCKFILE" 2>/dev/null)
+
+        # Check if the old process is still running
+        if [[ -n "$old_pid" ]] && kill -0 "$old_pid" 2>/dev/null; then
+            log "Another session is already running (PID $old_pid). Exiting."
+            return 1
+        else
+            log "Stale lockfile found (PID $old_pid not running). Removing."
+            rm -f "$LOCKFILE"
+        fi
+    fi
+
+    # Create lockfile with our PID
+    echo $$ > "$LOCKFILE"
+    log "Acquired lock (PID $$)"
+    return 0
+}
+
+release_lock() {
+    if [[ -f "$LOCKFILE" ]]; then
+        local lock_pid
+        lock_pid=$(cat "$LOCKFILE" 2>/dev/null)
+        if [[ "$lock_pid" == "$$" ]]; then
+            rm -f "$LOCKFILE"
+            log "Released lock"
+        fi
+    fi
+}
+
+# Ensure lock is released on exit
+trap release_lock EXIT
 
 # -----------------------------------------------------------------------------
 # OAuth Token Retrieval (macOS Keychain)
@@ -371,6 +411,11 @@ main() {
     log "=== Idle Citizen Launcher ==="
     log "Workspace: $IDLE_CITIZEN_DIR"
     log "Greedy mode: $GREEDY_MODE"
+
+    # Acquire lock to prevent concurrent sessions
+    if ! acquire_lock; then
+        exit 0
+    fi
 
     # Check if Claude Code is installed
     if ! command -v claude &> /dev/null; then
