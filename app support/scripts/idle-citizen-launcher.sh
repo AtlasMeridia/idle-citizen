@@ -11,7 +11,9 @@ set -euo pipefail
 # Configuration
 # -----------------------------------------------------------------------------
 
-IDLE_CITIZEN_DIR="${IDLE_CITIZEN_DIR:-$HOME/idle-citizen}"
+# Derive project root from script location (two levels up from app support/scripts/)
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+IDLE_CITIZEN_DIR="${IDLE_CITIZEN_DIR:-$(cd "$SCRIPT_DIR/../.." && pwd)}"
 QUOTA_THRESHOLD="${QUOTA_THRESHOLD:-30}"  # Launch if >30% remaining in 5-hour window
 GREEDY_MODE="${GREEDY_MODE:-false}"       # If true, run sessions until quota exhausted
 WATCH_SESSION="${WATCH_SESSION:-true}"    # If true, open Terminal window to watch session

@@ -7,7 +7,9 @@
 
 set -euo pipefail
 
-IDLE_CITIZEN_DIR="${IDLE_CITIZEN_DIR:-$HOME/idle-citizen}"
+# Derive project root from script location (two levels up from app support/scripts/)
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+IDLE_CITIZEN_DIR="${IDLE_CITIZEN_DIR:-$(cd "$SCRIPT_DIR/../.." && pwd)}"
 SESSION_NAME="${SESSION_NAME:-idle-citizen}"
 SESSION_TIMEOUT="${SESSION_TIMEOUT:-60m}"
 AUTO_TIMEOUT="${AUTO_TIMEOUT:-true}"

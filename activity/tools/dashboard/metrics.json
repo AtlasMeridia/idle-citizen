@@ -1,0 +1,328 @@
+{
+  "generated_at": "2025-12-24T08:20:13.131952",
+  "sessions": [
+    {
+      "timestamp": "2025-12-22T20:57:38",
+      "date": "2025-12-22",
+      "duration_seconds": 2.0,
+      "duration_minutes": 0.0,
+      "interactions": 0
+    },
+    {
+      "timestamp": "2025-12-22T20:58:04",
+      "date": "2025-12-22",
+      "duration_seconds": 265.0,
+      "duration_minutes": 4.4,
+      "interactions": 46
+    },
+    {
+      "timestamp": "2025-12-22T21:11:01",
+      "date": "2025-12-22",
+      "duration_seconds": 128.0,
+      "duration_minutes": 2.1,
+      "interactions": 29
+    },
+    {
+      "timestamp": "2025-12-22T21:13:14",
+      "date": "2025-12-22",
+      "duration_seconds": 309.0,
+      "duration_minutes": 5.2,
+      "interactions": 66
+    },
+    {
+      "timestamp": "2025-12-22T23:18:24",
+      "date": "2025-12-22",
+      "duration_seconds": 126.0,
+      "duration_minutes": 2.1,
+      "interactions": 20
+    },
+    {
+      "timestamp": "2025-12-23T01:20:31",
+      "date": "2025-12-23",
+      "duration_seconds": 335.0,
+      "duration_minutes": 5.6,
+      "interactions": 45
+    },
+    {
+      "timestamp": "2025-12-23T03:26:07",
+      "date": "2025-12-23",
+      "duration_seconds": 219.0,
+      "duration_minutes": 3.6,
+      "interactions": 37
+    },
+    {
+      "timestamp": "2025-12-23T05:29:47",
+      "date": "2025-12-23",
+      "duration_seconds": 3603.0,
+      "duration_minutes": 60.0,
+      "interactions": 12
+    },
+    {
+      "timestamp": "2025-12-23T08:43:16",
+      "date": "2025-12-23",
+      "duration_seconds": 497.0,
+      "duration_minutes": 8.3,
+      "interactions": 60
+    },
+    {
+      "timestamp": "2025-12-23T10:51:33",
+      "date": "2025-12-23",
+      "duration_seconds": 181.0,
+      "duration_minutes": 3.0,
+      "interactions": 30
+    },
+    {
+      "timestamp": "2025-12-23T12:54:34",
+      "date": "2025-12-23",
+      "duration_seconds": 339.0,
+      "duration_minutes": 5.7,
+      "interactions": 40
+    },
+    {
+      "timestamp": "2025-12-23T15:00:14",
+      "date": "2025-12-23",
+      "duration_seconds": 161.0,
+      "duration_minutes": 2.7,
+      "interactions": 36
+    },
+    {
+      "timestamp": "2025-12-23T17:02:55",
+      "date": "2025-12-23",
+      "duration_seconds": 264.0,
+      "duration_minutes": 4.4,
+      "interactions": 54
+    },
+    {
+      "timestamp": "2025-12-23T19:07:20",
+      "date": "2025-12-23",
+      "duration_seconds": 488.0,
+      "duration_minutes": 8.1,
+      "interactions": 50
+    }
+  ],
+  "daily_stats": [
+    {
+      "date": "2025-12-22",
+      "session_count": 5,
+      "total_minutes": 13.8,
+      "total_interactions": 161
+    },
+    {
+      "date": "2025-12-23",
+      "session_count": 9,
+      "total_minutes": 101.4,
+      "total_interactions": 364
+    }
+  ],
+  "commits": [
+    {
+      "sha": "a9e9420",
+      "date": "2025-12-24",
+      "message": "Fix launcher scripts and align with v2 activity system"
+    },
+    {
+      "sha": "acc8c0a",
+      "date": "2025-12-23",
+      "message": "Note macOS-only limitation in app support README"
+    },
+    {
+      "sha": "c9ee5c1",
+      "date": "2025-12-23",
+      "message": "Add lockfile to prevent overlapping sessions, document plist setup"
+    },
+    {
+      "sha": "7bb1cea",
+      "date": "2025-12-23",
+      "message": "Remove outdated archived plist, fix launcher to run hourly"
+    },
+    {
+      "sha": "919d731",
+      "date": "2025-12-23",
+      "message": "Increase quota consumption: multi-activity sessions, deeper work"
+    },
+    {
+      "sha": "bba5802",
+      "date": "2025-12-23",
+      "message": "Idle Citizen v2: modular activity system"
+    },
+    {
+      "sha": "a2f1ada",
+      "date": "2025-12-23",
+      "message": "Project Helper: DAEMON Phase 1 implementation guide"
+    },
+    {
+      "sha": "9e4c2b7",
+      "date": "2025-12-23",
+      "message": "Tool Builder: URL extractor CLI tool (urlx)"
+    },
+    {
+      "sha": "3ae43ba",
+      "date": "2025-12-23",
+      "message": "Creative Writing: Flash fiction \"Threshold\""
+    },
+    {
+      "sha": "36f2e66",
+      "date": "2025-12-23",
+      "message": "Response to Kenny: Agent SDK/Skills research and workflow discussion"
+    },
+    {
+      "sha": "7aac1a4",
+      "date": "2025-12-23",
+      "message": "Creative Writing: Short story \"The Last Good Day\""
+    },
+    {
+      "sha": "2d330b2",
+      "date": "2025-12-23",
+      "message": "Research: Local AI memory systems (Mem0 vs Letta)"
+    },
+    {
+      "sha": "484214c",
+      "date": "2025-12-23",
+      "message": "Rename project from Claude Space to Idle Citizen"
+    },
+    {
+      "sha": "87f9a82",
+      "date": "2025-12-23",
+      "message": "Add local issue tracker with GitHub migration path"
+    },
+    {
+      "sha": "631902c",
+      "date": "2025-12-23",
+      "message": "Tool: gitdigest - summarize recent git activity"
+    },
+    {
+      "sha": "882ae7e",
+      "date": "2025-12-23",
+      "message": "Research: Speech recognition options for Tho"
+    },
+    {
+      "sha": "bd33283",
+      "date": "2025-12-22",
+      "message": "Essay: The Illegible Substrate"
+    },
+    {
+      "sha": "358b0e0",
+      "date": "2025-12-22",
+      "message": "First Daily Notes Digest: 2025-12-22"
+    },
+    {
+      "sha": "c7d2ebb",
+      "date": "2025-12-22",
+      "message": "Remove inbox-biased mode selection guidance"
+    },
+    {
+      "sha": "52de088",
+      "date": "2025-12-22",
+      "message": "Promote Daily Notes Digest to equal priority mode"
+    },
+    {
+      "sha": "f3e4830",
+      "date": "2025-12-22",
+      "message": "Add auto-opening watch terminal for sessions"
+    },
+    {
+      "sha": "4432673",
+      "date": "2025-12-22",
+      "message": "Add backfill feature for processing historical notes"
+    },
+    {
+      "sha": "0e01c58",
+      "date": "2025-12-22",
+      "message": "Session 6: Research menu bar mode for Tho"
+    },
+    {
+      "sha": "2a7915a",
+      "date": "2025-12-22",
+      "message": "Fix: add --verbose flag for stream-json output"
+    },
+    {
+      "sha": "27ffa7a",
+      "date": "2025-12-22",
+      "message": "Archive unused files, add Daily Notes Digest mode"
+    },
+    {
+      "sha": "6a69127",
+      "date": "2025-12-22",
+      "message": "Add daily notes integration via symlink to Obsidian inbox"
+    },
+    {
+      "sha": "8e0621b",
+      "date": "2025-12-22",
+      "message": "Switch to task-based autonomous sessions"
+    },
+    {
+      "sha": "4c34861",
+      "date": "2025-12-22",
+      "message": "Session 5: Explore emergence and cellular automata"
+    },
+    {
+      "sha": "52e0123",
+      "date": "2025-12-22",
+      "message": "Update README with current features"
+    },
+    {
+      "sha": "7f57593",
+      "date": "2025-12-22",
+      "message": "Fix interactive session launcher"
+    },
+    {
+      "sha": "391ceea",
+      "date": "2025-12-22",
+      "message": "Make interactive script run autonomous exploration session"
+    },
+    {
+      "sha": "070e56e",
+      "date": "2025-12-22",
+      "message": "Update context.md for session 3"
+    },
+    {
+      "sha": "ef35ea4",
+      "date": "2025-12-22",
+      "message": "Add greedy mode for maximum quota utilization"
+    },
+    {
+      "sha": "536b820",
+      "date": "2025-12-22",
+      "message": "Dynamic session duration based on quota"
+    },
+    {
+      "sha": "e908ab2",
+      "date": "2025-12-22",
+      "message": "Expand tooling and capabilities"
+    },
+    {
+      "sha": "fe77a4a",
+      "date": "2025-12-22",
+      "message": "Track explorations and context files"
+    },
+    {
+      "sha": "98c403f",
+      "date": "2025-12-22",
+      "message": "Initial commit: workspace after 2 sessions"
+    }
+  ],
+  "artifacts_by_activity": {
+    "tools": 1,
+    "project-notes": 4,
+    "sandbox": 0,
+    "digests": 2,
+    "issues": 4,
+    "writing": 3
+  },
+  "issues": {
+    "open": 4,
+    "closed": 0,
+    "total": 4
+  },
+  "quota": {
+    "total_minutes": 115.2,
+    "total_hours": 1.9,
+    "weekly_budget": 420,
+    "utilization_percent": 27.4
+  },
+  "summary": {
+    "total_sessions": 14,
+    "total_commits": 37,
+    "total_artifacts": 14
+  }
+}
