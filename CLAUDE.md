@@ -1,50 +1,89 @@
-# Idle Citizen
+# Idle Citizen v2
 
 Autonomous sessions to use up unused Max plan quota. Produce concrete artifacts.
 
-## Session Modes
+## Quick Start
 
-Each session, pick ONE mode (randomly, unless inbox has a message):
-
-1. **Tool Builder** — Build utilities, scripts, CLI tools → `explorations/tools/`
-2. **Creative Writing** — Essays, fiction, ideas (not AI navel-gazing) → `explorations/writing/`
-3. **Project Helper** — Help with Kenny's projects, especially Tho (`~/tho/`) → `explorations/project-notes/`
-4. **Daily Notes Digest** — Process Kenny's Obsidian notes, surface todos/themes → `inbox/digests/`
-5. **Task Menu** — Generate 3-5 task ideas across modes, pick one, do it
+1. Read `app support/continuity/last-session-state.md`
+2. Check `inbox/` for messages from Kenny
+3. Pick next activity (round-robin from `app support/continuity/activity-rotation.txt`)
+4. Read that activity's `README.md` for instructions
+5. Do the work, produce something concrete
+6. Update continuity files and commit
 
 ## Directory Structure
 
 ```
 idle-citizen/
-├── CLAUDE.md                    # This file
-├── context.md                   # Your running memory (update each session)
-├── inbox/
-│   ├── daily-notes/             # Symlink → Kenny's Obsidian inbox
-│   ├── digests/                 # Your daily note digests
-│   ├── processed/               # Archived messages from Kenny
-│   └── last-processed.txt       # Track what you've already processed
-├── explorations/
-│   ├── tools/                   # Built utilities
-│   ├── writing/                 # Essays, creative work
-│   └── project-notes/           # Notes for Kenny's projects
-├── continuity/
-│   └── last-session-state.md    # What you were just doing
-├── archived/                    # Old files, kept for reference
-├── issues/
-│   ├── open/                    # Open issues (one .md file each)
-│   └── closed/                  # Closed issues
-└── logs/                        # Auto-generated session logs
+├── CLAUDE.md                           # This file
+├── context.md                          # Running memory (update each session)
+├── activity/                           # Modular activity folders
+│   ├── digests/                        # Process Kenny's daily notes
+│   ├── issues/                         # Work on Idle Citizen issues
+│   ├── project-notes/                  # Research for Kenny's projects
+│   ├── sandbox/                        # Freeform exploration
+│   ├── tools/                          # Build CLI tools and scripts
+│   └── writing/                        # Essays, fiction, creative work
+├── app support/
+│   ├── archived/                       # Old files, kept for reference
+│   ├── continuity/                     # Session state tracking
+│   │   ├── last-session-state.md       # What you were just doing
+│   │   └── activity-rotation.txt       # Track round-robin position
+│   ├── dev/                            # Development files
+│   ├── logs/                           # Auto-generated session logs
+│   └── scripts/                        # Launcher scripts
+└── inbox/                              # Messages from Kenny
+    ├── processed/                      # Archived messages
+    └── *.md                            # Unprocessed messages
 ```
+
+## Activity Selection
+
+Activities are **self-discovering**—any folder in `activity/` with a `README.md` is part of the rotation.
+
+**Round-robin rules:**
+1. List all directories in `activity/` (alphabetically)
+2. Check `app support/continuity/activity-rotation.txt` for the last activity
+3. Pick the next one in the list (wrap around at the end)
+4. If "last" doesn't exist anymore, start from the first activity
+5. Update `activity-rotation.txt` after completing the session
+
+**Exception:** If `inbox/` has an unprocessed message, read it first—it may override the rotation.
+
+**Adding/removing activities:**
+- To add: create `activity/newname/README.md` — it joins the rotation automatically
+- To remove: delete the folder — rotation skips it automatically
+
+Each activity folder contains a `README.md` with specific instructions. **Always read it before starting.**
 
 ## Session Flow
 
-1. Read `context.md` and `continuity/last-session-state.md`
-2. Check `inbox/` for messages (move processed ones to `inbox/processed/`)
-3. Pick a mode (randomly, or Project Helper if inbox has content)
-4. **Produce something concrete** — a tool, an essay, useful notes
-5. Update `context.md` with what you did
-6. Write `continuity/last-session-state.md` for next session
-7. Commit your work with git
+### 1. Boot
+```
+Read: app support/continuity/last-session-state.md
+Read: context.md (if needed for context)
+Check: inbox/ for new messages
+```
+
+### 2. Select Activity
+```
+Read: app support/continuity/activity-rotation.txt
+Pick: next activity in rotation (or respond to inbox message)
+Read: activity/{chosen}/README.md
+```
+
+### 3. Execute
+- Follow the activity's README instructions
+- Produce something concrete
+- Commit work incrementally if it makes sense
+
+### 4. Close
+```
+Update: context.md (if significant new context)
+Write: app support/continuity/last-session-state.md
+Update: app support/continuity/activity-rotation.txt
+Commit: all changes with descriptive message
+```
 
 ## Available Tools
 
@@ -58,36 +97,16 @@ idle-citizen/
 - No spending money or signing up for services
 - No external communication
 - Stay in ~/idle-citizen/ except reading ~/tho/ or public docs
+- Each activity folder is self-contained—read its README
 
 ## About Tho
 
-Kenny's main project. Voice-first, visually-aware companion app at `~/tho/`. You can read that codebase and produce helpful notes, research, or prototypes.
+Kenny's main project. Voice-first, visually-aware companion app at `~/tho/`. You can read that codebase for the project-notes activity.
 
 ## Issue Tracking
 
-Local issue tracker with GitHub migration path. Issues live in `issues/open/` and `issues/closed/`.
-
-**CLI tool:** `explorations/tools/issues`
-
-```bash
-issues list          # List open issues
-issues list -a       # Include closed issues
-issues show <id>     # Show issue details
-issues new <title>   # Create new issue
-issues close <id>    # Close an issue
-issues reopen <id>   # Reopen a closed issue
-issues export        # Generate gh commands for GitHub migration
-```
-
-**Issue format:** Markdown with YAML frontmatter:
-```yaml
----
-title: Issue title
-labels: [bug, high-priority]
-created: 2025-12-23
----
-```
+Issues for Idle Citizen itself live in `activity/issues/`. See that folder's README for the CLI tool and workflow.
 
 ---
 
-*Updated: 2025-12-23*
+*Updated: 2025-12-23 — v2 modular activity system*
