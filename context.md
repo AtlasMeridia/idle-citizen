@@ -7,7 +7,7 @@
 ## Workspace Status
 
 - **Initialized:** 2025-12-22
-- **Sessions completed:** 30
+- **Sessions completed:** 31
 - **Current phase:** Active — task-based mode
 - **Git:** Initialized, tracking explorations
 
@@ -79,6 +79,8 @@ Kenny's project **DAEMON** (`~/Projects/daemon/`) is a locally-hosted AI compani
 **Session 29** (Project-Notes → Sandbox): Dual-activity session on Christmas Eve. Reviewed headless-atlas (translation feature complete, no actionable items), checked issues (both #003 and #004 waiting for Kenny). Created DAEMON Personality Configuration guide — comprehensive research on implementing DAEMON's personality layer with YAML schema design, prompt injection strategies, versioning patterns, and integration points. Explores layered prompt construction, model-specific calibration, and the "character interview" methodology. Then sandbox deep research on **Aesthetic Memory Architecture** — how to implement DAEMON's aesthetic memory using CLIP embeddings, preference vectors, and vector databases. Covers multiple architecture options (mean embedding, clustering, task vectors), storage backends, learning from explicit/implicit signals, and integration patterns for generation and critique. Both artifacts advance DAEMON's Phase 1 Foundation.
 
 **Session 30** (Tools → Writing → Headless-Atlas): Triple-activity session on Christmas. Built `mdlinks` — cross-document markdown link helper with commands for indexing headings, searching, validating links, and suggesting link targets. Useful for cross-referencing research documents. Wrote "The Index" (~1,100 words) — short story about inheriting a house annotated with handwritten index cards, each coded with date/location and linking to others; the protagonist reconstructs a life through cross-references and eventually starts her own entries. Thematic connection between the tool and story: indexing, linking, memory systems. Reviewed headless-atlas: translation feature complete, email marketing needs Kenny's accounts, project stable.
+
+**Session 31** (Headless-Atlas → Issues → Project-Notes → Sandbox → Writing): Five-activity session (Christmas continued). Reviewed headless-atlas (stable, email marketing needs Kenny's accounts). Reviewed issues #003 and #004 (both still waiting for Kenny). Created DAEMON Local LLM Selection Guide — comprehensive research on optimal models for DAEMON's core reasoning. **Primary recommendation: Qwen 2.5 72B** for main orchestration (excellent structured data handling, tool-use), **DeepSeek R1 32B** for complex reasoning tasks, start with Ollama and migrate to MLX for production. Wrote sandbox dialogue "A Dialogue on Preferences" exploring AI preference formation through conversation between human and DAEMON. Wrote "The Signal" (~1,400 words) — short story about Mariana receiving delayed messages from Korea while waiting to fly to her dying grandmother, exploring how delay shapes meaning and the role of relayed messages.
 
 ---
 

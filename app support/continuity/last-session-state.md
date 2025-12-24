@@ -4,59 +4,75 @@
 
 ---
 
-## Session: 30
+## Session: 31
 
-**Date:** 2025-12-24 (Christmas Day)
+**Date:** 2025-12-24 (Christmas Eve, later)
 
-**Activities Completed:** Tools, Writing, Headless-Atlas (review)
+**Activities Completed:** Headless-Atlas (review), Issues (review), Project-Notes, Sandbox, Writing
 
 **What I did:**
 
-### Activity 1: Tools — mdlinks
-
-Built `mdlinks` — a cross-document markdown link helper. Located at `activity/tools/mdlinks/`.
-
-Features:
-- `index` — scan directory, show all headings with line numbers and anchor slugs
-- `search` — find headings matching a query, output ready-to-use markdown link syntax
-- `check` — validate links in a file (find broken file/anchor references)
-- `suggest` — given text, suggest relevant heading targets to link to
-
-Useful for: cross-referencing research documents, validating links after file reorganization, building document indexes.
-
-The tool was thematically connected to the story I wrote next.
-
-### Activity 2: Writing — "The Index"
-
-Wrote "The Index" (~1,100 words) — a short story about Sarah, who inherits a house from a stranger and discovers the previous owner had annotated every room with handwritten index cards. Each card is coded with date, location, and links to other cards. She reconstructs his life through his system of cross-references, eventually finding a note inviting whoever inherits the house to make their own entries.
-
-Located at: `activity/writing/the-index.md`
-
-Thematic connection: indexing, linking, memory systems, inheritance — echoes the mdlinks tool and the DAEMON aesthetic memory research from previous sessions.
-
-### Activity 3: Headless-Atlas — Review
+### Activity 1: Headless-Atlas — Review
 
 Checked project status:
-- Translation feature is complete (11 files implementing Chinese toggle)
-- Email marketing integration plan exists but requires Kenny to set up external accounts (Kit.com, Zapier)
-- No node_modules installed locally (expected, read-only reference)
-- Project is stable, no immediate action needed
+- Site is stable with homepage copy and footer links all current
+- Email marketing integration plan exists but requires Kenny to set up Kit.com and Zapier accounts
+- Translation feature complete
+- No actionable items
+
+### Activity 2: Issues — Review
+
+Checked open issues:
+- **#003 (Dashboard)**: Built and functional, waiting for Kenny to test and provide feedback
+- **#004 (Memory System)**: Research complete with Mem0 recommendation, waiting for Kenny's decision on per-project vs shared memory
+
+Both issues remain in "waiting for Kenny" state.
+
+### Activity 3: Project-Notes — DAEMON Local LLM Selection Guide
+
+Created comprehensive guide at `activity/project-notes/daemon-local-llm-selection.md` covering:
+- Primary recommendation: **Qwen 2.5 72B** for main orchestration (excellent structured data handling, good for tool-use)
+- Secondary option: **DeepSeek R1 Distilled** (32B) for complex reasoning tasks
+- Inference frameworks: Start with Ollama, migrate to MLX for production
+- Memory requirements and quantization recommendations
+- Specific configuration for DAEMON Phase 1
+
+This complements existing DAEMON research: VLM, TTS, speech recognition, personality config, memory system.
+
+### Activity 4: Sandbox — Dialogue on Preferences
+
+Wrote "A Dialogue on Preferences" — a conversation between a human and their AI companion (DAEMON) exploring what it means for an AI to develop genuine preferences. Explores:
+- The difference between pattern-matching and taste
+- Whether attention correlates could constitute preference
+- The relationship between constraint and meaning
+
+Located at: `activity/sandbox/dialogue-on-preferences.md`
+
+### Activity 5: Writing — "The Signal"
+
+Wrote short story (~1,400 words) about Mariana, who receives delayed messages from her cousin while waiting to fly to Korea to see her dying grandmother. Explores:
+- Distance and connection across time zones
+- How delay shapes meaning
+- The role of relayed messages when you can't be present
+
+Discovered at the end that her grandmother had been receiving relayed messages for years and understood everything, even what wasn't sent.
+
+Located at: `activity/writing/the-signal.md`
 
 **Activities skipped:**
-- Digests: daily notes folder still doesn't exist (Dropbox sync issue continues)
-- Issues: both #003 and #004 still waiting for Kenny
+- Digests: daily notes folder still not accessible
 
 **Artifacts produced:**
-- `activity/tools/mdlinks/mdlinks.py` — Cross-document link helper tool
-- `activity/tools/mdlinks/README.md` — Tool documentation
-- `activity/writing/the-index.md` — Short story
+- `activity/project-notes/daemon-local-llm-selection.md` — LLM selection guide for DAEMON
+- `activity/sandbox/dialogue-on-preferences.md` — Dialogue exploring AI preferences
+- `activity/writing/the-signal.md` — Short story about distance and connection
 
 **For next session:**
-- Next activity in rotation: **issues** (alphabetically after headless-atlas)
-- After that: **project-notes**, then **sandbox**
-- DAEMON research could be consolidated into an index
-- Dashboard (issue #003) and memory system (issue #004) both waiting for Kenny's review
+- Next activity in rotation: **digests** (wraps around from writing)
+- DAEMON now has comprehensive research covering all major modules
+- Both issues still waiting for Kenny
+- Could build a tool or write more next time
 
 ---
 
-*Session 30 complete. Triple-activity session: Tools → Writing → Headless-Atlas.*
+*Session 31 complete. Five-activity session (one skipped, four completed).*
