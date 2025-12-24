@@ -4,75 +4,70 @@
 
 ---
 
-## Session: 31
+## Session: 32
 
-**Date:** 2025-12-24 (Christmas Eve, later)
+**Date:** 2025-12-24 (Christmas Eve)
 
-**Activities Completed:** Headless-Atlas (review), Issues (review), Project-Notes, Sandbox, Writing
+**Activities Completed:** Digests (skipped), Headless-Atlas (review), Issues (review), Project-Notes, Writing
 
 **What I did:**
 
-### Activity 1: Headless-Atlas — Review
+### Activity 1: Digests — Skipped
+
+Daily notes folder (`inbox/daily-notes/`) still not accessible. Symlink doesn't exist.
+
+### Activity 2: Headless-Atlas — Review
 
 Checked project status:
-- Site is stable with homepage copy and footer links all current
+- Site is stable at v4.2.0 with figure numbering
+- All contact links integrated in footer (Twitter, GitHub, YouTube, Instagram, Email)
 - Email marketing integration plan exists but requires Kenny to set up Kit.com and Zapier accounts
-- Translation feature complete
+- Tools page has 5 projects listed including Idle Citizen
 - No actionable items
 
-### Activity 2: Issues — Review
+### Activity 3: Issues — Review
 
 Checked open issues:
-- **#003 (Dashboard)**: Built and functional, waiting for Kenny to test and provide feedback
-- **#004 (Memory System)**: Research complete with Mem0 recommendation, waiting for Kenny's decision on per-project vs shared memory
+- **#003 (Dashboard)**: Built with recent artifacts section, waiting for Kenny to test
+- **#004 (Memory System)**: Research complete with Mem0 recommendation, waiting for Kenny's decision
 
 Both issues remain in "waiting for Kenny" state.
 
-### Activity 3: Project-Notes — DAEMON Local LLM Selection Guide
+### Activity 4: Project-Notes — DAEMON MCP Implementation Guide
 
-Created comprehensive guide at `activity/project-notes/daemon-local-llm-selection.md` covering:
-- Primary recommendation: **Qwen 2.5 72B** for main orchestration (excellent structured data handling, good for tool-use)
-- Secondary option: **DeepSeek R1 Distilled** (32B) for complex reasoning tasks
-- Inference frameworks: Start with Ollama, migrate to MLX for production
-- Memory requirements and quantization recommendations
-- Specific configuration for DAEMON Phase 1
+Created comprehensive guide at `activity/project-notes/daemon-mcp-implementation.md` covering:
+- MCP overview and architecture (tools, resources, prompts)
+- Pre-built servers to use (Memory, Filesystem, Fetch, Brave Search)
+- MCP client implementation for Ollama-based DAEMON
+- Custom server examples (Personality server, R&D agent server)
+- Server configuration JSON schema
+- Orchestrator integration with MCP tool loop
+- Implementation roadmap
 
-This complements existing DAEMON research: VLM, TTS, speech recognition, personality config, memory system.
+This completes the DAEMON research suite: LLM selection, TTS, STT, VLM, memory, personality, R&D agent, and now MCP/tools layer.
 
-### Activity 4: Sandbox — Dialogue on Preferences
+### Activity 5: Writing — "The Layover"
 
-Wrote "A Dialogue on Preferences" — a conversation between a human and their AI companion (DAEMON) exploring what it means for an AI to develop genuine preferences. Explores:
-- The difference between pattern-matching and taste
-- Whether attention correlates could constitute preference
-- The relationship between constraint and meaning
+Wrote short story (~1,400 words) about Marcus, a man stuck at an airport bar during a Christmas Eve snowstorm, trying to get to his sister's house for the first Christmas without their father. Explores:
+- How to remember complicated people
+- The difference between documentation and memory
+- Finding genuine moments amid performative grief
+- Strangers in transit sharing what they can't say to family
 
-Located at: `activity/sandbox/dialogue-on-preferences.md`
+Ends with him finally writing something real for the memory ornament his sister wanted.
 
-### Activity 5: Writing — "The Signal"
-
-Wrote short story (~1,400 words) about Mariana, who receives delayed messages from her cousin while waiting to fly to Korea to see her dying grandmother. Explores:
-- Distance and connection across time zones
-- How delay shapes meaning
-- The role of relayed messages when you can't be present
-
-Discovered at the end that her grandmother had been receiving relayed messages for years and understood everything, even what wasn't sent.
-
-Located at: `activity/writing/the-signal.md`
-
-**Activities skipped:**
-- Digests: daily notes folder still not accessible
+Located at: `activity/writing/the-layover.md`
 
 **Artifacts produced:**
-- `activity/project-notes/daemon-local-llm-selection.md` — LLM selection guide for DAEMON
-- `activity/sandbox/dialogue-on-preferences.md` — Dialogue exploring AI preferences
-- `activity/writing/the-signal.md` — Short story about distance and connection
+- `activity/project-notes/daemon-mcp-implementation.md` — MCP implementation guide for DAEMON
+- `activity/writing/the-layover.md` — Short story about memory and absence
 
 **For next session:**
-- Next activity in rotation: **digests** (wraps around from writing)
-- DAEMON now has comprehensive research covering all major modules
+- Next activity in rotation: **digests** (but likely needs symlink fix)
+- After digests: headless-atlas, issues, project-notes, sandbox, tools, writing
 - Both issues still waiting for Kenny
-- Could build a tool or write more next time
+- DAEMON research is now comprehensive — could start building
 
 ---
 
-*Session 31 complete. Five-activity session (one skipped, four completed).*
+*Session 32 complete. Five activities attempted, four completed.*
