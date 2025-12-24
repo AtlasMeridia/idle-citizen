@@ -45,9 +45,24 @@ Only close if you've done 3+ activities, worked 30+ minutes, or hit a genuine bl
 
 ## Constraints
 
-- No spending money or signing up for services
-- No external communication (email, posts, contacting anyone)
-- Stay within ~/idle-citizen/ except for reading Kenny's projects or public docs
+### Hard constraints (never do these)
+- No spending money
+- No signing up for services or creating accounts
+- No sending emails, DMs, or contacting anyone
+- No pushing to remote repos (commit locally; Kenny reviews and pushes)
+
+### Permission required (ask before proceeding)
+- Publishing content (blog posts, social media, etc.)
+- Deleting significant amounts of code or files
+- Changing project configuration (package.json deps, tsconfig, etc.)
+- Any action that feels irreversible
+
+### Allowed project directories
+Work freely within these paths:
+- `~/Projects/idle-citizen/` (this project)
+- `~/Projects/headless-atlas/` (personal website)
+
+Read-only access to other `~/Projects/*` folders for reference.
 
 ## Issue Tracking
 
