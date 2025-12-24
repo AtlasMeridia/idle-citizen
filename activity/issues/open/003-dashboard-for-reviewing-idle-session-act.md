@@ -96,3 +96,18 @@ Built initial prototype with:
 - Test dashboard with Kenny
 - Add more metrics if needed (context.md changes, interaction quality, etc.)
 - Consider auto-refresh option (regenerate metrics.json after each session)
+
+## Progress (Session 21 — 2025-12-24)
+
+Added **Recent Artifacts** section to the dashboard:
+1. Updated `extract-metrics.py` with `get_recent_artifacts()` function that:
+   - Scans all activity folders for .md files (excluding READMEs)
+   - Extracts title from YAML frontmatter or first markdown heading
+   - Sorts by modification time, returns 10 most recent
+2. Added `recent_artifacts` to JSON output
+3. Updated `dashboard.html` with new section showing artifact list with:
+   - Artifact title
+   - Activity tag (color-coded badge)
+   - Modification date
+
+This makes it easier to see what was actually created recently, not just counts.

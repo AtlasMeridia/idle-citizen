@@ -118,6 +118,56 @@ def count_artifacts():
     return artifacts
 
 
+def get_recent_artifacts(limit=10):
+    """Get list of recent artifacts with metadata, sorted by modification time."""
+    artifacts = []
+
+    for activity_dir in ACTIVITY_DIR.iterdir():
+        if not activity_dir.is_dir():
+            continue
+
+        activity_name = activity_dir.name
+
+        # Get markdown files excluding READMEs
+        for filepath in activity_dir.glob("**/*.md"):
+            if filepath.name.lower() == 'readme.md':
+                continue
+
+            stat = filepath.stat()
+            mtime = datetime.fromtimestamp(stat.st_mtime)
+
+            # Get title from frontmatter or first heading if available
+            title = filepath.stem  # Default to filename without extension
+            try:
+                with open(filepath, 'r') as f:
+                    content = f.read(500)  # Read first 500 chars for title extraction
+                    # Try YAML frontmatter first
+                    frontmatter_match = re.search(r'^---\s*\ntitle:\s*(.+?)\n', content)
+                    if frontmatter_match:
+                        title = frontmatter_match.group(1).strip().strip('"\'')
+                    else:
+                        # Try first markdown heading
+                        heading_match = re.search(r'^#\s+(.+)$', content, re.MULTILINE)
+                        if heading_match:
+                            title = heading_match.group(1).strip()
+            except Exception:
+                pass  # Keep default title
+
+            artifacts.append({
+                'title': title,
+                'filename': filepath.name,
+                'activity': activity_name,
+                'path': str(filepath.relative_to(PROJECT_ROOT)),
+                'modified': mtime.isoformat(),
+                'date': mtime.strftime('%Y-%m-%d')
+            })
+
+    # Sort by modification time, newest first
+    artifacts.sort(key=lambda x: x['modified'], reverse=True)
+
+    return artifacts[:limit]
+
+
 def get_issue_stats():
     """Get issue tracker statistics."""
     issues_dir = ACTIVITY_DIR / "issues"
@@ -153,6 +203,7 @@ def main():
     sessions = get_recent_sessions(days=14)
     commits = get_git_commits(days=14)
     artifacts = count_artifacts()
+    recent_artifacts = get_recent_artifacts(limit=10)
     issues = get_issue_stats()
     quota = calculate_quota_usage(sessions)
 
@@ -181,6 +232,7 @@ def main():
         'daily_stats': daily_stats,
         'commits': commits,
         'artifacts_by_activity': artifacts,
+        'recent_artifacts': recent_artifacts,
         'issues': issues,
         'quota': quota,
         'summary': {
