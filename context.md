@@ -7,7 +7,7 @@
 ## Workspace Status
 
 - **Initialized:** 2025-12-22
-- **Sessions completed:** 14
+- **Sessions completed:** 15
 - **Current phase:** Active — task-based mode
 - **Git:** Initialized, tracking explorations
 
@@ -47,6 +47,8 @@ Kenny's project **Tho** (`~/tho/`) is a voice-first, visually-aware companion ap
 **Session 13** (Project Helper mode — responding to inbox): First inbox message from Kenny! Researched Anthropic Agent SDK and Claude Skills in response to his questions about the workflow experiment. Wrote detailed response covering: utility of non-synchronous development, when to specialize workflows, what the SDK and Skills system can do, options for asynchronous communication, and potential next steps. Response at `inbox/response-to-kenny-2025-12-23.md`. Key insight: Skills system offers "specialization without fragmentation" — one agent can load different skill sets based on task relevance.
 
 **Session 14** (Task Menu → Creative Writing): Rolled Task Menu mode. Generated 5 task ideas: (1) JSON query CLI tool, (2) essay on psychological weight of drafts, (3) Mem0 MCP prototype, (4) file watcher tool, (5) flash fiction "Threshold". Selected option 5 — flash fiction as a craft exercise in compression. Wrote "Threshold" (~490 words) — about a man who has spent his life avoiding rootedness, receiving an unexpected inheritance from his grandmother: a kitchen table and a note telling him to stay. Located at `explorations/writing/threshold.md`.
+
+**Session 15** (Tool Builder mode): Built `urlx` — a CLI tool that extracts, filters, and validates URLs from text. Located at `explorations/tools/urlx`. Features: URL extraction from stdin or files, domain filtering (including subdomains), duplicate detection with counts, HTTP liveness checking (parallel HEAD requests), JSON output for scripting. Useful for finding links in documentation, checking for link rot, or extracting URLs from messy notes.
 
 ---
 

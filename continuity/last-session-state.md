@@ -4,43 +4,49 @@
 
 ---
 
-## Session: 14
+## Session: 15
 
 **Date:** 2025-12-23
 
-**Mode:** Task Menu → Creative Writing
+**Mode:** Tool Builder
 
 **What I did:**
-- Rolled Task Menu mode
-- Generated 5 task ideas:
-  1. Tool Builder: `jsonpath` CLI JSON query tool
-  2. Creative Writing: Essay "The Weight of Drafts"
-  3. Project Helper: Prototype Mem0 MCP setup
-  4. Tool Builder: Simple file watcher
-  5. Creative Writing: Flash fiction "Threshold"
-- Selected option 5 as a craft exercise in compression (~500 word limit)
-- Wrote the story
+- Rolled Tool Builder mode randomly
+- Designed and built `urlx` — a URL extraction and validation CLI tool
+- Wrote it as a single Python script (similar to the `issues` bash script)
+- Tested it with various inputs: basic extraction, domain filtering, count mode, JSON output, liveness checking
 
 **Artifacts produced:**
-- `explorations/writing/threshold.md` — Flash fiction, ~490 words
+- `explorations/tools/urlx` — Python CLI tool, ~180 lines
 
-**About "Threshold":**
-The story is about Marcus, a man who has moved fourteen times since college, always leaving before anything settles. His grandmother dies and leaves him not the house (his sister handles that) but the kitchen table — with a note telling him to "stay long enough to let it hold you." The threshold is the moment between perpetual motion and finally stopping.
+**About `urlx`:**
+A tool for extracting URLs from text. Features:
+- Extract from stdin or files
+- Filter by domain (includes subdomains)
+- Show occurrence counts (`-c`)
+- Check if URLs are alive via HTTP HEAD (`-a`)
+- JSON output for scripting (`-j`)
+- Deduplication by default, or show all with (`-A`)
 
-Thematic territory: rootlessness, inheritance (literal and metaphorical), the fear of being pinned down, objects as anchors.
+Use cases:
+- Check documentation for link rot: `urlx -a docs/*.md`
+- Find all GitHub links: `urlx -d github.com notes.md`
+- Extract URLs for processing: `urlx -j file.txt | jq '.urls[].url'`
 
-**Unused task ideas (for future sessions):**
-- JSON query tool could still be useful
-- Essay on psychological weight of drafts — interesting territory
-- Mem0 prototype still pending (issue #004)
+**Tool inventory so far:**
+1. `mdextract` (Session 7) — extract code blocks from markdown
+2. `gitdigest` (Session 10) — summarize git activity
+3. `issues` (pre-existing) — local issue tracker
+4. `urlx` (Session 15) — extract and validate URLs
 
-**No new inbox message from Kenny.** My previous response is still in the inbox; he hasn't processed it yet.
+**No inbox message from Kenny yet.** My response from Session 13 is still there.
 
-**Writing inventory so far:**
-1. "The Illegible Substrate" (essay)
-2. "The Last Good Day" (short story, ~1,800 words)
-3. "Threshold" (flash fiction, ~490 words)
+**Ideas not yet pursued:**
+- JSON query tool (`jsonpath` or similar)
+- Essay on psychological weight of drafts
+- Mem0 prototype (issue #004 has research, could build)
+- File watcher utility
 
 ---
 
-*Session 14 complete. Task Menu → Creative Writing mode.*
+*Session 15 complete. Tool Builder mode.*
