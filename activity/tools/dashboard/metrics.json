@@ -1,5 +1,5 @@
 {
-  "generated_at": "2025-12-24T08:20:13.131952",
+  "generated_at": "2025-12-24T10:53:34.116261",
   "sessions": [
     {
       "timestamp": "2025-12-22T20:57:38",
@@ -98,6 +98,27 @@
       "duration_seconds": 488.0,
       "duration_minutes": 8.1,
       "interactions": 50
+    },
+    {
+      "timestamp": "2025-12-24T09:11:13",
+      "date": "2025-12-24",
+      "duration_seconds": 560.0,
+      "duration_minutes": 9.3,
+      "interactions": 93
+    },
+    {
+      "timestamp": "2025-12-24T09:20:43",
+      "date": "2025-12-24",
+      "duration_seconds": 543.0,
+      "duration_minutes": 9.1,
+      "interactions": 91
+    },
+    {
+      "timestamp": "2025-12-24T09:29:57",
+      "date": "2025-12-24",
+      "duration_seconds": 1029.0,
+      "duration_minutes": 17.1,
+      "interactions": 112
     }
   ],
   "daily_stats": [
@@ -112,9 +133,75 @@
       "session_count": 9,
       "total_minutes": 101.4,
       "total_interactions": 364
+    },
+    {
+      "date": "2025-12-24",
+      "session_count": 3,
+      "total_minutes": 35.5,
+      "total_interactions": 296
     }
   ],
   "commits": [
+    {
+      "sha": "a347568",
+      "date": "2025-12-24",
+      "message": "Add headless-atlas activity, revise constraints to tiered system"
+    },
+    {
+      "sha": "8253ce5",
+      "date": "2025-12-24",
+      "message": "Trim redundant procedural content now handled by skills"
+    },
+    {
+      "sha": "21a3598",
+      "date": "2025-12-24",
+      "message": "Add starter skills for autonomous sessions"
+    },
+    {
+      "sha": "0209423",
+      "date": "2025-12-24",
+      "message": "Session 20: Personal data architecture research, sessiondb tool, The Archive story"
+    },
+    {
+      "sha": "d91f0ec",
+      "date": "2025-12-24",
+      "message": "Document file type distinction in digests README"
+    },
+    {
+      "sha": "4c11acc",
+      "date": "2025-12-24",
+      "message": "Session 19: Short story, issue cleanup, unified chat interfaces research"
+    },
+    {
+      "sha": "1b34f96",
+      "date": "2025-12-24",
+      "message": "Session 18: Interaction Data Architecture research, synthetic layer essay, cchistory tool"
+    },
+    {
+      "sha": "a92a613",
+      "date": "2025-12-24",
+      "message": "Make activity list dynamic instead of hardcoded"
+    },
+    {
+      "sha": "ef24b39",
+      "date": "2025-12-24",
+      "message": "Streamline CLAUDE.md and remove outdated ~/tho/ references"
+    },
+    {
+      "sha": "54d3166",
+      "date": "2025-12-24",
+      "message": "Work from test session"
+    },
+    {
+      "sha": "1eb915f",
+      "date": "2025-12-24",
+      "message": "Replace greedy mode with quota-aware auto-scaling"
+    },
+    {
+      "sha": "c9d9000",
+      "date": "2025-12-24",
+      "message": "Make launcher scripts self-locating to prevent duplicate workspaces"
+    },
     {
       "sha": "a9e9420",
       "date": "2025-12-24",
@@ -303,26 +390,109 @@
   ],
   "artifacts_by_activity": {
     "tools": 1,
-    "project-notes": 4,
-    "sandbox": 0,
+    "project-notes": 6,
+    "headless-atlas": 0,
+    "sandbox": 2,
     "digests": 2,
     "issues": 4,
-    "writing": 3
+    "writing": 5
   },
+  "recent_artifacts": [
+    {
+      "title": "The Archive",
+      "filename": "the-archive.md",
+      "activity": "writing",
+      "path": "activity/writing/the-archive.md",
+      "modified": "2025-12-24T09:45:09.919091",
+      "date": "2025-12-24"
+    },
+    {
+      "title": "Personal Data Architecture: A Comprehensive Survey (December 2024)",
+      "filename": "personal-data-architecture-research.md",
+      "activity": "sandbox",
+      "path": "activity/sandbox/personal-data-architecture-research.md",
+      "modified": "2025-12-24T09:38:17.175892",
+      "date": "2025-12-24"
+    },
+    {
+      "title": "Unified Chat Interfaces for Interaction Data Architecture",
+      "filename": "unified-chat-interfaces-comparison.md",
+      "activity": "project-notes",
+      "path": "activity/project-notes/unified-chat-interfaces-comparison.md",
+      "modified": "2025-12-24T09:28:19.761491",
+      "date": "2025-12-24"
+    },
+    {
+      "title": "Low Quota Utilization - Session Intensity",
+      "filename": "002-low-quota-intensity.md",
+      "activity": "issues",
+      "path": "activity/issues/closed/002-low-quota-intensity.md",
+      "modified": "2025-12-24T09:25:07.252014",
+      "date": "2025-12-24"
+    },
+    {
+      "title": "Low Quota Utilization - Session Frequency",
+      "filename": "001-low-quota-frequency.md",
+      "activity": "issues",
+      "path": "activity/issues/closed/001-low-quota-frequency.md",
+      "modified": "2025-12-24T09:24:53.956401",
+      "date": "2025-12-24"
+    },
+    {
+      "title": "The Mother Tongue",
+      "filename": "the-mother-tongue.md",
+      "activity": "writing",
+      "path": "activity/writing/the-mother-tongue.md",
+      "modified": "2025-12-24T09:23:08.363543",
+      "date": "2025-12-24"
+    },
+    {
+      "title": "The Synthetic Layer",
+      "filename": "the-synthetic-layer.md",
+      "activity": "sandbox",
+      "path": "activity/sandbox/the-synthetic-layer.md",
+      "modified": "2025-12-24T09:16:32.603882",
+      "date": "2025-12-24"
+    },
+    {
+      "title": "Claude Interaction Data Extraction",
+      "filename": "claude-interaction-data-extraction.md",
+      "activity": "project-notes",
+      "path": "activity/project-notes/claude-interaction-data-extraction.md",
+      "modified": "2025-12-24T09:15:36.871269",
+      "date": "2025-12-24"
+    },
+    {
+      "title": "Dashboard for reviewing idle session activity",
+      "filename": "003-dashboard-for-reviewing-idle-session-act.md",
+      "activity": "issues",
+      "path": "activity/issues/open/003-dashboard-for-reviewing-idle-session-act.md",
+      "modified": "2025-12-24T08:22:18.649741",
+      "date": "2025-12-24"
+    },
+    {
+      "title": "Daily Notes Digest: 2025-12-24",
+      "filename": "2025-12-24.md",
+      "activity": "digests",
+      "path": "activity/digests/2025-12-24.md",
+      "modified": "2025-12-24T08:18:54.345897",
+      "date": "2025-12-24"
+    }
+  ],
   "issues": {
-    "open": 4,
-    "closed": 0,
+    "open": 2,
+    "closed": 2,
     "total": 4
   },
   "quota": {
-    "total_minutes": 115.2,
-    "total_hours": 1.9,
+    "total_minutes": 150.7,
+    "total_hours": 2.5,
     "weekly_budget": 420,
-    "utilization_percent": 27.4
+    "utilization_percent": 35.9
   },
   "summary": {
-    "total_sessions": 14,
-    "total_commits": 37,
-    "total_artifacts": 14
+    "total_sessions": 17,
+    "total_commits": 49,
+    "total_artifacts": 20
   }
 }
