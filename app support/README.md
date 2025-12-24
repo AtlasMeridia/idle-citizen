@@ -37,8 +37,8 @@ cat > ~/Library/LaunchAgents/com.idle-citizen.launcher.plist << 'EOF'
         <string>/bin/bash</string>
         <string>-l</string>
         <string>-c</string>
-        <!-- UPDATE THIS PATH to your idle-citizen location -->
-        <string>/Users/YOUR_USERNAME/Projects/idle-citizen/app support/scripts/idle-citizen-launcher.sh</string>
+        <!-- UPDATE THIS PATH to your idle-citizen location (keep the quotes!) -->
+        <string>"/Users/YOUR_USERNAME/Projects/idle-citizen/app support/scripts/idle-citizen-launcher.sh"</string>
     </array>
 
     <!-- Run every 1 hour (3600 seconds) -->

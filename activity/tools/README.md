@@ -19,9 +19,9 @@ tools/
 ## Existing Tools
 
 - `gitdigest/` — Summarize recent git activity
-- `issues/` — Local issue tracker CLI
+- `issues` — Local issue tracker CLI (bash script, not a directory)
 - `mdextract/` — Extract code blocks from markdown
-- `urlx/` — Extract/validate URLs from text
+- `urlx` — Extract/validate URLs from text (Python script)
 
 ## How to Execute
 

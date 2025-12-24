@@ -15,7 +15,7 @@ set -e
 # Find project root (where issues/ directory lives)
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
-ISSUES_DIR="$PROJECT_ROOT/issues"
+ISSUES_DIR="$PROJECT_ROOT/activity/issues"
 OPEN_DIR="$ISSUES_DIR/open"
 CLOSED_DIR="$ISSUES_DIR/closed"
 

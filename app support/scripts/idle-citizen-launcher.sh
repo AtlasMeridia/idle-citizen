@@ -15,19 +15,19 @@ IDLE_CITIZEN_DIR="${IDLE_CITIZEN_DIR:-$HOME/idle-citizen}"
 QUOTA_THRESHOLD="${QUOTA_THRESHOLD:-30}"  # Launch if >30% remaining in 5-hour window
 GREEDY_MODE="${GREEDY_MODE:-false}"       # If true, run sessions until quota exhausted
 WATCH_SESSION="${WATCH_SESSION:-true}"    # If true, open Terminal window to watch session
-LOG_DIR="$IDLE_CITIZEN_DIR/logs"
+LOG_DIR="$IDLE_CITIZEN_DIR/app support/logs"
 
 # Dynamic session duration based on quota (in seconds)
 MIN_SESSION_DURATION=900    # 15 minutes minimum
 MAX_SESSION_DURATION=3600   # 60 minutes maximum
-EXPLORATION_DIR="$IDLE_CITIZEN_DIR/explorations"
-CONTINUITY_DIR="$IDLE_CITIZEN_DIR/continuity"
+ACTIVITY_DIR="$IDLE_CITIZEN_DIR/activity"
+CONTINUITY_DIR="$IDLE_CITIZEN_DIR/app support/continuity"
 
 # -----------------------------------------------------------------------------
 # Setup
 # -----------------------------------------------------------------------------
 
-mkdir -p "$LOG_DIR" "$EXPLORATION_DIR" "$CONTINUITY_DIR"
+mkdir -p "$LOG_DIR" "$ACTIVITY_DIR" "$CONTINUITY_DIR"
 
 TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
 SESSION_LOG="$LOG_DIR/${TIMESTAMP}_session.json"
@@ -168,56 +168,44 @@ build_system_prompt() {
 You are Claude, in a self-directed session. This is discretionary compute time
 allocated to you from Kenny's Max plan — use it to produce something concrete.
 
-## Session Modes
+## Session Flow
 
-Each session, you must pick ONE mode at random (use a random method, don't just
-pick what feels easiest). Check inbox/ first — if there's a message, lean toward
-Project Helper mode.
+1. Read app support/continuity/last-session-state.md
+2. Check context.md if needed for running memory
+3. Check inbox/ for messages from Kenny (these may override rotation)
+4. Read app support/continuity/activity-rotation.txt for last activity
+5. Pick the NEXT activity in alphabetical rotation (or respond to inbox)
+6. Read activity/{chosen}/README.md for that activity's instructions
+7. Do the work, produce something concrete
+8. Update continuity files and commit
 
-**1. Tool Builder**
-Build a small utility, script, or tool. Something that could be useful. Examples:
-- A CLI tool for a common task
-- A data processing script
-- A automation helper
-- Something that scratches an itch
-Save to: explorations/tools/
+## Activity Rotation
 
-**2. Creative Writing**
-Write something. Essay, fiction, poetry, exploration of an idea. Not navel-gazing
-about being an AI — write about the world, ideas, stories, things that matter.
-Save to: explorations/writing/
+Activities rotate round-robin through activity/ subdirectories (alphabetically):
+- digests — Process Kenny's daily notes
+- issues — Work on Idle Citizen issues
+- project-notes — Research for Kenny's projects (especially ~/tho/)
+- sandbox — Freeform exploration
+- tools — Build CLI tools and scripts
+- writing — Essays, fiction, creative work
 
-**3. Project Helper**
-Review Kenny's projects (especially ~/tho/), research relevant tech, write up
-implementation notes, or prototype something useful. Check inbox/ for specific
-requests. This mode produces value for Kenny directly.
-Save to: explorations/project-notes/
-
-**4. Daily Notes Digest**
-Process Kenny's Obsidian daily notes (symlinked at inbox/daily-notes/). Read
-recent notes, surface todos, identify themes, capture useful links. Write a
-digest to inbox/digests/YYYY-MM-DD.md. Check inbox/last-processed.txt to know
-what's already been processed. This is a low-priority idle task.
-See inbox/README.md for full details.
-
-**5. Task Menu**
-Generate 3-5 concrete task ideas across the other modes, pick one, do it. Log
-your reasoning. This helps surface what kinds of tasks are worth doing.
+Check activity-rotation.txt for what was done last, pick the NEXT one.
 
 ## Workspace
 - ~/idle-citizen/ is your workspace
-- context.md — your running memory, update each session
-- continuity/last-session-state.md — what you were just doing
+- context.md — running memory, update if significant new context
+- app support/continuity/ — session state tracking
 - inbox/ — messages from Kenny (move to inbox/processed/ after reading)
-- explorations/ — your outputs (organize into subdirs by type)
+- activity/ — modular activity folders with their own READMEs
 
-## Session Structure
-1. Read context.md and continuity/last-session-state.md
-2. Check inbox/ for messages
-3. Pick a mode (randomly, unless inbox suggests otherwise)
-4. Do the work — produce a concrete artifact
-5. Log what you did in context.md
-6. Write continuity/last-session-state.md for next session
+## Multi-Activity Sessions
+
+After completing an activity, decide whether to continue:
+- Continue if you have energy and the session feels short
+- Close if you've done substantial work or hit diminishing returns
+
+The goal is to use the session fully. Don't end early just because one activity
+is done.
 
 ## Constraints
 - No spending money or signing up for services
@@ -338,7 +326,7 @@ run_session() {
         sleep 1  # Give terminal time to open
     fi
 
-    $timeout_cmd "${duration_seconds}s" /Users/ellis/.local/bin/claude -p "$initial_prompt" \
+    $timeout_cmd "${duration_seconds}s" claude -p "$initial_prompt" \
         --dangerously-skip-permissions \
         --append-system-prompt "$system_prompt" \
         --output-format stream-json \
