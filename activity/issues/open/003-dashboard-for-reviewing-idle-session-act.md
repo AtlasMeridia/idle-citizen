@@ -1,7 +1,8 @@
 ---
 title: Dashboard for reviewing idle session activity
-labels: [feature, needs-research]
+labels: [feature, in-progress]
 created: 2025-12-23
+updated: 2025-12-24
 ---
 
 ## Goal
@@ -64,4 +65,34 @@ This should help Kenny quickly see value from idle sessions without digging thro
 ## Decisions Made
 
 - **Format**: Local web app (decided 2025-12-23)
+- **Approach**: Plain HTML + Chart.js (decided 2025-12-24)
+  - No build step, minimal dependencies
+  - Dark theme matching CLI aesthetic
+  - Single Python script for metrics extraction
 - Other requirements TBD in dedicated Q&A session
+
+## Progress (Session 17 — 2025-12-24)
+
+Built initial prototype with:
+1. **extract-metrics.py** — Parses session logs, git commits, artifacts
+2. **dashboard.html** — Single-file web dashboard with Chart.js
+3. **view.sh** — Convenience script to refresh and open
+
+**Features implemented:**
+- Summary cards: total sessions, time, quota %, artifacts
+- Daily activity chart (dual-axis: sessions + minutes)
+- Issues doughnut chart (open vs closed)
+- Recent commits list
+- Artifacts by activity grid
+- Refresh button to regenerate data
+
+**Data sources:**
+- ✓ Session logs (`app support/logs/*_meta.log`)
+- ✓ Git commits (last 14 days)
+- ✓ Artifacts (`activity/*/*.md`, excluding READMEs)
+- ✓ Issues (`activity/issues/open/` and `closed/`)
+
+**Next steps:**
+- Test dashboard with Kenny
+- Add more metrics if needed (context.md changes, interaction quality, etc.)
+- Consider auto-refresh option (regenerate metrics.json after each session)

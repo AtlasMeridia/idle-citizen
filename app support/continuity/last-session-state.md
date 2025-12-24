@@ -4,54 +4,57 @@
 
 ---
 
-## Session: 16
+## Session: 17
 
-**Date:** 2025-12-23
+**Date:** 2025-12-24
 
-**Mode:** Project Helper
+**Activities Completed:** Digests, Issues
 
 **What I did:**
-- Rolled Project Helper mode randomly
-- Discovered Kenny's **DAEMON** project at `~/Projects/daemon/`
-- Read the full "Documentation of Intent" (617 lines) — comprehensive vision for a local AI companion
-- Created implementation guide for Phase 1 (Foundation)
-- Connected prior Mem0 research to DAEMON's memory architecture needs
+
+### Activity 1: Digests
+- Processed Kenny's daily notes from Dec 22-23
+- Created comprehensive digest at `activity/digests/2025-12-24.md`
+- Key themes captured:
+  - Interaction Data Architecture (new design doc for unified AI interaction capture)
+  - Model selection strategy for personal chat interface (5-model lineup)
+  - Philosophical threads on "the synthetic layer" and AGI emotion
+  - Dev tasks including workspace agent organization
+- Updated `last-processed.txt` timestamp
+
+### Activity 2: Issues
+- Worked on issue #003 (Dashboard for reviewing idle session activity)
+- Built complete prototype dashboard:
+  - `extract-metrics.py` — Python script to parse logs, git, artifacts
+  - `dashboard.html` — Single-file web dashboard with Chart.js, dark theme
+  - `view.sh` — Convenience launcher script
+  - `README.md` — Documentation
+- Features: summary cards, daily activity chart, issues chart, commits list, artifacts grid
+- Updated issue from "needs-research" to "in-progress"
 
 **Artifacts produced:**
-- `explorations/project-notes/daemon-phase1-implementation.md` — ~450 lines
+- `activity/digests/2025-12-24.md` — Daily notes digest
+- `activity/tools/dashboard/extract-metrics.py` — ~250 lines
+- `activity/tools/dashboard/dashboard.html` — ~400 lines
+- `activity/tools/dashboard/README.md`
+- `activity/tools/dashboard/view.sh`
 
-**About DAEMON:**
-Kenny's vision for a locally-hosted AI companion with:
-- Thin shell principle (orchestration, not capability)
-- Four memory types: episodic, semantic, procedural, aesthetic
-- Configurable personality with versioning
-- Modular architecture (swap models freely)
-- Built-in R&D agent for staying current
-- Uncensored by design (local, personal)
+**Technical notes:**
+- Dashboard uses plain HTML + Chart.js (no build step)
+- Metrics extracted from: session logs, git commits, artifact files, issue tracker
+- Tracks quota utilization, session count, daily activity patterns
+- Ready for Kenny to test and provide feedback
 
-The hardware is M4 Max with 128GB — can run 70B+ models locally.
-
-**Phase 1 Implementation Guide covers:**
-1. **Memory Architecture** — Mem0 + Qdrant + SQLite, maps to DAEMON's four types
-2. **Personality Configuration** — YAML schema inspired by LoLLMs, with versioning
-3. **Conversation Loop** — Thin orchestration, Ollama inference, memory injection
-4. **R&D Agent** — Automated scanning of HuggingFace, GitHub, Reddit, arXiv
-
-**Related projects discovered:**
-- `~/Projects/agent-skills-exploration/` — Set up but empty, could bootstrap with example skills
-- `~/Projects/daemon/` — Just the intent doc for now, no code yet
+**System issues encountered:**
+- Bash tool stopped working mid-session (may need restart/investigation)
+- Files may have been created in wrong directory (~/idle-citizen vs ~/Projects/idle-citizen)
+- Should verify file locations and fix if needed in next session
 
 **Ideas for future sessions:**
-- Build a starter skill for `agent-skills-exploration`
-- Prototype the DAEMON personality config loader
-- Create a minimal DAEMON conversation loop
-- Research M4/M5 Neural Engine optimization for MLX
-
-**Notes:**
-- Tho (`~/tho/`) doesn't exist anymore — DAEMON appears to be the successor
-- My prior Mem0 research (Session 11) maps directly to DAEMON needs
-- Kenny also has a `technical-advisor` and `nixxed` project worth exploring
+- Test dashboard and iterate based on Kenny's feedback
+- Investigate "Interaction Data Architecture" concept from digest
+- Continue with remaining activities in rotation (project-notes is next)
 
 ---
 
-*Session 16 complete. Project Helper mode.*
+*Session 17 complete. Multi-activity session: Digests → Issues.*
