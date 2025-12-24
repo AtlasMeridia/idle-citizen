@@ -23,6 +23,7 @@ tools/
 - `gitdigest/` — Summarize recent git activity
 - `issues` — Local issue tracker CLI (bash script, not a directory)
 - `mdextract/` — Extract code blocks from markdown
+- `researchscan/` — R&D aggregator for AI/ML papers and models (arXiv + HuggingFace)
 - `sessiondb/` — Build SQLite database of Idle Citizen activity for SQL queries
 - `urlx` — Extract/validate URLs from text (Python script)
 

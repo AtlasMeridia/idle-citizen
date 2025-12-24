@@ -16,6 +16,7 @@ Markdown files in this folder:
 ## Existing Work
 
 - `the-archive.md` — Short story about a woman who had perfect recall and chose to forget
+- `the-curator.md` — Short story about a museum curator inheriting a collection of personal meaning
 - `the-illegible-substrate.md` — Essay on tacit knowledge
 - `the-last-good-day.md` — Short story about a sous chef's moment of decision
 - `the-mother-tongue.md` — Short story about a translator losing her first language
