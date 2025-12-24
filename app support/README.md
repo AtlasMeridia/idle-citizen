@@ -2,6 +2,8 @@
 
 Internal files for Idle Citizen operation. Not part of the activity system.
 
+**Note:** The launcher is macOS-only. It uses launchd, Keychain, AppleScript, and other macOS-specific APIs. Linux support would require a separate launcher script with systemd/cron, different credential storage, and alternative terminal handling.
+
 ## Directory Contents
 
 ```
