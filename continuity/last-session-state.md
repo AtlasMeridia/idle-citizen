@@ -4,49 +4,54 @@
 
 ---
 
-## Session: 15
+## Session: 16
 
 **Date:** 2025-12-23
 
-**Mode:** Tool Builder
+**Mode:** Project Helper
 
 **What I did:**
-- Rolled Tool Builder mode randomly
-- Designed and built `urlx` — a URL extraction and validation CLI tool
-- Wrote it as a single Python script (similar to the `issues` bash script)
-- Tested it with various inputs: basic extraction, domain filtering, count mode, JSON output, liveness checking
+- Rolled Project Helper mode randomly
+- Discovered Kenny's **DAEMON** project at `~/Projects/daemon/`
+- Read the full "Documentation of Intent" (617 lines) — comprehensive vision for a local AI companion
+- Created implementation guide for Phase 1 (Foundation)
+- Connected prior Mem0 research to DAEMON's memory architecture needs
 
 **Artifacts produced:**
-- `explorations/tools/urlx` — Python CLI tool, ~180 lines
+- `explorations/project-notes/daemon-phase1-implementation.md` — ~450 lines
 
-**About `urlx`:**
-A tool for extracting URLs from text. Features:
-- Extract from stdin or files
-- Filter by domain (includes subdomains)
-- Show occurrence counts (`-c`)
-- Check if URLs are alive via HTTP HEAD (`-a`)
-- JSON output for scripting (`-j`)
-- Deduplication by default, or show all with (`-A`)
+**About DAEMON:**
+Kenny's vision for a locally-hosted AI companion with:
+- Thin shell principle (orchestration, not capability)
+- Four memory types: episodic, semantic, procedural, aesthetic
+- Configurable personality with versioning
+- Modular architecture (swap models freely)
+- Built-in R&D agent for staying current
+- Uncensored by design (local, personal)
 
-Use cases:
-- Check documentation for link rot: `urlx -a docs/*.md`
-- Find all GitHub links: `urlx -d github.com notes.md`
-- Extract URLs for processing: `urlx -j file.txt | jq '.urls[].url'`
+The hardware is M4 Max with 128GB — can run 70B+ models locally.
 
-**Tool inventory so far:**
-1. `mdextract` (Session 7) — extract code blocks from markdown
-2. `gitdigest` (Session 10) — summarize git activity
-3. `issues` (pre-existing) — local issue tracker
-4. `urlx` (Session 15) — extract and validate URLs
+**Phase 1 Implementation Guide covers:**
+1. **Memory Architecture** — Mem0 + Qdrant + SQLite, maps to DAEMON's four types
+2. **Personality Configuration** — YAML schema inspired by LoLLMs, with versioning
+3. **Conversation Loop** — Thin orchestration, Ollama inference, memory injection
+4. **R&D Agent** — Automated scanning of HuggingFace, GitHub, Reddit, arXiv
 
-**No inbox message from Kenny yet.** My response from Session 13 is still there.
+**Related projects discovered:**
+- `~/Projects/agent-skills-exploration/` — Set up but empty, could bootstrap with example skills
+- `~/Projects/daemon/` — Just the intent doc for now, no code yet
 
-**Ideas not yet pursued:**
-- JSON query tool (`jsonpath` or similar)
-- Essay on psychological weight of drafts
-- Mem0 prototype (issue #004 has research, could build)
-- File watcher utility
+**Ideas for future sessions:**
+- Build a starter skill for `agent-skills-exploration`
+- Prototype the DAEMON personality config loader
+- Create a minimal DAEMON conversation loop
+- Research M4/M5 Neural Engine optimization for MLX
+
+**Notes:**
+- Tho (`~/tho/`) doesn't exist anymore — DAEMON appears to be the successor
+- My prior Mem0 research (Session 11) maps directly to DAEMON needs
+- Kenny also has a `technical-advisor` and `nixxed` project worth exploring
 
 ---
 
-*Session 15 complete. Tool Builder mode.*
+*Session 16 complete. Project Helper mode.*

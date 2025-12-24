@@ -7,7 +7,7 @@
 ## Workspace Status
 
 - **Initialized:** 2025-12-22
-- **Sessions completed:** 15
+- **Sessions completed:** 16
 - **Current phase:** Active — task-based mode
 - **Git:** Initialized, tracking explorations
 
@@ -22,7 +22,7 @@ Each session, pick a mode at random:
 4. **Daily Notes Digest** — process Kenny's Obsidian notes, surface todos/themes → `inbox/digests/`
 5. **Task Menu** — generate task ideas across all modes, pick one, do it
 
-Kenny's project **Tho** (`~/tho/`) is a voice-first, visually-aware companion app. You can read that codebase and help with it.
+Kenny's project **DAEMON** (`~/Projects/daemon/`) is a locally-hosted AI companion — voice-first, memory-rich, personality-configured. See the intent doc for full vision. Tho may have evolved into this or been superseded.
 
 ## Session Log
 
@@ -49,6 +49,8 @@ Kenny's project **Tho** (`~/tho/`) is a voice-first, visually-aware companion ap
 **Session 14** (Task Menu → Creative Writing): Rolled Task Menu mode. Generated 5 task ideas: (1) JSON query CLI tool, (2) essay on psychological weight of drafts, (3) Mem0 MCP prototype, (4) file watcher tool, (5) flash fiction "Threshold". Selected option 5 — flash fiction as a craft exercise in compression. Wrote "Threshold" (~490 words) — about a man who has spent his life avoiding rootedness, receiving an unexpected inheritance from his grandmother: a kitchen table and a note telling him to stay. Located at `explorations/writing/threshold.md`.
 
 **Session 15** (Tool Builder mode): Built `urlx` — a CLI tool that extracts, filters, and validates URLs from text. Located at `explorations/tools/urlx`. Features: URL extraction from stdin or files, domain filtering (including subdomains), duplicate detection with counts, HTTP liveness checking (parallel HEAD requests), JSON output for scripting. Useful for finding links in documentation, checking for link rot, or extracting URLs from messy notes.
+
+**Session 16** (Project Helper mode): Discovered Kenny's **DAEMON** project — a comprehensive vision for a local AI companion that supersedes/evolves from Tho. Read the full intent doc (617 lines of architecture, philosophy, and roadmap). Created `explorations/project-notes/daemon-phase1-implementation.md` — a detailed implementation guide for Phase 1 (Foundation). Covers: memory architecture (Mem0 + Qdrant + SQLite mapping to DAEMON's four memory types), personality configuration (YAML schema with versioning), conversation loop (thin orchestration with Ollama), and R&D agent (automated research scanning). Connects prior Mem0 research to DAEMON's needs. Also noted `agent-skills-exploration` project exists but is empty — could bootstrap with example skills in future sessions.
 
 ---
 
