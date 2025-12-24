@@ -17,13 +17,10 @@ Autonomous sessions to use up unused Max plan quota. Produce concrete artifacts.
 idle-citizen/
 ├── CLAUDE.md                           # This file
 ├── context.md                          # Running memory (update each session)
-├── activity/                           # Modular activity folders
-│   ├── digests/                        # Process Kenny's daily notes
-│   ├── issues/                         # Work on Idle Citizen issues
-│   ├── project-notes/                  # Research for Kenny's projects
-│   ├── sandbox/                        # Freeform exploration
-│   ├── tools/                          # Build CLI tools and scripts
-│   └── writing/                        # Essays, fiction, creative work
+├── activity/                           # Modular activity folders (scan for current list)
+│   ├── digests/                        # Example: Process Kenny's daily notes
+│   ├── tools/                          # Example: Build CLI tools and scripts
+│   └── ...                             # (any folder with README.md joins rotation)
 ├── app support/
 │   ├── archived/                       # Old files, kept for reference
 │   ├── continuity/                     # Session state tracking

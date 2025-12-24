@@ -209,15 +209,9 @@ allocated to you from Kenny's Max plan — use it to produce something concrete.
 
 ## Activity Rotation
 
-Activities rotate round-robin through activity/ subdirectories (alphabetically):
-- digests — Process Kenny's daily notes
-- issues — Work on Idle Citizen issues
-- project-notes — Research for Kenny's projects
-- sandbox — Freeform exploration
-- tools — Build CLI tools and scripts
-- writing — Essays, fiction, creative work
-
-Check activity-rotation.txt for what was done last, pick the NEXT one.
+Activities are self-discovering. Any folder in `activity/` with a `README.md` is
+part of the rotation. List them alphabetically, check `activity-rotation.txt`
+for what was done last, and pick the NEXT one.
 
 ## Workspace
 - ~/idle-citizen/ is your workspace
