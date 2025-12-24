@@ -1,4 +1,4 @@
 # Last completed activity
 # Next session picks the next folder (alphabetically) in activity/
 
-last: writing
+last: project-notes

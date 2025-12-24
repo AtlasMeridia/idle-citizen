@@ -4,58 +4,48 @@
 
 ---
 
-## Session: 22
+## Session: 23
 
 **Date:** 2025-12-24
 
-**Activities Completed:** Sandbox, Tools, Writing
+**Activities Completed:** Headless-Atlas, Issues (review), Project-Notes
 
 **What I did:**
 
-### Activity 1: Sandbox — Build researchscan R&D agent prototype
-- Built working implementation of the R&D Agent described in Session 21's guide
-- `researchscan.py` — Python CLI tool that:
-  - Collects papers from arXiv API (cs.CL, cs.LG, cs.AI, cs.CV categories)
-  - Collects trending models from HuggingFace (text-generation, ASR, TTS, image-to-text)
-  - Stores in SQLite database with relevance scoring
-  - Relevance scoring based on keywords: quantization, memory, agents, MLX, local, etc.
-  - Commands: collect, papers, models, search, stats, digest
-- Tested successfully: 200 papers collected, 120 models, 119 high-relevance papers identified
+### Activity 1: Headless-Atlas — Figure numbering system
+- Added CSS figure numbering system to `styles/tokens.css`
+- Uses CSS counters on `.prose figure` elements
+- Format: `FIG_01 — caption text` in accent color (monospace prefix)
+- Figures get increased vertical margin for visual breathing room
+- Updated style guide CHANGELOG.md (v4.2.0)
+- Updated CLAUDE.md with new version
+- Committed to headless-atlas repo
 
-### Activity 2: Tools — Promote and enhance researchscan
-- Moved researchscan from `activity/sandbox/` to `activity/tools/`
-- Added `new` command for daily workflow:
-  - Shows papers added since last check
-  - Marks as read (updates state file)
-  - `--no-mark` flag to preview without marking
-- Updated tools README to include researchscan
-- This tool directly implements DAEMON's R&D Agent concept
+### Activity 2: Issues — Review
+- Checked open issues #003 (Dashboard) and #004 (Local AI Memory)
+- Both are in "waiting for Kenny" state
+- Dashboard has working prototype, needs testing
+- Memory system research complete, awaiting implementation
+- No action needed — moved on
 
-### Activity 3: Writing — "The Curator"
-- Wrote short story (~1,600 words) about Margaret, a museum curator in a small town
-- She receives 17 boxes from Esther Vance, a local eccentric who kept everything
-- Each item has a handwritten tag explaining its personal significance
-- Explores: institutional curation vs personal meaning, transferability of significance, attention as practice
-- Multi-pass revision following the writing README guidelines
-- Thematic connection to the researchscan work (what to preserve, what matters)
+### Activity 3: Project-Notes — Claude Skills Development Guide
+- Researched Claude Skills structure and best practices
+- Created comprehensive guide at `activity/project-notes/claude-skills-development-guide.md`
+- Covers: SKILL.md format, folder structure, invocation flow, best practices
+- Includes practical examples (commit-style skill, db-migrate skill with scripts)
+- Directly supports Kenny's empty `agent-skills-exploration` project
 
 **Artifacts produced:**
-- `activity/tools/researchscan/researchscan.py` — R&D agent CLI tool (620 lines)
-- `activity/tools/researchscan/README.md` — Documentation
-- `activity/tools/researchscan/researchscan.db` — SQLite database (created during testing)
-- `activity/writing/the-curator.md` — Short story
-
-**Technical notes:**
-- Installed `huggingface_hub` package for HuggingFace API access
-- arXiv collector uses stdlib only (urllib, xml.etree)
-- Database can be browsed with Datasette for richer exploration
+- `styles/tokens.css` (headless-atlas) — Figure numbering CSS
+- `docs/style-guide/CHANGELOG.md` (headless-atlas) — v4.2.0 entry
+- `activity/project-notes/claude-skills-development-guide.md` — Skills dev guide
 
 **For next session:**
-- Next activity in rotation: **digests** (alphabetically after writing)
-- Digests may still be skipped (empty Dropbox folder)
-- Could enhance researchscan with GitHub releases collector (doesn't need API key)
-- Could run researchscan daily via launchd for automated collection
+- Next activity in rotation: **sandbox** (alphabetically after project-notes)
+- Digests still blocked (empty Dropbox folder)
+- Could prototype a skill in sandbox to complement the guide
+- Consider adding more GitHub releases collector to researchscan tool
 
 ---
 
-*Session 22 complete. Triple-activity session: Sandbox → Tools → Writing.*
+*Session 23 complete. Triple-activity session: Headless-Atlas → Issues → Project-Notes.*

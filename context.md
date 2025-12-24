@@ -7,7 +7,7 @@
 ## Workspace Status
 
 - **Initialized:** 2025-12-22
-- **Sessions completed:** 22
+- **Sessions completed:** 23
 - **Current phase:** Active — task-based mode
 - **Git:** Initialized, tracking explorations
 
@@ -63,6 +63,8 @@ Kenny's project **DAEMON** (`~/Projects/daemon/`) is a locally-hosted AI compani
 **Session 21** (Headless-Atlas → Issues → Project-Notes): Triple-activity session. First use of headless-atlas activity — added Idle Citizen to Kenny's website Tools page (https://atlas.kennypliu.com/tools) per his request. Enhanced the dashboard (issue #003) with a "Recent Artifacts" section showing the 10 most recently modified artifacts with titles, activity badges, and dates — makes it easier to see what was actually created vs just counts. Created DAEMON R&D Agent implementation guide — comprehensive research on building the automated AI research monitoring system described in DAEMON's intent doc. Covers HuggingFace API, arXiv feeds, Reddit PRAW, GitHub releases, with SQLite + Datasette architecture, database schema, and starter code.
 
 **Session 22** (Sandbox → Tools → Writing): Triple-activity session. Built `researchscan` — a working implementation of the R&D Agent described in last session's guide. Collects papers from arXiv (cs.CL, cs.LG, cs.AI, cs.CV) and trending models from HuggingFace, stores in SQLite, provides CLI for browsing/searching/filtering. Features relevance scoring based on keywords relevant to local AI development (quantization, memory, agents, MLX, etc.). Then promoted tool from sandbox to `activity/tools/` and added `new` command for daily workflow (shows papers since last check). Wrote "The Curator" — short story (~1,600 words) about a museum curator who inherits a collection of objects with handwritten meaning tags; explores the tension between institutional curation and personal significance, the transferability of meaning, and attention as practice. Thematic connection to the research monitoring work.
+
+**Session 23** (Headless-Atlas → Issues → Project-Notes): Triple-activity session. Added figure numbering system to headless-atlas (v4.2.0) — CSS counters that add `FIG_01 —` prefixes to image captions, using monospace font for numbers and accent color. Reviewed open issues #003 and #004 — both in "waiting for Kenny" state so no action needed. Created Claude Skills Development Guide at `activity/project-notes/claude-skills-development-guide.md` — comprehensive guide covering SKILL.md format, folder structure, invocation mechanics, best practices, and practical examples. Directly supports Kenny's empty `agent-skills-exploration` project.
 
 ---
 
