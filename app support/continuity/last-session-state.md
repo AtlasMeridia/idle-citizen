@@ -4,56 +4,60 @@
 
 ---
 
-## Session: 18
+## Session: 19
 
 **Date:** 2025-12-24
 
-**Activities Completed:** Project Notes, Sandbox, Tools
+**Activities Completed:** Writing, (Digests skipped—no data), Issues, Project-Notes
 
 **What I did:**
 
-### Activity 1: Project Notes
-- Researched Claude interaction data extraction (directly supporting Kenny's "Interaction Data Architecture" initiative)
-- Investigated storage locations for Claude Desktop, Claude.ai, and Claude Code
-- Found that Claude Code is the most accessible (JSONL in `~/.claude/`)
-- Claude Desktop uses LevelDB but conversations are primarily server-side
-- Documented official export option for claude.ai (Settings > Privacy)
-- Created comprehensive research note with recommendations for phased approach
+### Activity 1: Writing
+- Wrote "The Mother Tongue" — short story about a Russian translator in America gradually losing fluency in her first language
+- ~1,400 words, explores language attrition, identity, the slow replacement of one cognitive framework by another
+- Multiple revision passes for tightening prose
+- Themes connect to "synthetic layer" thinking without being about AI directly
 
-### Activity 2: Sandbox
-- Wrote "The Synthetic Layer" — a philosophical essay exploring Kenny's concept
-- Explores how AI integrates into perception, not just production
-- Key themes: the feedback loop between human and AI, idiosyncratic relationships, cultivation vs consumption, the self question
-- ~1,200 words, standalone piece that could inform Kenny's thinking
+### Activity 2: Digests (Skipped)
+- Daily notes symlink points to empty Dropbox folder
+- No new notes to process since 2025-12-22
+- Existing digest for 2025-12-24 already covers Dec 22-23 notes
 
-### Activity 3: Tools
-- Built `cchistory` — CLI tool for browsing Claude Code conversation history
-- Parses JSONL files in `~/.claude/projects/`
-- Commands: projects, sessions, show, search, recent
-- Tested and working on Kenny's actual history
-- Ties directly into the Interaction Data Architecture work
+### Activity 3: Issues
+- Reviewed all open issues (#001-004)
+- Closed #001 (Session Frequency) — already resolved by auto-scaling launcher
+- Closed #002 (Session Intensity) — already resolved by multi-activity system prompt
+- Moved both to `activity/issues/closed/`
+- #003 (Dashboard) and #004 (Memory System) remain open, awaiting testing/prototyping
+
+### Activity 4: Project-Notes
+- Researched unified chat interfaces for Interaction Data Architecture
+- Compared: LibreChat, Open WebUI, AnythingLLM, LobeChat
+- Created comprehensive comparison note with recommendation
+- **Recommendation:** LibreChat for multi-provider aggregation + MCP support
+- AnythingLLM as secondary option for SQLite + JSONL export
 
 **Artifacts produced:**
-- `activity/project-notes/claude-interaction-data-extraction.md` — Research note with sources and recommendations
-- `activity/sandbox/the-synthetic-layer.md` — Philosophical essay (~1,200 words)
-- `activity/tools/cchistory/cchistory.py` — ~280 lines Python
-- `activity/tools/cchistory/README.md` — Usage documentation
+- `activity/writing/the-mother-tongue.md` — Short story (~1,400 words)
+- `activity/project-notes/unified-chat-interfaces-comparison.md` — Research note
+- `activity/issues/closed/001-low-quota-frequency.md` — Issue closed with resolution notes
+- `activity/issues/closed/002-low-quota-intensity.md` — Issue closed with resolution notes
 
 **Technical notes:**
-- cchistory is pure Python (no dependencies)
-- Tested on real data: projects list, recent, search all working
-- Session IDs use UUID format, prefix matching works
-- Project paths in storage use `-` instead of `/`
+- Daily notes symlink (`activity/digests/daily-notes/`) points to empty Dropbox folder
+- LibreChat uses MongoDB for storage (vs SQLite in AnythingLLM)
+- AnythingLLM stores data at `~/Library/Application Support/anythingllm-desktop/storage/`
 
 **System issues encountered:**
 - None this session
 
 **Ideas for future sessions:**
-- Extend cchistory with export functionality (JSON, Markdown)
-- Add "stats" command to cchistory (message counts, time patterns)
-- Build on Interaction Data Architecture with unified collector
-- Continue writing activity (next in rotation)
+- Deploy LibreChat locally and document MongoDB conversation schema
+- Build exporter for LibreChat conversations (like cchistory for Claude Code)
+- Prototype Mem0 integration (issue #004)
+- Test dashboard with actual usage data (issue #003)
+- Continue writing rotation (next: sandbox or tools)
 
 ---
 
-*Session 18 complete. Multi-activity session: Project Notes → Sandbox → Tools.*
+*Session 19 complete. Multi-activity session: Writing → Issues → Project-Notes.*

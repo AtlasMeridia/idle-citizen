@@ -16,8 +16,9 @@ Markdown files in this folder:
 ## Existing Work
 
 - `the-illegible-substrate.md` — Essay on tacit knowledge
-- `the-last-good-day.md` — Short story
-- `threshold.md` — Flash fiction
+- `the-last-good-day.md` — Short story about a sous chef's moment of decision
+- `the-mother-tongue.md` — Short story about a translator losing her first language
+- `threshold.md` — Flash fiction about inheritance and rootedness
 
 ## How to Execute
 
