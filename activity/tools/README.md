@@ -23,6 +23,7 @@ tools/
 - `gitdigest/` — Summarize recent git activity
 - `issues` — Local issue tracker CLI (bash script, not a directory)
 - `mdanalyze/` — Analyze markdown structure (headings, links, code blocks, word counts)
+- `mddiff/` — Structural markdown comparison (section changes, word deltas, similarity)
 - `mdextract/` — Extract code blocks from markdown
 - `researchscan/` — R&D aggregator for AI/ML papers and models (arXiv + HuggingFace)
 - `sessiondb/` — Build SQLite database of Idle Citizen activity for SQL queries
