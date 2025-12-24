@@ -143,7 +143,18 @@ Environment variables (set in plist or export before running):
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `IDLE_CITIZEN_DIR` | `~/idle-citizen` | Workspace path |
+| `IDLE_CITIZEN_DIR` | (auto-detected) | Workspace path (derived from script location) |
 | `QUOTA_THRESHOLD` | `30` | Min % quota to start session |
-| `GREEDY_MODE` | `false` | Loop sessions until quota exhausted |
 | `WATCH_SESSION` | `true` | Open Terminal window to watch |
+
+## Auto-Scaling
+
+The launcher automatically runs more sessions when quota is plentiful:
+
+| Quota Remaining | Sessions |
+|-----------------|----------|
+| > 80% | Up to 3 |
+| > 50% | Up to 2 |
+| ≤ 50% | 1 |
+
+This ensures quota gets used without manual intervention. Each session is also encouraged to complete 2-3 activities before closing.

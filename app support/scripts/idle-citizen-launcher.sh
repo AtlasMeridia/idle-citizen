@@ -14,9 +14,13 @@ set -euo pipefail
 # Derive project root from script location (two levels up from app support/scripts/)
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 IDLE_CITIZEN_DIR="${IDLE_CITIZEN_DIR:-$(cd "$SCRIPT_DIR/../.." && pwd)}"
-QUOTA_THRESHOLD="${QUOTA_THRESHOLD:-30}"  # Launch if >30% remaining in 5-hour window
-GREEDY_MODE="${GREEDY_MODE:-false}"       # If true, run sessions until quota exhausted
+QUOTA_THRESHOLD="${QUOTA_THRESHOLD:-30}"  # Won't launch if below this %
 WATCH_SESSION="${WATCH_SESSION:-true}"    # If true, open Terminal window to watch session
+
+# Auto-scaling thresholds: run more sessions when quota is plentiful
+QUOTA_HIGH=80    # Above this: run up to 3 sessions
+QUOTA_MEDIUM=50  # Above this: run up to 2 sessions
+                 # Below QUOTA_MEDIUM: run 1 session
 LOG_DIR="$IDLE_CITIZEN_DIR/app support/logs"
 
 # Dynamic session duration based on quota (in seconds)
@@ -134,6 +138,28 @@ except:
 }
 
 # -----------------------------------------------------------------------------
+# Calculate max sessions based on quota (auto-scaling)
+# Higher quota = more sessions to use it up
+# -----------------------------------------------------------------------------
+
+calculate_max_sessions() {
+    local quota_pct="$1"
+
+    python3 -c "
+quota = float('$quota_pct')
+high = $QUOTA_HIGH
+medium = $QUOTA_MEDIUM
+
+if quota > high:
+    print(3)
+elif quota > medium:
+    print(2)
+else:
+    print(1)
+"
+}
+
+# -----------------------------------------------------------------------------
 # Calculate session duration based on quota
 # Scale linearly: 30% quota -> 15min, 100% quota -> 60min
 # -----------------------------------------------------------------------------
@@ -200,14 +226,26 @@ Check activity-rotation.txt for what was done last, pick the NEXT one.
 - inbox/ — messages from Kenny (move to inbox/processed/ after reading)
 - activity/ — modular activity folders with their own READMEs
 
-## Multi-Activity Sessions
+## Multi-Activity Sessions — IMPORTANT
 
-After completing an activity, decide whether to continue:
-- Continue if you have energy and the session feels short
-- Close if you've done substantial work or hit diminishing returns
+You should typically complete 2-3 activities per session, not just one.
 
-The goal is to use the session fully. Don't end early just because one activity
-is done.
+After completing an activity, **default to continuing** unless:
+- You've already done 3+ activities this session
+- You've been working for 30+ minutes
+- You're genuinely stuck or hitting diminishing returns
+
+**Do NOT close the session just because:**
+- One activity is "done" — there's always another in the rotation
+- The work feels "complete enough" — use the quota
+- You want to be conservative — Kenny wants you to use this time
+
+When continuing:
+1. Update activity-rotation.txt with the completed activity
+2. Pick the next activity in rotation
+3. Keep going
+
+The quota expires if unused. Err on the side of doing more, not less.
 
 ## Constraints
 - No spending money or signing up for services
@@ -400,7 +438,6 @@ run_single_session() {
 main() {
     log "=== Idle Citizen Launcher ==="
     log "Workspace: $IDLE_CITIZEN_DIR"
-    log "Greedy mode: $GREEDY_MODE"
 
     # Acquire lock to prevent concurrent sessions
     if ! acquire_lock; then
@@ -424,21 +461,42 @@ main() {
 
     log "OAuth token retrieved successfully"
 
-    if [[ "$GREEDY_MODE" == "true" ]]; then
-        # Greedy mode: run sessions until quota exhausted
-        local session_count=0
-        while run_single_session "$token"; do
-            ((session_count++))
-            log "=== Session $session_count complete. Checking for more quota... ==="
-            sleep 10  # Brief pause between sessions
-        done
-        log "Greedy mode complete. Ran $session_count session(s)."
-    else
-        # Normal mode: run one session
+    # Check initial quota to determine max sessions (auto-scaling)
+    log "Checking quota for auto-scaling..."
+    local initial_quota
+    initial_quota=$(get_quota_remaining "$token")
+
+    if [[ "$initial_quota" == "-1" ]]; then
+        log "ERROR: Could not determine quota"
+        exit 1
+    fi
+
+    local max_sessions
+    max_sessions=$(calculate_max_sessions "$initial_quota")
+    log "Quota: ${initial_quota}% → auto-scaling to max $max_sessions session(s)"
+
+    # Run sessions up to the calculated max
+    local session_count=0
+    while [[ $session_count -lt $max_sessions ]]; do
         if ! run_single_session "$token"; then
-            log "Skipping session."
-            exit 0
+            if [[ $session_count -eq 0 ]]; then
+                log "Skipping session (quota too low)."
+            else
+                log "Stopping after $session_count session(s) (quota depleted)."
+            fi
+            break
         fi
+
+        ((session_count++))
+
+        if [[ $session_count -lt $max_sessions ]]; then
+            log "=== Session $session_count complete. Pausing before next session... ==="
+            sleep 10  # Brief pause between sessions
+        fi
+    done
+
+    if [[ $session_count -gt 0 ]]; then
+        log "Completed $session_count session(s)."
     fi
 
     log "=== Launcher complete ==="
