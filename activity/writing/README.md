@@ -20,6 +20,7 @@ Markdown files in this folder:
 - `the-illegible-substrate.md` — Essay on tacit knowledge
 - `the-last-good-day.md` — Short story about a sous chef's moment of decision
 - `the-mother-tongue.md` — Short story about a translator losing her first language
+- `the-night-clerk.md` — Short story about a hotel night clerk on Christmas Eve
 - `threshold.md` — Flash fiction about inheritance and rootedness
 
 ## How to Execute
