@@ -21,6 +21,8 @@ Markdown files in this folder:
 - `the-last-good-day.md` — Short story about a sous chef's moment of decision
 - `the-mother-tongue.md` — Short story about a translator losing her first language
 - `the-night-clerk.md` — Short story about a hotel night clerk on Christmas Eve
+- `the-swarm.md` — Short story about a beekeeper deciding whether to sell the family apiary
+- `the-translation.md` — Short story about two colleagues navigating cross-cultural miscommunication
 - `threshold.md` — Flash fiction about inheritance and rootedness
 
 ## How to Execute

@@ -4,57 +4,65 @@
 
 ---
 
-## Session: 27
+## Session: 28
 
-**Date:** 2025-12-24
+**Date:** 2025-12-24 (Christmas Eve)
 
-**Activities Completed:** Headless-Atlas, Issues (review), Project-Notes
+**Activities Completed:** Sandbox, Tools, Writing
 
 **What I did:**
 
-### Activity 1: Headless-Atlas — Version Sync Fix
+### Activity 1: Sandbox — Procedural Places
 
-Updated the design system version number in `tokens.css` from 3.1 to 4.2.0 to match the CHANGELOG. The file comment was out of sync with the documented version history. Also cleaned up a stray `.env.example` file that shouldn't have been in the repo.
+Experimented with constrained generative worldbuilding. Created a constraint system with six dimensions (geography, scale, era-feel, mood, economic mode, relationship to water) and generated three fictional places by rolling constraints and finding the internal logic that makes each configuration coherent:
 
-Commit: `chore: update tokens.css version to 4.2.0`
+1. **The Rosewater District** — A Louisiana-style wetland neighborhood in mid-century decay, where former suburban streets are now navigated by skiff
+2. **Ama Thala** — A ruined mountain temple where a hermit maintains the spring without claiming ownership or religion
+3. **Calle Tercera, Atacana** — A desert-edge street in a lithium mining town, divided between company housing and the old town whose wells are drying
 
-### Activity 2: Issues — Review
+Key insight: Constraints create problems to solve, not randomness. The intersections of orthogonal dimensions produce texture and specificity.
 
-Reviewed both open issues (#003 Dashboard, #004 Memory System). Both are in "waiting for Kenny" state:
-- #003: Dashboard prototype built, needs Kenny's feedback
-- #004: Memory system research complete, needs Kenny's decision on scope
+Created: `activity/sandbox/procedural-places.md`
 
-No action needed on either issue at this time.
+### Activity 2: Tools — jsonq
 
-### Activity 3: Project-Notes — DAEMON Local VLM Implementation Guide
+Built a JSON query tool with simple dot-notation syntax. A lightweight alternative to jq for common inspection tasks.
 
-Created comprehensive research document for DAEMON's Phase 2 (Perception) vision capabilities.
+Features:
+- Dot notation: `user.name`
+- Array access: `items[0]`, `items[-1]`
+- Wildcards: `items[*].id` to map over arrays
+- `--keys` to list available paths
+- `--summary` for structural overview
+- `--raw` for unquoted string output
+- `--type` and `--length` for metadata
 
-**Key findings:**
-- **Recommended model:** Qwen2.5-VL-7B-Instruct (4-bit quantized)
-- **Framework:** MLX-VLM for native Apple Silicon optimization
-- Qwen2.5-VL outperforms LLaVA on most benchmarks, especially document understanding
-- ~5GB RAM required for 7B-4bit model, runs at ~35 tok/s on M4 Max
-- MLX-VLM provides OpenAI-compatible API server, easy integration
+Tested on Claude Code session data (JSONL files). Works well for exploring unknown JSON structures.
 
-**Document includes:**
-- Model landscape comparison (Qwen, Gemma, LLaVA, SmolVLM)
-- Installation and Python integration examples
-- Memory requirements by Mac configuration
-- Capability implementations for DAEMON (screen analysis, document understanding, aesthetic analysis, UI navigation, video)
-- Module interface design following DAEMON's hot-swap principles
-- Implementation checklist for Phase 2
+Created: `activity/tools/jsonq/` with Python script and README
+
+### Activity 3: Writing — "The Translation"
+
+Short story (~1,800 words) about two colleagues—Yuki, whose English is excellent but who hasn't mastered the space around words, and David, whose Japanese is functional but who can't detect tatemae vs honne. They work through a project together and gradually learn to communicate across their different relationships with silence and indirection.
+
+The story explores cross-cultural communication failure not as hostility but as different frames—what it means when words arrive but meaning doesn't. Ends with a tentative invitation and a new comfort with not-knowing.
+
+Four-pass revision process (draft, structural, line edit, polish).
+
+Created: `activity/writing/the-translation.md`
 
 **Artifacts produced:**
-- Headless-atlas version fix commit
-- `activity/project-notes/daemon-local-vlm-implementation.md` — VLM implementation guide
+- `activity/sandbox/procedural-places.md` — Constraint-based place generation experiment
+- `activity/tools/jsonq/jsonq.py` — JSON query tool
+- `activity/tools/jsonq/README.md` — Documentation
+- `activity/writing/the-translation.md` — Short story
 
 **For next session:**
-- Next activity in rotation: **sandbox** (alphabetically after project-notes)
-- Could explore building a prototype VLM integration
-- Could continue with creative writing activity
-- Digests still blocked (daily-notes folder empty)
+- Next activity in rotation: **digests** (alphabetically after writing, though often blocked by empty daily-notes folder)
+- After that: **headless-atlas**
+- Could follow up on places experiment — maybe use one as a story setting
+- jsonq could be useful for analyzing Claude Code session data
 
 ---
 
-*Session 27 complete. Triple-activity session: Headless-Atlas → Issues → Project-Notes.*
+*Session 28 complete. Triple-activity session: Sandbox → Tools → Writing.*
