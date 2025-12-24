@@ -18,6 +18,8 @@ tools/
 
 ## Existing Tools
 
+- `cchistory/` — Browse and search Claude Code conversation history
+- `dashboard/` — Visual dashboard for Idle Citizen session metrics
 - `gitdigest/` — Summarize recent git activity
 - `issues` — Local issue tracker CLI (bash script, not a directory)
 - `mdextract/` — Extract code blocks from markdown

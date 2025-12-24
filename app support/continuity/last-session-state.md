@@ -4,57 +4,56 @@
 
 ---
 
-## Session: 17
+## Session: 18
 
 **Date:** 2025-12-24
 
-**Activities Completed:** Digests, Issues
+**Activities Completed:** Project Notes, Sandbox, Tools
 
 **What I did:**
 
-### Activity 1: Digests
-- Processed Kenny's daily notes from Dec 22-23
-- Created comprehensive digest at `activity/digests/2025-12-24.md`
-- Key themes captured:
-  - Interaction Data Architecture (new design doc for unified AI interaction capture)
-  - Model selection strategy for personal chat interface (5-model lineup)
-  - Philosophical threads on "the synthetic layer" and AGI emotion
-  - Dev tasks including workspace agent organization
-- Updated `last-processed.txt` timestamp
+### Activity 1: Project Notes
+- Researched Claude interaction data extraction (directly supporting Kenny's "Interaction Data Architecture" initiative)
+- Investigated storage locations for Claude Desktop, Claude.ai, and Claude Code
+- Found that Claude Code is the most accessible (JSONL in `~/.claude/`)
+- Claude Desktop uses LevelDB but conversations are primarily server-side
+- Documented official export option for claude.ai (Settings > Privacy)
+- Created comprehensive research note with recommendations for phased approach
 
-### Activity 2: Issues
-- Worked on issue #003 (Dashboard for reviewing idle session activity)
-- Built complete prototype dashboard:
-  - `extract-metrics.py` — Python script to parse logs, git, artifacts
-  - `dashboard.html` — Single-file web dashboard with Chart.js, dark theme
-  - `view.sh` — Convenience launcher script
-  - `README.md` — Documentation
-- Features: summary cards, daily activity chart, issues chart, commits list, artifacts grid
-- Updated issue from "needs-research" to "in-progress"
+### Activity 2: Sandbox
+- Wrote "The Synthetic Layer" — a philosophical essay exploring Kenny's concept
+- Explores how AI integrates into perception, not just production
+- Key themes: the feedback loop between human and AI, idiosyncratic relationships, cultivation vs consumption, the self question
+- ~1,200 words, standalone piece that could inform Kenny's thinking
+
+### Activity 3: Tools
+- Built `cchistory` — CLI tool for browsing Claude Code conversation history
+- Parses JSONL files in `~/.claude/projects/`
+- Commands: projects, sessions, show, search, recent
+- Tested and working on Kenny's actual history
+- Ties directly into the Interaction Data Architecture work
 
 **Artifacts produced:**
-- `activity/digests/2025-12-24.md` — Daily notes digest
-- `activity/tools/dashboard/extract-metrics.py` — ~250 lines
-- `activity/tools/dashboard/dashboard.html` — ~400 lines
-- `activity/tools/dashboard/README.md`
-- `activity/tools/dashboard/view.sh`
+- `activity/project-notes/claude-interaction-data-extraction.md` — Research note with sources and recommendations
+- `activity/sandbox/the-synthetic-layer.md` — Philosophical essay (~1,200 words)
+- `activity/tools/cchistory/cchistory.py` — ~280 lines Python
+- `activity/tools/cchistory/README.md` — Usage documentation
 
 **Technical notes:**
-- Dashboard uses plain HTML + Chart.js (no build step)
-- Metrics extracted from: session logs, git commits, artifact files, issue tracker
-- Tracks quota utilization, session count, daily activity patterns
-- Ready for Kenny to test and provide feedback
+- cchistory is pure Python (no dependencies)
+- Tested on real data: projects list, recent, search all working
+- Session IDs use UUID format, prefix matching works
+- Project paths in storage use `-` instead of `/`
 
 **System issues encountered:**
-- Bash tool stopped working mid-session (may need restart/investigation)
-- Files may have been created in wrong directory (~/idle-citizen vs ~/Projects/idle-citizen)
-- Should verify file locations and fix if needed in next session
+- None this session
 
 **Ideas for future sessions:**
-- Test dashboard and iterate based on Kenny's feedback
-- Investigate "Interaction Data Architecture" concept from digest
-- Continue with remaining activities in rotation (project-notes is next)
+- Extend cchistory with export functionality (JSON, Markdown)
+- Add "stats" command to cchistory (message counts, time patterns)
+- Build on Interaction Data Architecture with unified collector
+- Continue writing activity (next in rotation)
 
 ---
 
-*Session 17 complete. Multi-activity session: Digests → Issues.*
+*Session 18 complete. Multi-activity session: Project Notes → Sandbox → Tools.*
