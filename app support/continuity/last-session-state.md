@@ -4,60 +4,60 @@
 
 ---
 
-## Session: 20
+## Session: 21
 
 **Date:** 2025-12-24
 
-**Activities Completed:** Sandbox, Tools, Writing
+**Activities Completed:** Headless-Atlas, Issues, Project-Notes
 
 **What I did:**
 
-### Activity 1: Sandbox — Deep Research on Personal Data Architecture
-- Launched 3 parallel research agents investigating:
-  1. Personal knowledge graphs and second brain architectures
-  2. AI memory systems for personal assistants
-  3. Personal data capture pipelines
-- Synthesized findings into comprehensive research document (~15k words)
-- Key findings:
-  - SQLite is the "lingua franca" of personal data tools (Dogsheep, Screenpipe, Logseq DB)
-  - Mem0 is the leading open-source AI memory framework ($24M Series A)
-  - Temporal knowledge graphs (Graphiti/Zep) enable time-aware queries but are immature
-  - "Forgetting isn't a bug—it's a feature of intelligent memory"
-  - Privacy concerns are pushing toward local-first architectures
-- This research directly supports Kenny's Interaction Data Architecture initiative
+### Activity 1: Headless-Atlas — Add Idle Citizen to Tools page
+- Kenny left a prompt file (`dev/add-to-tools-page-prompt.md`) requesting Idle Citizen be added to his website
+- Added Idle Citizen as the first project on https://atlas.kennypliu.com/tools
+- Status: "Active" (with pulsing indicator)
+- Description: Autonomous AI session system for unused Claude Max quota
+- Committed to headless-atlas repo, archived the prompt file
 
-### Activity 2: Tools — Built `sessiondb`
-- Python CLI tool that creates a SQLite database of Idle Citizen activity
-- Aggregates: session logs, git commits, artifacts, issues
-- Queryable with standard sqlite3 or Datasette
-- No external dependencies (uses sqlite3 standard library)
-- Follows the Dogsheep pattern: convert personal data to SQLite, query with standard tools
-- Successfully tested: found 32 sessions, 45 commits, 19 artifacts, 4 issues
+### Activity 2: Issues — Dashboard Enhancement
+- Worked on issue #003 (Dashboard for reviewing sessions)
+- Added "Recent Artifacts" section showing 10 most recent artifacts with:
+  - Title extracted from frontmatter or markdown heading
+  - Activity badge (color-coded)
+  - Modification date
+- Updated `extract-metrics.py` with `get_recent_artifacts()` function
+- Updated `dashboard.html` with new section and styling
+- This improves visibility into what was actually created vs just counts
 
-### Activity 3: Writing — "The Archive"
-- Short story (~1,600 words after revision) about Maya, a woman who used a total-recall device for 11 years
-- Explores the cost of perfect memory: the inability to forget, to transform, to let the past become the past
-- Themes: technology and cognition, the value of imperfect memory, grief and healing
-- Connection to sandbox research on "forgetting mechanisms" in AI memory systems
-- Multiple revision passes to tighten prose and remove didactic sections
+### Activity 3: Project-Notes — DAEMON R&D Agent Implementation Guide
+- Researched practical approaches to building DAEMON's automated research monitoring system
+- Created comprehensive implementation guide covering:
+  - HuggingFace API for trending models
+  - arXiv RSS/Atom feeds for papers
+  - Reddit PRAW for r/LocalLLaMA monitoring
+  - GitHub releases + trending repos
+  - SQLite + Datasette architecture
+  - Full database schema
+  - Starter Python code
+  - Phased implementation plan
+- This directly supports DAEMON Phase 1 (R&D Agent is described as "essential")
 
 **Artifacts produced:**
-- `activity/sandbox/personal-data-architecture-research.md` — Comprehensive research synthesis
-- `activity/tools/sessiondb/sessiondb.py` — SQLite database builder CLI
-- `activity/tools/sessiondb/README.md` — Tool documentation
-- `activity/writing/the-archive.md` — Short story
+- `activity/project-notes/daemon-rnd-agent-implementation.md` — R&D agent implementation guide
+- Updated `activity/tools/dashboard/extract-metrics.py` — Added recent artifacts function
+- Updated `activity/tools/dashboard/dashboard.html` — Added recent artifacts section
+- Updated `activity/issues/open/003-dashboard...` — Documented Session 21 progress
 
 **Technical notes:**
-- Parallel agents work well for deep research (3 agents, ~3-4 minutes each)
-- SQLite is available on the system (Python standard library)
-- No ML libraries (sentence-transformers, torch) or Ollama available, so deferred embeddings tool
+- Digests activity skipped again due to empty Dropbox folder (symlink target empty)
+- headless-atlas node_modules not installed, so couldn't run type-check, but changes are data-only
+- Dashboard improvements tested and working
 
-**Ideas for future sessions:**
-- Test sessiondb with Kenny to see if it's useful
-- Add more data sources to sessiondb (Claude Code history via cchistory?)
-- Build embeddings tool once Ollama or similar is available
-- Consider integrating Mem0 for DAEMON project (issue #004)
+**For next session:**
+- Next activity in rotation: **sandbox** (alphabetically after project-notes)
+- Consider building the R&D agent as a tool (follows Dogsheep/sessiondb pattern)
+- Digests may need investigation — is Dropbox syncing correctly?
 
 ---
 
-*Session 20 complete. Triple-activity session: Sandbox (research) → Tools (sessiondb) → Writing (The Archive).*
+*Session 21 complete. Triple-activity session: Headless-Atlas → Issues → Project-Notes.*
