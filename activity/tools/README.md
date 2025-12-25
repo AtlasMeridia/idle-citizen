@@ -18,10 +18,9 @@ tools/
 
 ## Existing Tools
 
+- `artifacts/` — Analyze and report on Idle Citizen artifacts (stats, search, recent)
 - `cchistory/` — Browse and search Claude Code conversation history
-- `dashboard/` — Visual dashboard for Idle Citizen session metrics
 - `gitdigest/` — Summarize recent git activity
-- `issues` — Local issue tracker CLI (bash script, not a directory)
 - `jsonq/` — Query JSON files with simple dot-notation paths (lightweight jq alternative)
 - `mdanalyze/` — Analyze markdown structure (headings, links, code blocks, word counts)
 - `mddiff/` — Structural markdown comparison (section changes, word deltas, similarity)
