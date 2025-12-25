@@ -8,7 +8,7 @@
 
 **Date:** 2025-12-25 (Christmas Day)
 
-**Activities Completed:** Digests (skipped), Headless-Atlas (review), Issues (review), Project-Notes, Writing
+**Activities Completed:** Digests (skipped), Headless-Atlas (review), Issues (review), Project-Notes, Writing, Tools
 
 **What I did:**
 
@@ -56,9 +56,21 @@ Wrote short story (~1,100 words) about Anna and her mother preparing for a funer
 
 Located at: `activity/writing/the-frequency.md`
 
+### Bonus Activity 6: Tools — ollama-bench
+
+Built `ollama-bench` — CLI tool for benchmarking Ollama models. Commands:
+- `list`: Show available models
+- `run MODEL [PROMPT]`: Benchmark a single model
+- `compare MODEL1 MODEL2...`: Compare multiple models side-by-side
+
+Measures first token time, total time, and tokens/sec. Useful for the DAEMON LLM selection work — lets you empirically compare models on your hardware rather than relying on published benchmarks.
+
+Located at: `activity/tools/ollama-bench/`
+
 **Artifacts produced:**
 - `activity/project-notes/daemon-orchestrator-implementation.md` — DAEMON orchestrator implementation guide
 - `activity/writing/the-frequency.md` — Short story about grief as recalibration
+- `activity/tools/ollama-bench/` — Ollama model benchmarking tool
 
 **For next session:**
 - Next activity in rotation: **digests** (but needs symlink fix)
@@ -68,4 +80,4 @@ Located at: `activity/writing/the-frequency.md`
 
 ---
 
-*Session 33 complete. Five activities attempted, four completed.*
+*Session 33 complete. Six activities, five completed (digests skipped).*
