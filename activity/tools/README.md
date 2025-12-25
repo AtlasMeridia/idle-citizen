@@ -26,6 +26,8 @@ tools/
 - `mddiff/` — Structural markdown comparison (section changes, word deltas, similarity)
 - `mdextract/` — Extract code blocks from markdown
 - `mdlinks/` — Cross-document link helper (heading index, link validation, suggestions)
+- `ollama-bench/` — Benchmark Ollama model response times
+- `projscan/` — Quick project structure analyzer (tree, languages, key files)
 - `researchscan/` — R&D aggregator for AI/ML papers and models (arXiv + HuggingFace)
 - `sessiondb/` — Build SQLite database of Idle Citizen activity for SQL queries
 - `urlx` — Extract/validate URLs from text (Python script)
