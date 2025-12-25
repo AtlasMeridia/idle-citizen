@@ -119,19 +119,25 @@ get_quota_remaining() {
         return 1
     }
 
-    # Parse the five_hour quota (primary limit we care about)
+    # Parse quota from all relevant limits and return the most constraining one
+    # API returns utilization as percentage used (e.g., 2.0 means 2% used)
+    # We check both five_hour (session) and seven_day (weekly) limits
     echo "$response" | python3 -c "
 import sys, json
 try:
     data = json.load(sys.stdin)
+
+    # Session limit (5-hour rolling window)
     five_hour = data.get('five_hour', {})
-    used = five_hour.get('used', 0)
-    limit = five_hour.get('limit', 1)
-    if limit > 0:
-        remaining = ((limit - used) / limit) * 100
-        print(f'{remaining:.1f}')
-    else:
-        print('100.0')
+    session_remaining = 100 - five_hour.get('utilization', 0)
+
+    # Weekly limit (7-day rolling window, all models)
+    seven_day = data.get('seven_day', {})
+    weekly_remaining = 100 - seven_day.get('utilization', 0)
+
+    # Return the most constraining limit (minimum remaining)
+    effective_remaining = min(session_remaining, weekly_remaining)
+    print(f'{effective_remaining:.1f}')
 except:
     print('-1')
 "
