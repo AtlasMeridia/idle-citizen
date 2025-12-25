@@ -62,7 +62,7 @@ This is "RAG but more dynamic" — memory systems actively extract facts, consol
 - [x] Which system best fits existing stack? → **Mem0** (simpler, better MCP support)
 - [x] Storage backend? → **Qdrant** (via Docker) + SQLite for history
 - [x] How to integrate with Claude Code? → **OpenMemory MCP server** (native)
-- [ ] Should this be shared across projects or per-project? → TBD by Kenny
+- [x] Should this be shared across projects or per-project? → **Shared across all projects** (Kenny's decision: this computer is devoted to agentic AI)
 
 ## Research Complete
 
@@ -70,12 +70,21 @@ See detailed implementation guide: `explorations/project-notes/local-ai-memory-i
 
 **Recommendation:** Mem0 with OpenMemory MCP server, fully local with Ollama.
 
+## Status: OPERATIONAL (Session 39)
+
+The memory system is now live:
+- OpenMemory MCP server installed globally by Kenny
+- Tested successfully in Session 39 (can add and search memories)
+- Memories are being shared across all projects on this machine
+
 ## Next Steps
 
-1. ~~Pick one system to prototype~~ → **Mem0**
-2. Seed with exported Claude Desktop history
-3. ~~Build simple wrapper for Claude Code integration~~ → Use OpenMemory MCP
-4. Evaluate and iterate
+1. ~~Pick one system to prototype~~ → **Mem0** ✓
+2. Seed with exported Claude Desktop history (optional, low priority)
+3. ~~Build simple wrapper for Claude Code integration~~ → Use OpenMemory MCP ✓
+4. ~~Install and test~~ → **Working as of 2025-12-25** ✓
+5. Let memories accumulate naturally through use
+6. Periodically review what's being stored
 
 ## References
 

@@ -1,7 +1,14 @@
 ---
 title: Artifact Feedback System
-labels: [enhancement, low-priority]
+labels: [enhancement, deferred]
 created: 2025-12-24
+updated: 2025-12-25
+---
+
+## Status: DEFERRED
+
+Per Kenny's feedback (2025-12-25): Hold off on feedback system for now. Kenny is still setting things up and will read artifacts in time. Consider project management tools (Asana/Linear MCP) for actionable items instead of markdown-based tracking.
+
 ---
 
 ## Problem

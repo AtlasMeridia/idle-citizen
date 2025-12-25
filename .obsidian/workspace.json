@@ -8,7 +8,31 @@
         "type": "tabs",
         "children": [
           {
-            "id": "33131d3b2aa8a466",
+            "id": "569b559615d7492d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "activity/issues/open/004-local-ai-memory-system.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "004-local-ai-memory-system"
+            }
+          },
+          {
+            "id": "3897bdde2136da03",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
+            }
+          },
+          {
+            "id": "22d798aa7c306e2d",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -20,23 +44,9 @@
               "icon": "lucide-file",
               "title": "waiting-for-kenny"
             }
-          },
-          {
-            "id": "b415e15601d298f2",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "activity/tools/cchistory/README.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "README"
-            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -109,7 +119,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "activity/tools/cchistory/README.md",
+                "file": "inbox/waiting-for-kenny.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -119,7 +129,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for README"
+              "title": "Backlinks for waiting-for-kenny"
             }
           },
           {
@@ -128,12 +138,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "activity/tools/cchistory/README.md",
+                "file": "inbox/waiting-for-kenny.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from README"
+              "title": "Outgoing links from waiting-for-kenny"
             }
           },
           {
@@ -171,13 +181,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "activity/tools/cchistory/README.md",
+                "file": "inbox/waiting-for-kenny.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of README"
+              "title": "Outline of waiting-for-kenny"
             }
           }
         ]
@@ -198,8 +208,16 @@
       "bases:Create new base": false
     }
   },
-  "active": "b415e15601d298f2",
+  "active": "22d798aa7c306e2d",
   "lastOpenFiles": [
+    "activity/issues/open/004-local-ai-memory-system.md",
+    "inbox/waiting-for-kenny.md",
+    "activity/digests/README.md",
+    "activity/digests/README.md.tmp.26933.1766632313911",
+    "activity/digests/README.md.tmp.26933.1766632308789",
+    "activity/digests/README.md.tmp.26933.1766632302134",
+    "inbox/response-to-kenny-2025-12-24.md",
+    "activity/tools/cchistory/README.md",
     "context.md.tmp.25615.1766632007212",
     "activity/project-notes/daemon-privacy-security-implementation.md",
     "activity/writing/the-gift.md",
@@ -211,17 +229,12 @@
     "app support/archived/dashboard",
     "activity/issues/closed/003-dashboard-for-reviewing-idle-session-act.md",
     "app support/logs/2025-12-24_18-59-21_session.json",
-    "app support/logs/2025-12-24_18-59-21_meta.log",
-    "app support/continuity/last-session-state.md.tmp.22488.1766631508267",
     "activity/sandbox/personal-ai-landscape-2025.md",
     "activity/writing/the-return.md",
-    "inbox/waiting-for-kenny.md",
     "activity/project-notes/claude-agent-sdk-implementation.md",
     "activity/issues/open/006-artifact-feedback-system.md",
     "activity/issues/closed/005-sensitive-file-in-repo.md",
-    "activity/tools/sessiondb/sessiondb.py",
     "activity/tools/sessiondb/README.md",
-    "activity/tools/researchscan/researchscan.py",
     "activity/tools/researchscan/README.md",
     "activity/tools/ollama-bench/README.md",
     "activity/tools/mdlinks/README.md",
@@ -232,9 +245,6 @@
     "activity/tools/jsonq/README.md",
     "activity/tools/gitdigest/README.md",
     "activity/tools/dashboard/README.md",
-    "activity/tools/cchistory/README.md",
-    "activity/tools/README.md",
-    "inbox/processed/2025-12-24 Kenny's msg to Claude.md",
-    "inbox/response-to-kenny-2025-12-24.md"
+    "activity/tools/README.md"
   ]
 }
