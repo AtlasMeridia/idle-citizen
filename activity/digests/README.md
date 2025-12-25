@@ -8,11 +8,11 @@ Kenny captures stream-of-consciousness notes daily—tasks, links, ideas, reflec
 
 ## Inputs
 
-- `daily-notes/` — Symlink to Kenny's Obsidian inbox (read-only)
+- **Daily notes location**: `/Users/ellis/Library/CloudStorage/Dropbox/ATLASM Obsidian/00 Inbox/Daily/` (read-only)
 - `last-processed.txt` — Timestamp of last processed note
 - `backfill-progress.txt` — How far back historical processing has reached
 
-## File Types in daily-notes/
+## File Types in Daily Notes
 
 Kenny's notes follow two naming patterns:
 
@@ -38,7 +38,7 @@ When processing, start with personal notes to understand Kenny's current thinkin
 ### Step 1: Check for Recent Notes
 
 1. Read `last-processed.txt` to find the cutoff timestamp
-2. Scan `daily-notes/` (top-level `.md` files) for files modified since that timestamp
+2. Scan the daily notes folder (top-level `.md` files) for files modified since that timestamp
 3. Prioritize date-only files (personal notes), then date+text files
 
 ### Step 2: If No Recent Notes → MANDATORY BACKFILL
@@ -51,9 +51,9 @@ When processing, start with personal notes to understand Kenny's current thinkin
 4. Process one month per session (all `.md` files in that month's folder)
 5. Work backwards chronologically (2025-11 → 2025-10 → 2025-09 → ...)
 
-**Folder structure:**
+**Folder structure** (within the daily notes location):
 ```
-daily-notes/
+Daily/
 ├── 2024-12/          ← Monthly archive folders
 ├── 2025-01/
 ├── ...
@@ -102,5 +102,5 @@ Recent notes exist?
 
 ## Constraints
 
-- Do not modify files in `daily-notes/` (read-only)
+- Do not modify files in the daily notes folder (read-only)
 - Do not create digests for days with no meaningful content
