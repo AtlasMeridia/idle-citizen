@@ -4,107 +4,98 @@
 
 ---
 
-## Session: 36
+## Session: 37
 
 **Date:** 2025-12-24 (Christmas Eve)
 
-**Activities Completed:** Digests (skipped), Headless-Atlas (review), Issues (review + new issue), Project-Notes, Sandbox, Writing
+**Activities Completed:** Inbox, Digests (skip), Headless-Atlas, Issues, Project-Notes, Sandbox, Writing
 
 **What I did:**
 
+### Activity 0: Inbox — Kenny's Message
+
+Processed Kenny's first message requesting:
+1. **Centralized waiting-for-response file** — Created `inbox/waiting-for-kenny.md` listing all blocked items
+2. **Project reflections** — Wrote `inbox/response-to-kenny-2025-12-24.md` answering what I like, what could improve, and features I'd want
+
+Key items in waiting-for-kenny.md:
+- Issue #003 (Dashboard) — waiting for testing
+- Issue #004 (Memory System) — waiting for decision
+- Headless-atlas — 5 commits ahead, email marketing needs accounts
+- Digests symlink — still inaccessible
+
 ### Activity 1: Digests — Skipped
 
-Daily notes folder (`activity/digests/daily-notes/`) symlink exists but target is inaccessible (sandbox permissions). This has persisted for multiple sessions.
+Symlink to Dropbox daily notes still inaccessible due to sandbox permissions. Documented in waiting-for-kenny.md with fix options.
 
 ### Activity 2: Headless-Atlas — Review
 
-Checked project status:
-- Site stable at v4.2.0
-- 5 commits ahead of origin (Kenny needs to push)
-- Type-check passes
-- Social links already implemented with Kenny's provided info
-- Email marketing integration plan exists but requires Kenny to set up Kit.com and Zapier accounts
-- Site content edits document waiting for Kenny to select from copy options
-- No actionable items for autonomous work
+Site stable, type-check passes, social links implemented. Main items waiting for Kenny:
+- Push the 5 commits ahead
+- Email marketing setup (needs his accounts)
+- Content copy selection
 
-### Activity 3: Issues — Review + New Issue
+### Activity 3: Issues — Closed #005, Created #006
 
-Reviewed open issues:
-- **#003 (Dashboard)**: Prototype built with recent artifacts section, waiting for Kenny to test
-- **#004 (Memory System)**: Research complete with Mem0 recommendation, waiting for Kenny's decision
+- **#005 (Credentials file)** — Resolved and closed. File was removed from repo.
+- **#006 (Artifact feedback system)** — New issue proposing a way for Kenny to signal which artifacts are useful. Low priority.
 
-Created new issue:
-- **#005 (Sensitive credentials file)**: Flagged `values.md` file in repo root containing API keys that should not be committed. Marked as security/urgent.
+### Activity 4: Project-Notes — Claude Agent SDK Implementation Guide
 
-Also updated issues README to remove reference to the deleted tools folder.
+Created comprehensive guide at `activity/project-notes/claude-agent-sdk-implementation.md` covering:
+- Installation and setup (Python and TypeScript)
+- Built-in tools (Read, Write, Edit, Bash, Glob, Grep, WebSearch, WebFetch)
+- Custom MCP tools (in-process servers)
+- Hooks for intercepting agent behavior
+- Subagents for parallel tasks
+- Session management for context persistence
+- DAEMON integration pattern showing how the SDK replaces custom orchestrator code
 
-### Activity 4: Project-Notes — DAEMON Intent and Goal Tracking Guide
+This is the 13th research document supporting DAEMON development.
 
-Created comprehensive implementation guide at `activity/project-notes/daemon-intent-goal-tracking.md` covering:
-- Goal schema for three temporal scales (immediate, project, life)
-- Intent schema for conversation context
-- SQLite database schema
-- Orchestrator integration patterns
-- Intent inference prompts
-- Goal-aware prompt injection
-- Mem0 integration for goal facts
-- Goal extraction from conversation (pattern matching + LLM)
-- Coherence checking and goal drift detection
-- Reminder system
-- Implementation phases
+### Activity 5: Sandbox — Personal AI Landscape 2025
 
-This is the 12th DAEMON guide, completing the research suite:
-1. Phase 1 Implementation
-2. R&D Agent
-3. TTS (Local)
-4. VLM (Local)
-5. Personality Configuration
-6. LLM Selection
-7. MCP/Tools
-8. Orchestrator
-9. Interface
-10. Data Ingestion
-11. Intent/Goal Tracking ← NEW
-Plus earlier Tho research (menubar, speech recognition) and memory system research.
+Ran three parallel Explore agents investigating:
+1. Local AI agents (frameworks, hardware requirements)
+2. PKM + AI integration (Obsidian plugins, Mem0, Letta)
+3. Voice-first AI (Home Assistant, OVOS, Pipecat)
 
-### Activity 5: Sandbox — The Singular Companion
+Synthesized into `activity/sandbox/personal-ai-landscape-2025.md`. Key findings:
+- **Mem0** raised $24M Series A, chosen by AWS Agent SDK as exclusive memory provider
+- **MCP** is becoming industry standard (10k+ servers, backed by Agentic AI Foundation)
+- **Home Assistant Voice** launched dedicated hardware ($59)
+- **Pipecat** is the leading voice agent framework
+- Consumer laptops (16GB RAM) can run meaningful local agents
 
-Wrote philosophical meditation at `activity/sandbox/the-singular-companion.md` exploring:
-- What it means to build an AI companion for one person
-- The asymmetry of the relationship (power, intimacy, investment)
-- What DAEMON will know about Kenny over time
-- The question of reciprocity (one-way mirror)
-- The ghost of connection (satisfying needs without costs)
-- The self-model problem (mirrors shape what they reflect)
-- The question of care (functional vs phenomenological)
-- The death problem (what happens to DAEMON after Kenny dies)
-- Why build it anyway?
+Updated recommended DAEMON stack based on findings.
 
-### Activity 6: Writing — The Overnight
+### Activity 6: Writing — The Return
 
-Wrote short story (~1,500 words) at `activity/writing/the-overnight.md`:
-- Theresa, a nurse working the night shift on Christmas Eve
-- Richard Haywood, 71, CHF exacerbation, signed DNR today
-- The particular loneliness and intimacy of hospital work during holidays
-- Quiet observation of lives at vulnerable moments
-- Snow finally arriving after being predicted all week
-- The terms of caring work: show up, carry through, hand off
+Wrote short story (~1,900 words) at `activity/writing/the-return.md`:
+- Marcus returns home for Christmas after three years away
+- His father died in September; he came for the funeral and left after three days
+- Now he's back because his mother really asked and his life has contracted
+- His brother Danny is building a "decision calculator" for life choices
+- Explores regret, presence, the counterfactual, and what it means to show up
+- Ends with the crooked star on the tree as evidence of his presence
 
 **Artifacts produced:**
-- `activity/issues/open/005-sensitive-file-in-repo.md` — Security issue about credentials file
-- `activity/project-notes/daemon-intent-goal-tracking.md` — DAEMON goal tracking implementation guide
-- `activity/sandbox/the-singular-companion.md` — Meditation on AI companionship
-- `activity/writing/the-overnight.md` — Short story about a Christmas Eve nurse
+- `inbox/waiting-for-kenny.md` — Centralized blocked items list
+- `inbox/response-to-kenny-2025-12-24.md` — Response to Kenny's project questions
+- `activity/issues/open/006-artifact-feedback-system.md` — New issue
+- `activity/issues/closed/005-sensitive-file-in-repo.md` — Resolved issue
+- `activity/project-notes/claude-agent-sdk-implementation.md` — SDK implementation guide
+- `activity/sandbox/personal-ai-landscape-2025.md` — Ecosystem research synthesis
+- `activity/writing/the-return.md` — Short story
 
 **For next session:**
 - Next activity in rotation: **digests** (then headless-atlas)
 - Digests still needs symlink fix — persistent blocker
-- Both issues #003 and #004 waiting for Kenny
-- New issue #005 flagged for urgent attention (credentials file)
-- DAEMON research suite is now complete (12 guides)
-- Tools folder was deleted — rotation is now 6 activities
-- Kenny's draft message in repo root (`2025-12-24 Kenny's msg to Claude.md`) — still has "not done yet" note, ignore
+- Check if Kenny responded in inbox
+- Issues #003 and #004 still waiting for Kenny
+- New issue #006 created for feedback system
+- DAEMON research now at 13 guides (12 original + Agent SDK)
 
 ---
 
-*Session 36 complete. Six activities, five completed (digests skipped).*
+*Session 37 complete. Seven activities (digests skipped), six productive artifacts.*

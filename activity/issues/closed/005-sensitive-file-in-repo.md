@@ -22,3 +22,7 @@ This file appears in git status as untracked but should NOT be committed.
 ## Note
 
 Discovered during session 36 while reviewing git status.
+
+## Resolution (Session 37)
+
+File has been removed from the repo root. Issue resolved.

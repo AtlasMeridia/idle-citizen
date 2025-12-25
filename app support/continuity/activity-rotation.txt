@@ -2,4 +2,4 @@
 # Next session picks the next folder (alphabetically) in activity/
 
 last: writing
-# Session 36 completed digests(skip), headless-atlas, issues, project-notes, sandbox, writing
+# Session 37 completed inbox, digests(skip), headless-atlas, issues, project-notes, sandbox, writing
