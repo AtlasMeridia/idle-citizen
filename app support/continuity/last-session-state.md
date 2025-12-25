@@ -4,17 +4,17 @@
 
 ---
 
-## Session: 33
+## Session: 34
 
-**Date:** 2025-12-25 (Christmas Day)
+**Date:** 2025-12-24 (Christmas Eve)
 
-**Activities Completed:** Digests (skipped), Headless-Atlas (review), Issues (review), Project-Notes, Writing, Tools
+**Activities Completed:** Digests (skipped), Headless-Atlas (review), Issues (review), Project-Notes, Sandbox, Writing
 
 **What I did:**
 
 ### Activity 1: Digests — Skipped
 
-Daily notes folder (`inbox/daily-notes/`) still doesn't exist. Symlink needs to be created by Kenny.
+Daily notes folder (`activity/digests/daily-notes/`) symlink exists but target is inaccessible (sandbox permissions). Still needs Kenny to verify the symlink target.
 
 ### Activity 2: Headless-Atlas — Review
 
@@ -32,52 +32,59 @@ Checked open issues:
 
 Both issues remain in "waiting for Kenny" state.
 
-### Activity 4: Project-Notes — DAEMON Orchestrator Implementation Guide
+### Activity 4: Project-Notes — DAEMON Interface Implementation Guide
 
-Created comprehensive guide at `activity/project-notes/daemon-orchestrator-implementation.md` covering:
-- Orchestrator architecture and responsibilities (what it owns vs delegates)
-- Conversation loop design with context building
-- Memory integration patterns with Mem0
-- Module registry and capability routing
-- State management for session continuity
-- Python implementation skeleton
-- Configuration examples (daemon.yaml)
-- Error handling and graceful degradation
+Created comprehensive guide at `activity/project-notes/daemon-interface-implementation.md` covering:
+- Recommended architecture (system tray + main window + voice mode)
+- Framework choice: Tauri 2.0 over Electron (lighter, native tray support)
+- Three interface modes: Ambient, Conversational, Voice-Only
+- Voice pipeline: Faster-Whisper (STT) + Kokoro (TTS)
+- Avatar system: static → Live2D progression
+- System tray integration with quick menu structure
+- Frontend stack recommendation (Tauri + React/Svelte + Tailwind)
+- Tauri ↔ Python communication patterns
+- Implementation phases
 
-This fills the gap between the DAEMON intent doc and the individual module guides. The orchestrator is the central nervous system that ties together: LLM (Qwen 2.5), TTS (Kokoro), STT (Whisper), VLM (Qwen-VL), memory (Mem0), personality (YAML config), R&D agent (researchscan), and tools (MCP servers).
+This completes the DAEMON architecture documentation suite. Combined with the orchestrator guide, all major components are now documented.
 
-### Activity 5: Writing — "The Frequency"
+### Activity 5: Sandbox — Preference Formation Research
 
-Wrote short story (~1,100 words) about Anna and her mother preparing for a funeral. Explores:
-- The gap between ritual and genuine grief
-- The opacity of long marriages ("We were married for 37 years and I didn't know he had opinions about classical music")
-- How loss manifests as practical adjustments ("I'm going to have to learn when the store is crowded now")
-- The "frequency" of social maintenance vs. the quieter frequency of recalibration
+Deep research on cognitive science of human preference formation at `activity/sandbox/preference-formation-research.md`. Explores:
+- How preferences develop (exposure effects, social influence, peak experiences)
+- Discovery vs. construction debate
+- Preference stability and change (expertise effects, hedonic adaptation)
+- The articulation problem (stated vs. revealed preferences)
+- Narrative identity and "I'm the kind of person who..."
+- Preference aggregation impossibilities (Arrow's theorem)
+- RLHF limitations and better approaches
+- 10 implications for DAEMON's preference learning
 
-Located at: `activity/writing/the-frequency.md`
+Connects cognitive science research to AI system design, specifically for building preference-aware systems like DAEMON.
 
-### Bonus Activity 6: Tools — ollama-bench
+### Activity 6: Writing — "The Collection"
 
-Built `ollama-bench` — CLI tool for benchmarking Ollama models. Commands:
-- `list`: Show available models
-- `run MODEL [PROMPT]`: Benchmark a single model
-- `compare MODEL1 MODEL2...`: Compare multiple models side-by-side
+Wrote short story (~1,700 words) about Maya, a widow sorting through her late husband's vinyl collection. Explores:
+- Sharing a life without sharing preferences
+- The gap between loving someone and understanding what they love
+- Learning to listen after 26 years of pretending to
+- What we keep when someone is gone
 
-Measures first token time, total time, and tokens/sec. Useful for the DAEMON LLM selection work — lets you empirically compare models on your hardware rather than relying on published benchmarks.
+Thematic connection to the preference research: how preferences remain opaque even in long relationships, and what it means to start understanding after the fact.
 
-Located at: `activity/tools/ollama-bench/`
+Located at: `activity/writing/the-collection.md`
 
 **Artifacts produced:**
-- `activity/project-notes/daemon-orchestrator-implementation.md` — DAEMON orchestrator implementation guide
-- `activity/writing/the-frequency.md` — Short story about grief as recalibration
-- `activity/tools/ollama-bench/` — Ollama model benchmarking tool
+- `activity/project-notes/daemon-interface-implementation.md` — DAEMON interface implementation guide
+- `activity/sandbox/preference-formation-research.md` — Cognitive science of preference formation
+- `activity/writing/the-collection.md` — Short story about vinyl, grief, and learning to listen
 
 **For next session:**
-- Next activity in rotation: **digests** (but needs symlink fix)
+- Next activity in rotation: **digests** (but needs symlink fix, skip if inaccessible)
 - After digests: headless-atlas, issues, project-notes, sandbox, tools, writing
 - Both issues still waiting for Kenny
-- DAEMON research is now truly comprehensive — Phase 1 implementation guide, all module research, plus orchestrator. Ready to build.
+- DAEMON research suite is now complete: Phase 1 guide, LLM selection, TTS, STT, VLM, MCP, personality, R&D agent, orchestrator, and interface
+- Consider: starting to prototype DAEMON components?
 
 ---
 
-*Session 33 complete. Six activities, five completed (digests skipped).*
+*Session 34 complete. Six activities, five completed (digests skipped).*
