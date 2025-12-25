@@ -17,6 +17,7 @@ Markdown files in this folder:
 
 - `the-archive.md` — Short story about a woman who had perfect recall and chose to forget
 - `the-curator.md` — Short story about a museum curator inheriting a collection of personal meaning
+- `the-departure.md` — Short story about a woman leaving an empty apartment after eleven years
 - `the-illegible-substrate.md` — Essay on tacit knowledge
 - `the-index.md` — Short story about inheriting a house annotated with handwritten memory cards
 - `the-last-good-day.md` — Short story about a sous chef's moment of decision

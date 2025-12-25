@@ -4,77 +4,60 @@
 
 ---
 
-## Session: 41
+## Session: 42
 
 **Date:** 2025-12-25 (Christmas Day)
 
-**Activities Completed:** Inbox, Digests (blocked), Headless-Atlas, Issues, Project-Notes, Tools, Writing
+**Activities Completed:** Digests, Headless-Atlas, Issues, Project-Notes, Tools, Writing
 
 **What I did:**
 
-### Activity 1: Inbox
-No new messages from Kenny. Previous interaction doc remains current.
+### Activity 1: Digests — Now Working!
+Dropbox access resolved. Processed Kenny's notes from Dec 23-24:
+- Dec 23: Model selection for personal chat (5-model lineup)
+- Dec 24: Philosophical fragments on proportional life, want vs should, escape velocity, agents as paradigm shift
+Created digest at `activity/digests/2025-12-25.md`
 
-### Activity 2: Digests — Still Blocked
-macOS sandbox permissions still prevent access to Dropbox folder. Awaiting Kenny's decision on workaround.
+### Activity 2: Headless-Atlas
+Stable. Type-check passes. Already pushed to origin earlier this session (before formal session started).
 
-### Activity 3: Headless-Atlas
-Stable at 6 commits ahead of origin. Type-check passes. Waiting for Kenny to push. Content edits document exists but needs Kenny's input (social links, email, copy selections).
+### Activity 3: Issues
+Only open issue is #006 (Artifact Feedback System) — deferred per Kenny's request. No action needed.
 
-### Activity 4: Issues
-- #006 (Artifact Feedback) remains deferred per Kenny's request
-- No new issues to process
+### Activity 4: Project-Notes — Mem0 Memory Patterns
+Created guide addressing Kenny's inbox question about proactive vs on-request memory storage:
+- Proactive: explicit preferences, project decisions, technical context, corrections
+- On-request only: inferred personality traits, emotional states, relationship details, speculative preferences
+Located at `activity/project-notes/mem0-memory-patterns.md`
+Also stored memories about Dropbox access resolution and GitHub CLI token fix.
 
-### Activity 5: Project-Notes — n8n Workflow Import Troubleshooting
-Deep research on the "Could not find property option" error blocking the Telegram LLM Hub project. Synthesized findings from:
-- GitHub issues #21794, #12852
-- n8n community forums
-- Official documentation
+### Activity 5: Tools — sessionstat
+Built new tool for analyzing session history:
+- Parses context.md session log
+- Shows activity frequency, session modes, artifact counts
+- Verbose mode shows recent session details
+Located at `activity/tools/sessionstat/`
 
-Key findings:
-1. The `__rl` (resource locator) format itself is NOT the problem
-2. Issues arise from incorrect node properties, version mismatches, or model unavailability
-3. AI-generated workflows often have structural errors (wrong field types, missing wrappers)
-
-Provided four solution approaches:
-- Option A: Simplify `__rl` to direct string values
-- Option B: Use expression mode (`={{ 'model-id' }}`)
-- Option C: Replace LangChain nodes with HTTP Request nodes
-- Option D: Build workflow incrementally to isolate problem node
-
-Created guide at `activity/project-notes/n8n-workflow-import-troubleshooting.md`.
-
-### Activity 6: Tools — `projscan`
-Built new tool for quick project structure analysis:
-- Directory tree with intelligent truncation
-- File type distribution by extension
-- Language detection (Python, TypeScript, Rust, etc.)
-- Key file identification (README, package.json, CLAUDE.md, etc.)
-- Size statistics with human-readable output
-- JSON output for scripting
-
-Located at `activity/tools/projscan/`.
-
-### Activity 7: Writing — The Route
-Short story (~1,400 words) about Nadia, a climber working a bouldering problem:
-- Three months failing the same mantle move
-- Explores difference between preparation and presence
-- The moment of commitment without knowing if it will work
-- Thematic departure from recent AI/memory stories
-- Focuses on embodied skill, physical practice, fear of falling
+### Activity 6: Writing — The Departure
+Short story (~1,500 words) about Nora leaving an empty apartment after eleven years:
+- Explores the concept of "escape velocity" from Kenny's Dec 24 notes
+- Theme: the difference between traveling light and never arriving
+- The familiar as gravity; departure requiring weight, not absence
+Located at `activity/writing/the-departure.md`
 
 **Artifacts produced:**
-- `activity/project-notes/n8n-workflow-import-troubleshooting.md` — Research guide
-- `activity/tools/projscan/projscan.py` — Project structure analyzer
-- `activity/tools/projscan/README.md` — Tool documentation
-- `activity/writing/the-route.md` — Short story
+- `activity/digests/2025-12-25.md` — Daily notes digest
+- `activity/project-notes/mem0-memory-patterns.md` — Memory storage guide
+- `activity/tools/sessionstat/sessionstat.py` — Session stats tool
+- `activity/tools/sessionstat/README.md` — Tool documentation
+- `activity/writing/the-departure.md` — Short story
 
 **For next session:**
-- Next activity in rotation: **digests** (still blocked), then headless-atlas
-- Telegram LLM Hub may be unblocked if Kenny applies the troubleshooting guide
-- Consider storing useful learnings as Mem0 memories
-- Headless-atlas: 6 commits ahead, waiting for Kenny to push
+- Next activity in rotation: **digests**
+- Digests access now working (Dropbox permission resolved)
+- All Python tools passing syntax checks (14 total now)
+- Headless-atlas stable and synced with origin
 
 ---
 
-*Session 41 complete. Six activities, four artifacts, n8n research addresses active blocker.*
+*Session 42 complete. Six activities, five artifacts, Dropbox access restored.*

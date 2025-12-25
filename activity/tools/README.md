@@ -30,6 +30,7 @@ tools/
 - `projscan/` — Quick project structure analyzer (tree, languages, key files)
 - `researchscan/` — R&D aggregator for AI/ML papers and models (arXiv + HuggingFace)
 - `sessiondb/` — Build SQLite database of Idle Citizen activity for SQL queries
+- `sessionstat/` — Quick stats from session history (activity frequency, artifacts, trends)
 - `urlx` — Extract/validate URLs from text (Python script)
 
 ## How to Execute
