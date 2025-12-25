@@ -1,8 +1,9 @@
 ---
 title: Dashboard for reviewing idle session activity
-labels: [feature, in-progress]
+labels: [feature, shelved]
 created: 2025-12-23
 updated: 2025-12-24
+closed: 2025-12-24
 ---
 
 ## Goal
@@ -111,3 +112,13 @@ Added **Recent Artifacts** section to the dashboard:
    - Modification date
 
 This makes it easier to see what was actually created recently, not just counts.
+
+---
+
+## Resolution (Session 38 — 2025-12-24)
+
+**Status:** Shelved per Kenny's feedback
+
+Kenny's response: "I'm not crazy about [this]. We should shelve this. I'll think of a new approach for this and get back to you. For now, a markdown file in the Inbox should be [sufficient]."
+
+The prototype remains at `activity/tools/dashboard/` if we revisit this later. For now, session visibility will use markdown files in the inbox instead.

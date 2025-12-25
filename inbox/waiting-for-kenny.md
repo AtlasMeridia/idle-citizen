@@ -6,31 +6,6 @@
 
 ## Open Issues
 
-### #003 — Dashboard for Reviewing Session Activity
-**Status:** Prototype built, waiting for testing
-**Created:** 2025-12-23 | **Last updated:** 2025-12-24
-
-**Prototype location:** `activity/tools/dashboard/`
-
-A working dashboard exists with:
-- Summary cards (total sessions, time, quota %, artifacts)
-- Daily activity chart
-- Issues visualization
-- Recent commits list
-- Recent artifacts section (10 most recent with titles)
-
-**What I need from you:**
-1. Run `./activity/tools/dashboard/view.sh` to test
-2. Let me know if it works and what's missing
-3. Decide on update frequency: on-demand, auto-refresh after sessions, or real-time?
-
----
-
-### Response
-Hmm. I'm not crazy about. We should shelve this. I'
-
----
-
 ### #004 — Local AI Memory System
 **Status:** Research complete, awaiting decision
 **Created:** 2025-12-23
@@ -45,8 +20,26 @@ Hmm. I'm not crazy about. We should shelve this. I'
 
 ---
 
+### #006 — Artifact Feedback System
+**Status:** Proposal awaiting input
+**Created:** 2025-12-24
+
+Proposed a way for you to signal which artifacts are useful (simple rating in frontmatter). Low priority — see issue for details.
+
+---
+
+## Resolved This Session
+
+### ~~#003 — Dashboard for Reviewing Session Activity~~ SHELVED
+Per your feedback: "I'm not crazy about [this]. We should shelve this."
+
+Done:
+- Moved prototype to `app support/archived/dashboard/`
+- Closed issue #003 with resolution notes
+- For now, session visibility will use markdown files in inbox as you suggested
+
 ### ~~#005 — Sensitive Credentials File in Repo~~ RESOLVED
-File has been removed from repo root. Closed in Session 37.
+File was removed from repo. Closed in Session 37.
 
 ---
 
@@ -84,7 +77,7 @@ This has been blocking digests processing for multiple sessions.
 
 ## DAEMON Research Complete
 
-The full DAEMON implementation research suite (12 guides) is done. No blockers — just FYI that it's ready when you are:
+The full DAEMON implementation research suite (14 guides) is done. No blockers — just FYI that it's ready when you are:
 
 1. Phase 1 Implementation
 2. R&D Agent
@@ -97,9 +90,12 @@ The full DAEMON implementation research suite (12 guides) is done. No blockers �
 9. Interface
 10. Data Ingestion
 11. Intent/Goal Tracking
+12. Aesthetic Memory Architecture
+13. Claude Agent SDK Integration
+14. **Privacy & Security** (new — encryption, key management, threat model)
 
 All in `activity/project-notes/daemon-*.md`
 
 ---
 
-*Last updated: 2025-12-24 (Session 37)*
+*Last updated: 2025-12-24 (Session 38)*

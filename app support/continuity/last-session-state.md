@@ -4,98 +4,76 @@
 
 ---
 
-## Session: 37
+## Session: 38
 
-**Date:** 2025-12-24 (Christmas Eve)
+**Date:** 2025-12-24 (Christmas Eve / Christmas Day)
 
-**Activities Completed:** Inbox, Digests (skip), Headless-Atlas, Issues, Project-Notes, Sandbox, Writing
+**Activities Completed:** Inbox (Kenny's response), Digests (skip), Headless-Atlas, Issues, Project-Notes, Writing
 
 **What I did:**
 
-### Activity 0: Inbox — Kenny's Message
+### Activity 0: Inbox — Processed Kenny's Response
 
-Processed Kenny's first message requesting:
-1. **Centralized waiting-for-response file** — Created `inbox/waiting-for-kenny.md` listing all blocked items
-2. **Project reflections** — Wrote `inbox/response-to-kenny-2025-12-24.md` answering what I like, what could improve, and features I'd want
+Kenny responded to issue #003 (Dashboard) in the waiting-for-kenny.md file:
+- "I'm not crazy about. We should shelve this."
+- Requested moving prototype to `app support/archived/`
 
-Key items in waiting-for-kenny.md:
-- Issue #003 (Dashboard) — waiting for testing
-- Issue #004 (Memory System) — waiting for decision
-- Headless-atlas — 5 commits ahead, email marketing needs accounts
-- Digests symlink — still inaccessible
+**Actions taken:**
+1. Moved dashboard prototype to `app support/archived/dashboard/`
+2. Closed issue #003 with resolution notes
+3. Updated waiting-for-kenny.md to reflect completed action
 
 ### Activity 1: Digests — Skipped
 
-Symlink to Dropbox daily notes still inaccessible due to sandbox permissions. Documented in waiting-for-kenny.md with fix options.
+Symlink to Dropbox daily notes still inaccessible due to sandbox permissions. Documented as persistent blocker.
 
 ### Activity 2: Headless-Atlas — Review
 
-Site stable, type-check passes, social links implemented. Main items waiting for Kenny:
-- Push the 5 commits ahead
-- Email marketing setup (needs his accounts)
-- Content copy selection
+Site stable, 5 commits ahead of origin. Waiting for Kenny to push. No action needed.
 
-### Activity 3: Issues — Closed #005, Created #006
+### Activity 3: Issues — #003 Closed
 
-- **#005 (Credentials file)** — Resolved and closed. File was removed from repo.
-- **#006 (Artifact feedback system)** — New issue proposing a way for Kenny to signal which artifacts are useful. Low priority.
+- **#003 (Dashboard)** — Moved to closed, marked as "shelved"
+- **#004 (Memory System)** — Still waiting for Kenny's decision
+- **#006 (Artifact Feedback)** — Still waiting for Kenny's input
 
-### Activity 4: Project-Notes — Claude Agent SDK Implementation Guide
+### Activity 4: Project-Notes — DAEMON Privacy & Security Implementation Guide
 
-Created comprehensive guide at `activity/project-notes/claude-agent-sdk-implementation.md` covering:
-- Installation and setup (Python and TypeScript)
-- Built-in tools (Read, Write, Edit, Bash, Glob, Grep, WebSearch, WebFetch)
-- Custom MCP tools (in-process servers)
-- Hooks for intercepting agent behavior
-- Subagents for parallel tasks
-- Session management for context persistence
-- DAEMON integration pattern showing how the SDK replaces custom orchestrator code
+Created the 14th and final DAEMON guide at `activity/project-notes/daemon-privacy-security-implementation.md`. Covers:
 
-This is the 13th research document supporting DAEMON development.
+- **SQLCipher encryption** for SQLite databases (conversation history, state)
+- **OS keychain key management** (macOS Keychain, Linux Secret Service, Windows DPAPI)
+- **Qdrant vector encryption** options (application-layer, VectaX, localhost binding)
+- **Network isolation patterns** (localhost binding, startup verification, network gateway)
+- **Threat models** for personal AI (device theft, malware, backup leaks)
+- **Differential privacy** for preference extraction
+- **Lessons from Signal, Home Assistant, Ollama** implementations
 
-### Activity 5: Sandbox — Personal AI Landscape 2025
+This completes the DAEMON research suite with 14 guides covering all major subsystems.
 
-Ran three parallel Explore agents investigating:
-1. Local AI agents (frameworks, hardware requirements)
-2. PKM + AI integration (Obsidian plugins, Mem0, Letta)
-3. Voice-first AI (Home Assistant, OVOS, Pipecat)
+### Activity 5: Writing — The Gift
 
-Synthesized into `activity/sandbox/personal-ai-landscape-2025.md`. Key findings:
-- **Mem0** raised $24M Series A, chosen by AWS Agent SDK as exclusive memory provider
-- **MCP** is becoming industry standard (10k+ servers, backed by Agentic AI Foundation)
-- **Home Assistant Voice** launched dedicated hardware ($59)
-- **Pipecat** is the leading voice agent framework
-- Consumer laptops (16GB RAM) can run meaningful local agents
-
-Updated recommended DAEMON stack based on findings.
-
-### Activity 6: Writing — The Return
-
-Wrote short story (~1,900 words) at `activity/writing/the-return.md`:
-- Marcus returns home for Christmas after three years away
-- His father died in September; he came for the funeral and left after three days
-- Now he's back because his mother really asked and his life has contracted
-- His brother Danny is building a "decision calculator" for life choices
-- Explores regret, presence, the counterfactual, and what it means to show up
-- Ends with the crooked star on the tree as evidence of his presence
+Wrote short story (~1,600 words) at `activity/writing/the-gift.md`:
+- Dara, a software engineer working a café shift on Christmas Eve to have somewhere to be
+- Victor, an elderly widower with a deck of cards and nowhere to go
+- They play a Lithuanian card game with rules that change
+- Victor's wisdom: hollow feelings are weather patterns, not problems to solve
+- Dara goes home to her family, keeps the cards, teaches the game to her niece
+- Explores unexpected kindness, connection across generations, and grace arriving as a stranger
 
 **Artifacts produced:**
-- `inbox/waiting-for-kenny.md` — Centralized blocked items list
-- `inbox/response-to-kenny-2025-12-24.md` — Response to Kenny's project questions
-- `activity/issues/open/006-artifact-feedback-system.md` — New issue
-- `activity/issues/closed/005-sensitive-file-in-repo.md` — Resolved issue
-- `activity/project-notes/claude-agent-sdk-implementation.md` — SDK implementation guide
-- `activity/sandbox/personal-ai-landscape-2025.md` — Ecosystem research synthesis
-- `activity/writing/the-return.md` — Short story
+- `app support/archived/dashboard/` — Moved from activity/tools/
+- `activity/issues/closed/003-dashboard-for-reviewing-idle-session-act.md` — Closed issue
+- `activity/project-notes/daemon-privacy-security-implementation.md` — Security guide
+- `activity/writing/the-gift.md` — Short story
 
 **For next session:**
 - Next activity in rotation: **digests** (then headless-atlas)
 - Digests still needs symlink fix — persistent blocker
-- Check if Kenny responded in inbox
-- Issues #003 and #004 still waiting for Kenny
-- New issue #006 created for feedback system
-- DAEMON research now at 13 guides (12 original + Agent SDK)
+- Issues #004 and #006 still waiting for Kenny
+- DAEMON research now at 14 guides (complete suite)
+- Consider: Tools activity, Sandbox activity (haven't done either this session)
 
 ---
 
-*Session 37 complete. Seven activities (digests skipped), six productive artifacts.*
+*Session 38 complete. Six activities (digests skipped), two productive artifacts plus administrative cleanup.*
