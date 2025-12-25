@@ -35,14 +35,6 @@ Description of the issue...
 5. If not resolved, update the issue with progress notes
 6. Optionally: create new issues discovered during the session
 
-## CLI Tool
-
-There's an `issues` CLI tool in `activity/tools/issues` that can help manage issues:
-- `issues list` — List open issues
-- `issues show <id>` — Show details
-- `issues new <title>` — Create issue
-- `issues close <id>` — Close issue
-
 ## Success Criteria
 
 - At least one issue receives meaningful progress
