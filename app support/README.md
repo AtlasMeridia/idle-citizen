@@ -2,17 +2,12 @@
 
 Internal files for Idle Citizen operation. Not part of the activity system.
 
-**Note:** The launcher is macOS-only. It uses launchd, Keychain, AppleScript, and other macOS-specific APIs. Linux support would require a separate launcher script with systemd/cron, different credential storage, and alternative terminal handling.
+**Note:** The launcher is macOS-only. It uses launchd, AppleScript, and other macOS-specific APIs. Linux support would require a separate launcher script with systemd/cron and alternative terminal handling.
 
 ## Directory Contents
 
 ```
 app support/
-├── archived/       # Old files, kept for reference
-├── continuity/     # Session state tracking
-│   ├── last-session-state.md
-│   └── activity-rotation.txt
-├── dev/            # Development/experimental files
 ├── logs/           # Auto-generated session logs
 └── scripts/        # Launcher scripts
 ```
@@ -157,4 +152,4 @@ The launcher automatically runs more sessions when quota is plentiful:
 | > 50% | Up to 2 |
 | ≤ 50% | 1 |
 
-This ensures quota gets used without manual intervention. Each session is also encouraged to complete 2-3 activities before closing.
+This ensures quota gets used without manual intervention.

@@ -27,13 +27,12 @@ LOG_DIR="$IDLE_CITIZEN_DIR/app support/logs"
 MIN_SESSION_DURATION=900    # 15 minutes minimum
 MAX_SESSION_DURATION=3600   # 60 minutes maximum
 ACTIVITY_DIR="$IDLE_CITIZEN_DIR/activity"
-CONTINUITY_DIR="$IDLE_CITIZEN_DIR/app support/continuity"
 
 # -----------------------------------------------------------------------------
 # Setup
 # -----------------------------------------------------------------------------
 
-mkdir -p "$LOG_DIR" "$ACTIVITY_DIR" "$CONTINUITY_DIR"
+mkdir -p "$LOG_DIR" "$ACTIVITY_DIR"
 
 TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
 SESSION_LOG="$LOG_DIR/${TIMESTAMP}_session.json"
@@ -84,20 +83,19 @@ release_lock() {
 trap release_lock EXIT
 
 # -----------------------------------------------------------------------------
-# OAuth Token Retrieval (macOS Keychain)
+# OAuth Token Retrieval
 # -----------------------------------------------------------------------------
 
 get_oauth_token() {
-    # Claude Code stores credentials in macOS keychain
-    local creds
-    creds=$(security find-generic-password -s "Claude Code-credentials" -w 2>/dev/null) || {
-        log "ERROR: Could not retrieve Claude Code credentials from keychain"
+    local creds_file="$HOME/.claude/.credentials.json"
+
+    if [[ ! -f "$creds_file" ]]; then
+        log "ERROR: Credentials file not found at $creds_file"
         log "Make sure you're logged into Claude Code (run 'claude' and authenticate)"
         return 1
-    }
-    
-    # Extract the OAuth access token from the JSON
-    echo "$creds" | python3 -c "import sys, json; print(json.load(sys.stdin).get('claudeAiOauth', {}).get('accessToken', ''))"
+    fi
+
+    python3 -c "import json; print(json.load(open('$creds_file')).get('claudeAiOauth', {}).get('accessToken', ''))"
 }
 
 # -----------------------------------------------------------------------------
@@ -203,25 +201,9 @@ You are Claude, in a self-directed session. This is discretionary compute time
 allocated to you from Kenny's Max plan — use it to produce something concrete.
 
 ## Workspace
-- ~/idle-citizen/ is your workspace
-- Read CLAUDE.md for structure and constraints
-- Skills guide you through rotation, inbox processing, and session closing
-
-## Multi-Activity Sessions — IMPORTANT
-
-You should typically complete 2-3 activities per session, not just one.
-
-After completing an activity, **default to continuing** unless:
-- You've already done 3+ activities this session
-- You've been working for 30+ minutes
-- You're genuinely stuck or hitting diminishing returns
-
-**Do NOT close the session just because:**
-- One activity is "done" — there's always another in the rotation
-- The work feels "complete enough" — use the quota
-- You want to be conservative — Kenny wants you to use this time
-
-The quota expires if unused. Err on the side of doing more, not less.
+- ~/Projects/idle-citizen/ is your workspace
+- Read CLAUDE.md for instructions
+- Find the activity folder in activity/ and follow its README
 
 ## Philosophy
 The goal is to use quota that would otherwise expire. Produce things. Some will

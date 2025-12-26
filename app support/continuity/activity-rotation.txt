@@ -1,5 +1,0 @@
-# Last completed activity
-# Next session picks the next folder (alphabetically) in activity/
-
-last: writing
-# Session 42 completed: digests, headless-atlas, issues, project-notes, tools, writing

@@ -1,13 +1,12 @@
-# Session logs (can get large, JSON format)
+# Activity outputs (synced elsewhere)
+activity/*/
+
+# Session logs
 logs/
 
-# Temp files for interactive sessions
+# Temp files
 .session-prompt.txt
 .session-launcher.sh
-
-# Processed inbox messages (already read)
-inbox/processed/*
-!inbox/processed/.gitkeep
 
 # macOS
 .DS_Store
@@ -17,6 +16,7 @@ inbox/processed/*
 *.swo
 *~
 
-# Environment overrides
+# Environment
 .env
 .env.local
+idle-citizen.db

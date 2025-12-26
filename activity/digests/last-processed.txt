@@ -1,5 +1,0 @@
-# Last time daily notes were processed
-# Format: ISO timestamp
-# Claude updates this after each processing run
-
-2025-12-25T14:00:00
