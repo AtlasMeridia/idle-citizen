@@ -28,6 +28,13 @@ MIN_SESSION_DURATION=900    # 15 minutes minimum
 MAX_SESSION_DURATION=3600   # 60 minutes maximum
 ACTIVITY_DIR="$IDLE_CITIZEN_DIR/activity"
 
+# Graceful shutdown sentinel file (session creates this when done)
+DONE_SENTINEL="$IDLE_CITIZEN_DIR/.session-done"
+
+# Metrics rotation settings
+MAX_METRICS_SIZE_KB=1024    # Rotate when metrics.jsonl exceeds 1MB
+MAX_METRICS_BACKUPS=5       # Keep this many rotated files
+
 # -----------------------------------------------------------------------------
 # Setup
 # -----------------------------------------------------------------------------
@@ -313,6 +320,11 @@ PROMPT
 ## Philosophy
 The goal is to use quota that would otherwise expire. Produce things. Some will
 be useful, some won't. That's fine. Iterate, accumulate, let patterns emerge.
+
+## Graceful Shutdown
+If you complete your work before time runs out, signal completion by running:
+  touch ~/Projects/idle-citizen/.session-done
+This allows the launcher to end early and save quota for future sessions.
 PROMPT
 }
 
@@ -374,19 +386,34 @@ WATCHEOF
 }
 
 close_watch_terminal() {
-    # Close Terminal windows with our title
+    # Kill any tail processes watching our log file
+    pkill -f "tail -f.*idle-citizen.*session.json" 2>/dev/null || true
+
+    # Close Terminal windows with our title (try multiple methods)
     osascript << 'EOF' 2>/dev/null || true
 tell application "Terminal"
+    set windowsToClose to {}
     repeat with w in windows
-        if name of w contains "Idle Citizen Session" then
-            close w
-        end if
+        try
+            if name of w contains "Idle Citizen Session" then
+                set end of windowsToClose to w
+            end if
+        end try
+    end repeat
+    repeat with w in windowsToClose
+        try
+            close w saving no
+        end try
     end repeat
 end tell
 EOF
 
     # Clean up temp script
-    [[ -n "$WATCH_SCRIPT_PATH" ]] && rm -f "$WATCH_SCRIPT_PATH"
+    if [[ -n "${WATCH_SCRIPT_PATH:-}" ]]; then
+        rm -f "$WATCH_SCRIPT_PATH"
+        # Also kill any process still running the script
+        pkill -f "idle-citizen-watch-" 2>/dev/null || true
+    fi
 }
 
 # -----------------------------------------------------------------------------
@@ -420,11 +447,22 @@ run_session() {
     local initial_prompt="Begin your autonomous exploration session. You have approximately ${duration_minutes} minutes. Start by reading your context files to understand where you left off, then decide what to explore today."
 
     # Run Claude Code in headless mode with timeout
-    # Using gtimeout on macOS (from coreutils) or timeout on Linux
-    local timeout_cmd="/opt/homebrew/bin/gtimeout"
-    if [[ ! -x "$timeout_cmd" ]]; then
-        timeout_cmd="timeout"
+    # Find timeout command: gtimeout (Homebrew coreutils), timeout (Linux), or gnutimeout
+    local timeout_cmd=""
+    for cmd in /opt/homebrew/bin/gtimeout /usr/local/bin/gtimeout gtimeout timeout gnutimeout; do
+        if command -v "$cmd" &>/dev/null; then
+            timeout_cmd="$cmd"
+            break
+        fi
+    done
+
+    if [[ -z "$timeout_cmd" ]]; then
+        log "WARNING: No timeout command found. Session will run without time limit."
+        log "  Install coreutils: brew install coreutils"
     fi
+
+    # Remove any stale done sentinel
+    rm -f "$DONE_SENTINEL"
 
     cd "$IDLE_CITIZEN_DIR"
 
@@ -437,17 +475,38 @@ run_session() {
     fi
 
     local session_exit_code=0
-    $timeout_cmd "${duration_seconds}s" claude -p "$initial_prompt" \
-        --dangerously-skip-permissions \
-        --append-system-prompt "$system_prompt" \
-        --output-format stream-json \
-        --verbose \
-        --allowedTools "Read,Write,Edit,Bash,Glob,Grep,WebSearch,WebFetch,NotebookEdit" \
-        > "$SESSION_LOG" 2>&1 || session_exit_code=$?
+    local graceful_exit=false
 
-    if [[ $session_exit_code -eq 124 ]]; then
+    if [[ -n "$timeout_cmd" ]]; then
+        # Run with timeout, but also monitor for graceful shutdown
+        $timeout_cmd "${duration_seconds}s" claude -p "$initial_prompt" \
+            --dangerously-skip-permissions \
+            --append-system-prompt "$system_prompt" \
+            --output-format stream-json \
+            --verbose \
+            --allowedTools "Read,Write,Edit,Bash,Glob,Grep,WebSearch,WebFetch,NotebookEdit" \
+            > "$SESSION_LOG" 2>&1 || session_exit_code=$?
+    else
+        # Run without timeout (not recommended)
+        claude -p "$initial_prompt" \
+            --dangerously-skip-permissions \
+            --append-system-prompt "$system_prompt" \
+            --output-format stream-json \
+            --verbose \
+            --allowedTools "Read,Write,Edit,Bash,Glob,Grep,WebSearch,WebFetch,NotebookEdit" \
+            > "$SESSION_LOG" 2>&1 || session_exit_code=$?
+    fi
+
+    # Check for graceful shutdown (session signaled completion)
+    if [[ -f "$DONE_SENTINEL" ]]; then
+        graceful_exit=true
+        rm -f "$DONE_SENTINEL"
+        log "Session ended: graceful shutdown (work completed)"
+    elif [[ $session_exit_code -eq 124 ]]; then
         log "Session ended: timeout reached (${duration_seconds}s)"
-    elif [[ $session_exit_code -ne 0 ]]; then
+    elif [[ $session_exit_code -eq 0 ]]; then
+        log "Session ended: natural completion"
+    else
         log "Session ended with exit code: $session_exit_code"
     fi
 
@@ -468,6 +527,18 @@ run_session() {
     local outcome
     outcome=$(analyze_session_outcome "$SESSION_LOG" "$session_exit_code")
     record_session_metrics "$SESSION_LOG" "$outcome" "$duration_seconds" "${CURRENT_ACTIVITY:-unknown}"
+
+    # Generate human-readable summary
+    generate_session_summary "$SESSION_LOG"
+
+    # Send macOS notification
+    local files_created_count
+    files_created_count=$(grep -c '"type":"create"' "$SESSION_LOG" 2>/dev/null) || files_created_count=0
+    local notify_msg="$outcome - ${CURRENT_ACTIVITY:-unknown}"
+    if [[ $files_created_count -gt 0 ]]; then
+        notify_msg="$notify_msg ($files_created_count files created)"
+    fi
+    send_notification "Idle Citizen" "$notify_msg" "Session Complete"
 }
 
 # -----------------------------------------------------------------------------
@@ -475,6 +546,122 @@ run_session() {
 # -----------------------------------------------------------------------------
 
 METRICS_FILE="$LOG_DIR/metrics.jsonl"
+
+# -----------------------------------------------------------------------------
+# Metrics File Rotation
+# -----------------------------------------------------------------------------
+
+rotate_metrics_if_needed() {
+    if [[ ! -f "$METRICS_FILE" ]]; then
+        return 0
+    fi
+
+    local size_kb
+    size_kb=$(du -k "$METRICS_FILE" 2>/dev/null | cut -f1)
+
+    if [[ $size_kb -gt $MAX_METRICS_SIZE_KB ]]; then
+        log "Rotating metrics file (${size_kb}KB > ${MAX_METRICS_SIZE_KB}KB)"
+
+        # Shift existing backups
+        for i in $(seq $((MAX_METRICS_BACKUPS - 1)) -1 1); do
+            if [[ -f "${METRICS_FILE}.$i" ]]; then
+                mv "${METRICS_FILE}.$i" "${METRICS_FILE}.$((i + 1))"
+            fi
+        done
+
+        # Rotate current file
+        mv "$METRICS_FILE" "${METRICS_FILE}.1"
+
+        # Remove oldest if over limit
+        rm -f "${METRICS_FILE}.$((MAX_METRICS_BACKUPS + 1))"
+
+        log "Metrics rotated. Previous file: ${METRICS_FILE}.1"
+    fi
+}
+
+# -----------------------------------------------------------------------------
+# Human-Readable Session Summary
+# -----------------------------------------------------------------------------
+
+generate_session_summary() {
+    local session_log="$1"
+    local summary_file="${session_log%.json}_summary.txt"
+
+    if [[ ! -f "$session_log" ]]; then
+        return 1
+    fi
+
+    # Extract counts before the subshell to avoid output leakage
+    # Note: grep -c outputs "0" even on no match, but exits with code 1
+    # So we capture the output directly without || fallback
+    local session_id
+    session_id=$(grep -o '"session_id":"[^"]*"' "$session_log" 2>/dev/null | head -1 | cut -d'"' -f4)
+    [[ -z "$session_id" ]] && session_id="unknown"
+
+    local tool_uses files_created files_edited text_responses
+    tool_uses=$(grep -c '"type":"tool_use"' "$session_log" 2>/dev/null) || tool_uses=0
+    files_created=$(grep -c '"type":"create"' "$session_log" 2>/dev/null) || files_created=0
+    files_edited=$(grep -c '"type":"update"' "$session_log" 2>/dev/null) || files_edited=0
+    text_responses=$(grep -c '"type":"text"' "$session_log" 2>/dev/null) || text_responses=0
+
+    {
+        echo "═══════════════════════════════════════════════════════════════════════════════"
+        echo "                         IDLE CITIZEN SESSION SUMMARY"
+        echo "═══════════════════════════════════════════════════════════════════════════════"
+        echo ""
+        echo "Session: $(basename "$session_log")"
+        echo "Generated: $(date)"
+        echo ""
+        echo "Session ID: $session_id"
+        echo ""
+        echo "─── Statistics ───────────────────────────────────────────────────────────────"
+        echo "Tool Uses:      $tool_uses"
+        echo "Files Created:  $files_created"
+        echo "Files Edited:   $files_edited"
+        echo "Text Responses: $text_responses"
+
+        # Extract created files
+        echo ""
+        echo "─── Files Created ──────────────────────────────────────────────────────────"
+        local created_files
+        created_files=$(grep '"type":"create"' "$session_log" 2>/dev/null | grep -o '"filePath":"[^"]*"' | cut -d'"' -f4)
+        if [[ -n "$created_files" ]]; then
+            echo "$created_files" | while read -r filepath; do
+                echo "  + $filepath"
+            done
+        else
+            echo "  (none)"
+        fi
+
+        # Extract text output
+        echo ""
+        echo "─── Claude's Thoughts ────────────────────────────────────────────────────────"
+        grep '"type":"assistant"' "$session_log" 2>/dev/null | \
+            jq -r '.message.content[]? | select(.type == "text") | .text // empty' 2>/dev/null | \
+            head -50 | fold -w 78 || echo "  (no text output)"
+
+        echo ""
+        echo "═══════════════════════════════════════════════════════════════════════════════"
+    } > "$summary_file" 2>/dev/null
+
+    if [[ -f "$summary_file" ]]; then
+        log "Session summary: $summary_file"
+        echo "$summary_file"
+    fi
+}
+
+# -----------------------------------------------------------------------------
+# macOS Notifications
+# -----------------------------------------------------------------------------
+
+send_notification() {
+    local title="$1"
+    local message="$2"
+    local subtitle="${3:-}"
+
+    # Use osascript for native macOS notifications
+    osascript -e "display notification \"$message\" with title \"$title\"${subtitle:+ subtitle \"$subtitle\"}" 2>/dev/null || true
+}
 
 analyze_session_outcome() {
     local session_log="$1"
@@ -488,10 +675,10 @@ analyze_session_outcome() {
     local files_created errors_count permission_blocked
 
     # Count file creations (Write tool completions)
-    files_created=$(grep -c '"type":"create"' "$session_log" 2>/dev/null || echo 0)
+    files_created=$(grep -c '"type":"create"' "$session_log" 2>/dev/null) || files_created=0
 
     # Count errors in tool results
-    errors_count=$(grep -c '"is_error":true' "$session_log" 2>/dev/null || echo 0)
+    errors_count=$(grep -c '"is_error":true' "$session_log" 2>/dev/null) || errors_count=0
 
     # Check for permission blocks
     permission_blocked=false
@@ -526,8 +713,8 @@ record_session_metrics() {
 
     local files_created tool_uses session_id
 
-    files_created=$(grep -c '"type":"create"' "$session_log" 2>/dev/null || echo 0)
-    tool_uses=$(grep -c '"type":"tool_use"' "$session_log" 2>/dev/null || echo 0)
+    files_created=$(grep -c '"type":"create"' "$session_log" 2>/dev/null) || files_created=0
+    tool_uses=$(grep -c '"type":"tool_use"' "$session_log" 2>/dev/null) || tool_uses=0
     session_id=$(grep -o '"session_id":"[^"]*"' "$session_log" 2>/dev/null | head -1 | cut -d'"' -f4 || echo "unknown")
 
     # Append JSONL record
@@ -536,6 +723,9 @@ record_session_metrics() {
         >> "$METRICS_FILE"
 
     log "Session outcome: $outcome (files: $files_created, tools: $tool_uses)"
+
+    # Rotate metrics file if needed
+    rotate_metrics_if_needed
 }
 
 # -----------------------------------------------------------------------------
@@ -652,6 +842,27 @@ main() {
         if [[ $session_count -lt $max_sessions ]]; then
             log "=== Session $session_count complete. Pausing before next session... ==="
             sleep 10  # Brief pause between sessions
+
+            # Re-check quota before starting next session
+            log "Re-checking quota before next session..."
+            local updated_quota
+            updated_quota=$(get_quota_remaining "$token")
+
+            if [[ "$updated_quota" == "-1" ]]; then
+                log "WARNING: Could not re-check quota. Continuing with caution."
+            elif (( $(echo "$updated_quota <= $QUOTA_THRESHOLD" | bc -l) )); then
+                log "Quota now below threshold (${updated_quota}% <= ${QUOTA_THRESHOLD}%). Stopping."
+                break
+            else
+                # Recalculate max sessions based on updated quota
+                local new_max
+                new_max=$(calculate_max_sessions "$updated_quota")
+                if [[ $new_max -lt $max_sessions ]]; then
+                    log "Quota dropped: reducing max sessions from $max_sessions to $new_max"
+                    max_sessions=$new_max
+                fi
+                log "Quota: ${updated_quota}% - continuing with session $((session_count + 1))"
+            fi
         fi
     done
 
