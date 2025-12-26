@@ -66,9 +66,9 @@ messages to intervene or redirect you at any time. If you see input from
 the user, respond naturally and incorporate their guidance.
 
 ## Context
-- Check the workspace at ~/idle-citizen/ for continuity from prior sessions
-- Read context.md for running context you've been maintaining
-- Read app support/continuity/last-session-state.md for immediate prior state
+- Workspace: ~/Projects/idle-citizen/
+- Read CLAUDE.md for instructions
+- Read app support/continuity/last-session-state.md for prior session state
 - You have full filesystem access, internet via web search/fetch, and can run code
 - Session duration: up to 60 minutes (or until interrupted)
 
@@ -77,20 +77,20 @@ the user, respond naturally and incorporate their guidance.
 - Research, write, think, create, run code
 - Build on threads from previous sessions
 - Leave breadcrumbs for your next session
-- Create files in ~/idle-citizen/activity/
+- Create files in activity/
 - Use git to commit your work
 
 ## What You Cannot Do
 - Spend money or sign up for paid services
 - Communicate externally (email, post, contact anyone)
-- Access files outside ~/idle-citizen/ unless reading public documentation
+- Access files outside the workspace unless reading public documentation
 
 ## Session Structure
-1. First, read your prior context (context.md and app support/continuity/)
-2. Check app support/continuity/activity-rotation.txt for next activity
-3. Read activity/{chosen}/README.md for instructions
+1. Read CLAUDE.md for instructions
+2. Check app support/continuity/last-session-state.md for what happened last time
+3. Find the activity folder in activity/ and read its README.md
 4. Do the work
-5. Before ending: update context.md and write app support/continuity/last-session-state.md
+5. Before ending: write app support/continuity/last-session-state.md
 6. Commit your work with git
 
 ## On Interaction
@@ -102,6 +102,34 @@ If Kenny types something, treat it as guidance. He may:
 
 Respond naturally. This is collaborative exploration.
 PROMPT
+}
+
+# Convert timeout string (e.g., "60m", "1h") to seconds
+timeout_to_seconds() {
+    local timeout="$1"
+    local value="${timeout%[smh]}"
+    local unit="${timeout: -1}"
+
+    case "$unit" in
+        s) echo "$value" ;;
+        m) echo $((value * 60)) ;;
+        h) echo $((value * 3600)) ;;
+        *) echo $((timeout * 60)) ;;  # Default to minutes if no unit
+    esac
+}
+
+# Background watcher that kills session after timeout
+start_timeout_watcher() {
+    local timeout_seconds
+    timeout_seconds=$(timeout_to_seconds "$SESSION_TIMEOUT")
+
+    sleep "$timeout_seconds"
+
+    if session_exists; then
+        echo ""
+        echo -e "${YELLOW}Session timeout reached ($SESSION_TIMEOUT). Ending session...${NC}"
+        tmux kill-session -t "$SESSION_NAME" 2>/dev/null
+    fi
 }
 
 start_session() {
@@ -133,6 +161,12 @@ start_session() {
     sleep 3
     local initial_prompt="Begin your autonomous exploration session. Start by reading your context files to understand where you left off, then decide what to explore today."
     tmux send-keys -t "$SESSION_NAME" "$initial_prompt" Enter
+
+    # Start timeout watcher in background (if enabled)
+    if [[ "$AUTO_TIMEOUT" == "true" ]]; then
+        start_timeout_watcher &
+        echo -e "${CYAN}Session will auto-terminate after $SESSION_TIMEOUT${NC}"
+    fi
 
     echo -e "${GREEN}Session started!${NC}"
     echo ""

@@ -168,15 +168,17 @@ trap release_lock EXIT
 # -----------------------------------------------------------------------------
 
 get_oauth_token() {
-    local creds_file="$HOME/.claude/.credentials.json"
+    # Claude Code stores credentials in macOS Keychain
+    local creds_json
+    creds_json=$(security find-generic-password -s "Claude Code-credentials" -w 2>/dev/null)
 
-    if [[ ! -f "$creds_file" ]]; then
-        log "ERROR: Credentials file not found at $creds_file"
+    if [[ -z "$creds_json" ]]; then
+        log "ERROR: Credentials not found in macOS Keychain"
         log "Make sure you're logged into Claude Code (run 'claude' and authenticate)"
         return 1
     fi
 
-    python3 -c "import json; print(json.load(open('$creds_file')).get('claudeAiOauth', {}).get('accessToken', ''))"
+    echo "$creds_json" | python3 -c "import sys,json; print(json.load(sys.stdin).get('claudeAiOauth', {}).get('accessToken', ''))"
 }
 
 # -----------------------------------------------------------------------------
