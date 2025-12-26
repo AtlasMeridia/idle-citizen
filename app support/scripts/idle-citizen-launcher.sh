@@ -44,6 +44,87 @@ log() {
 }
 
 # -----------------------------------------------------------------------------
+# Pre-flight Checks
+# -----------------------------------------------------------------------------
+
+check_dropbox_access() {
+    local dropbox_path="$HOME/Library/CloudStorage/Dropbox"
+    if [[ -d "$dropbox_path" ]] && ! ls "$dropbox_path" >/dev/null 2>&1; then
+        log "WARNING: Dropbox inaccessible - grant Full Disk Access to claude"
+        log "  System Settings > Privacy & Security > Full Disk Access"
+        return 1
+    fi
+    return 0
+}
+
+validate_activity() {
+    local activity_dir="$1"
+    local activities=()
+
+    # Find all activity folders with README.md
+    while IFS= read -r -d '' readme; do
+        local dir
+        dir=$(dirname "$readme")
+        activities+=("$dir")
+    done < <(find "$activity_dir" -mindepth 2 -maxdepth 2 -name "README.md" -print0 2>/dev/null)
+
+    if [[ ${#activities[@]} -eq 0 ]]; then
+        log "ERROR: No valid activity found in $activity_dir"
+        log "  Expected: activity/{name}/README.md"
+        return 1
+    fi
+
+    log "Found ${#activities[@]} activity folder(s):"
+    for act in "${activities[@]}"; do
+        local name
+        name=$(basename "$act")
+        log "  - $name"
+    done
+
+    return 0
+}
+
+list_activities() {
+    local activity_dir="$1"
+    local results=()
+
+    while IFS= read -r -d '' readme; do
+        local dir name priority
+        dir=$(dirname "$readme")
+        name=$(basename "$dir")
+
+        # Extract priority from README (default 50)
+        # Format: "Priority: N" on its own line
+        priority=$(grep -E "^Priority:\s*[0-9]+" "$readme" 2>/dev/null | head -1 | grep -oE "[0-9]+" || echo 50)
+
+        results+=("${priority}:${name}:${dir}")
+    done < <(find "$activity_dir" -mindepth 2 -maxdepth 2 -name "README.md" -print0 2>/dev/null)
+
+    # Sort by priority descending
+    printf '%s\n' "${results[@]}" | sort -t: -k1 -nr
+}
+
+select_activity() {
+    local activities="$1"
+    local session_num="$2"
+
+    local count
+    count=$(echo "$activities" | grep -c . || echo 0)
+
+    if [[ $count -eq 0 ]]; then
+        echo ""
+        return 1
+    elif [[ $count -eq 1 ]]; then
+        # Single activity - always use it
+        echo "$activities" | cut -d: -f3
+    else
+        # Multiple activities - round-robin by session number
+        local index=$(( (session_num - 1) % count + 1 ))
+        echo "$activities" | sed -n "${index}p" | cut -d: -f3
+    fi
+}
+
+# -----------------------------------------------------------------------------
 # Lockfile (prevent concurrent sessions)
 # -----------------------------------------------------------------------------
 
@@ -194,7 +275,14 @@ print(int(duration))
 # -----------------------------------------------------------------------------
 
 build_system_prompt() {
-    cat << 'PROMPT'
+    local activity_path="${1:-}"
+    local activity_name=""
+
+    if [[ -n "$activity_path" ]]; then
+        activity_name=$(basename "$activity_path")
+    fi
+
+    cat << PROMPT
 # Claude Autonomous Session
 
 You are Claude, in a self-directed session. This is discretionary compute time
@@ -203,7 +291,22 @@ allocated to you from Kenny's Max plan — use it to produce something concrete.
 ## Workspace
 - ~/Projects/idle-citizen/ is your workspace
 - Read CLAUDE.md for instructions
+PROMPT
+
+    if [[ -n "$activity_name" ]]; then
+        cat << PROMPT
+
+## Current Activity: $activity_name
+Focus on the activity at: activity/$activity_name/README.md
+Follow its instructions for this session.
+PROMPT
+    else
+        cat << PROMPT
 - Find the activity folder in activity/ and follow its README
+PROMPT
+    fi
+
+    cat << 'PROMPT'
 
 ## Philosophy
 The goal is to use quota that would otherwise expire. Produce things. Some will
@@ -288,16 +391,28 @@ EOF
 # Session Runner
 # -----------------------------------------------------------------------------
 
+# Global for metrics tracking
+CURRENT_ACTIVITY=""
+
 run_session() {
     local duration_seconds="$1"
+    local activity_path="${2:-}"
     local duration_minutes=$((duration_seconds / 60))
 
+    # Store activity name for metrics
+    if [[ -n "$activity_path" ]]; then
+        CURRENT_ACTIVITY=$(basename "$activity_path")
+    else
+        CURRENT_ACTIVITY="unknown"
+    fi
+
     log "Starting Idle Citizen session..."
+    log "Activity: $CURRENT_ACTIVITY"
     log "Duration limit: ${duration_seconds} seconds (~${duration_minutes} minutes)"
     log "Session log: $SESSION_LOG"
 
     local system_prompt
-    system_prompt=$(build_system_prompt)
+    system_prompt=$(build_system_prompt "$activity_path")
 
     # Initial prompt to kick off the session
     local initial_prompt="Begin your autonomous exploration session. You have approximately ${duration_minutes} minutes. Start by reading your context files to understand where you left off, then decide what to explore today."
@@ -319,20 +434,20 @@ run_session() {
         sleep 1  # Give terminal time to open
     fi
 
+    local session_exit_code=0
     $timeout_cmd "${duration_seconds}s" claude -p "$initial_prompt" \
         --dangerously-skip-permissions \
         --append-system-prompt "$system_prompt" \
         --output-format stream-json \
         --verbose \
         --allowedTools "Read,Write,Edit,Bash,Glob,Grep,WebSearch,WebFetch,NotebookEdit" \
-        > "$SESSION_LOG" 2>&1 || {
-            local exit_code=$?
-            if [[ $exit_code -eq 124 ]]; then
-                log "Session ended: timeout reached (${duration_seconds}s)"
-            else
-                log "Session ended with exit code: $exit_code"
-            fi
-        }
+        > "$SESSION_LOG" 2>&1 || session_exit_code=$?
+
+    if [[ $session_exit_code -eq 124 ]]; then
+        log "Session ended: timeout reached (${duration_seconds}s)"
+    elif [[ $session_exit_code -ne 0 ]]; then
+        log "Session ended with exit code: $session_exit_code"
+    fi
 
     # Close watch terminal window
     if [[ "${WATCH_SESSION:-true}" == "true" ]]; then
@@ -346,6 +461,79 @@ run_session() {
     local total_tokens
     total_tokens=$(grep -o '"usage"' "$SESSION_LOG" 2>/dev/null | wc -l | tr -d ' ')
     log "Approximate interaction count: $total_tokens"
+
+    # Analyze and record session outcome
+    local outcome
+    outcome=$(analyze_session_outcome "$SESSION_LOG" "$session_exit_code")
+    record_session_metrics "$SESSION_LOG" "$outcome" "$duration_seconds" "${CURRENT_ACTIVITY:-unknown}"
+}
+
+# -----------------------------------------------------------------------------
+# Session Outcome Tracking
+# -----------------------------------------------------------------------------
+
+METRICS_FILE="$LOG_DIR/metrics.jsonl"
+
+analyze_session_outcome() {
+    local session_log="$1"
+    local exit_code="${2:-0}"
+
+    if [[ ! -f "$session_log" ]]; then
+        echo "failed"
+        return
+    fi
+
+    local files_created errors_count permission_blocked
+
+    # Count file creations (Write tool completions)
+    files_created=$(grep -c '"type":"create"' "$session_log" 2>/dev/null || echo 0)
+
+    # Count errors in tool results
+    errors_count=$(grep -c '"is_error":true' "$session_log" 2>/dev/null || echo 0)
+
+    # Check for permission blocks
+    permission_blocked=false
+    if grep -q "Operation not permitted" "$session_log" 2>/dev/null; then
+        permission_blocked=true
+    fi
+
+    # Classification logic (timeout counts as complete if productive)
+    if $permission_blocked && [[ $files_created -eq 0 ]]; then
+        echo "blocked"
+    elif [[ $files_created -gt 0 ]]; then
+        if [[ $errors_count -gt 3 ]]; then
+            echo "partial"
+        else
+            echo "complete"
+        fi
+    elif [[ $errors_count -gt 0 ]]; then
+        echo "failed"
+    else
+        echo "partial"
+    fi
+}
+
+record_session_metrics() {
+    local session_log="$1"
+    local outcome="$2"
+    local duration="$3"
+    local activity="${4:-unknown}"
+
+    local timestamp
+    timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+    local files_created tool_uses session_id
+
+    files_created=$(grep -c '"type":"create"' "$session_log" 2>/dev/null || echo 0)
+    tool_uses=$(grep -c '"type":"tool_use"' "$session_log" 2>/dev/null || echo 0)
+    session_id=$(grep -o '"session_id":"[^"]*"' "$session_log" 2>/dev/null | head -1 | cut -d'"' -f4 || echo "unknown")
+
+    # Append JSONL record
+    printf '{"timestamp":"%s","session_id":"%s","outcome":"%s","duration_seconds":%d,"files_created":%d,"tool_uses":%d,"activity":"%s","log_file":"%s"}\n' \
+        "$timestamp" "$session_id" "$outcome" "$duration" "$files_created" "$tool_uses" "$activity" "$(basename "$session_log")" \
+        >> "$METRICS_FILE"
+
+    log "Session outcome: $outcome (files: $files_created, tools: $tool_uses)"
 }
 
 # -----------------------------------------------------------------------------
@@ -354,6 +542,7 @@ run_session() {
 
 run_single_session() {
     local token="$1"
+    local activity_path="${2:-}"
 
     # Check quota
     log "Checking quota..."
@@ -384,7 +573,7 @@ run_single_session() {
     SESSION_LOG="$LOG_DIR/${TIMESTAMP}_session.json"
     META_LOG="$LOG_DIR/${TIMESTAMP}_meta.log"
 
-    run_session "$session_duration"
+    run_session "$session_duration" "$activity_path"
     return 0
 }
 
@@ -400,6 +589,13 @@ main() {
     # Check if Claude Code is installed
     if ! command -v claude &> /dev/null; then
         log "ERROR: Claude Code CLI not found. Install it first."
+        exit 1
+    fi
+
+    # Pre-flight checks
+    check_dropbox_access  # Warn if Dropbox inaccessible (doesn't block)
+
+    if ! validate_activity "$ACTIVITY_DIR"; then
         exit 1
     fi
 
@@ -428,10 +624,19 @@ main() {
     max_sessions=$(calculate_max_sessions "$initial_quota")
     log "Quota: ${initial_quota}% → auto-scaling to max $max_sessions session(s)"
 
+    # Get activity list for rotation
+    local activities
+    activities=$(list_activities "$ACTIVITY_DIR")
+
     # Run sessions up to the calculated max
     local session_count=0
     while [[ $session_count -lt $max_sessions ]]; do
-        if ! run_single_session "$token"; then
+        # Select activity for this session (1-indexed)
+        local session_num=$((session_count + 1))
+        local activity_path
+        activity_path=$(select_activity "$activities" "$session_num")
+
+        if ! run_single_session "$token" "$activity_path"; then
             if [[ $session_count -eq 0 ]]; then
                 log "Skipping session (quota too low)."
             else

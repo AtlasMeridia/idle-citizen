@@ -132,6 +132,16 @@ Before the launcher will work:
    brew install jq
    ```
 
+4. **Full Disk Access** for Dropbox (if your activity reads from Dropbox)
+
+   The macOS sandbox blocks access to `~/Library/CloudStorage/Dropbox/` from processes launched via launchd. To fix:
+
+   1. Open **System Settings > Privacy & Security > Full Disk Access**
+   2. Add `/opt/homebrew/bin/claude` (or your Claude CLI path)
+   3. Optionally add Terminal.app if running interactively
+
+   The launcher will warn if Dropbox is inaccessible but won't block sessions.
+
 ## Configuration
 
 Environment variables (set in plist or export before running):
@@ -153,3 +163,38 @@ The launcher automatically runs more sessions when quota is plentiful:
 | ≤ 50% | 1 |
 
 This ensures quota gets used without manual intervention.
+
+## Session Metrics
+
+Each session is analyzed and recorded to `logs/metrics.jsonl`:
+
+```json
+{"timestamp":"2025-12-25T12:00:00Z","session_id":"...","outcome":"complete","duration_seconds":3600,"files_created":5,"tool_uses":42,"activity":"digests","log_file":"2025-12-25_12-00-00_session.json"}
+```
+
+**Outcome classifications:**
+- `complete` — Session produced files, no major errors
+- `partial` — Some work done, but significant errors occurred
+- `failed` — No useful output, errors prevented progress
+- `blocked` — Permission or access issues blocked the activity
+
+## Multi-Activity Rotation
+
+When multiple activities exist in `activity/`, the launcher rotates between them:
+
+- Session 1: Highest priority activity
+- Session 2: Second highest (or wraps to first)
+- Session 3: Third highest (or wraps)
+
+**Setting activity priority:** Add `Priority: N` to your activity's README.md (default is 50):
+
+```markdown
+# My Activity
+
+Priority: 80
+
+## Purpose
+...
+```
+
+Higher priority = selected first.
